@@ -1,6 +1,8 @@
 /*GLOBAL CSS*/
 html {
-    font-family:Helvetica;
+    font-family:Avenir Regular;
+    height:100vh;
+    background:radial-gradient(white 30%,#a7a7a7);
 }
 
 
@@ -9,20 +11,23 @@ html {
     font-size:25px;
     display:flex;
     flex-wrap: wrap;
-    justify-content:space-around;
+    justify-content:center;
 
 }
 .dir-container a {
     text-decoration:none;
 }
 .dir-box {
+    font-family:Avenir Bold;
     text-align:center;
     height:200px;
     width:200px;
-    background-color:#cdcdcd;
-    color:white;
-    margin:20px;
+    background-color:white;
+    box-shadow:0px 0px 9px #0000004d;
+    color:grey;
     margin-bottom:75px;
+    margin-left:5vw;
+    margin-right:5vw;
     transition:all 0.4s ease;
 }
 .dir-box:hover {
@@ -161,4 +166,18 @@ input[type=submit]:hover {
     margin-top:-2px;
     width:110px;
     height:60px;
+}
+
+
+@font-face {
+    font-family: Avenir Regular;
+    src: url(.Fonts/AvenirNextLTPro-Regular.otf);
+}
+@font-face {
+    font-family: Avenir Bold;
+    src: url(.Fonts/AvenirNextLTPro-Bold.otf);
+}
+@font-face {
+    font-family: Avenir Heavy;
+    src: url(.Fonts/AvenirNextLTPro-Heavy.otf);
 }
