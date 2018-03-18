@@ -9,6 +9,11 @@ $(document).ready(function(){
         $('.new-button').removeClass('nb-active');
         $('.cnd_container').addClass('cnd-active');
     });
+    $('#um').on('click', function(e) {
+        $('.new-menu').removeClass('nm-active');
+        $('.new-button').removeClass('nb-active');
+        $('.um_container').addClass('um-active');
+    });
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();
     });

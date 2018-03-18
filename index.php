@@ -1,6 +1,17 @@
 <?php 
+    $dir=$_SERVER['REQUEST_URI'];
     $functions = $_SERVER['DOCUMENT_ROOT']."/functions.php"; 
     include_once($functions);
+    if (isset($_GET['dn']) && isset($_GET['d_type'])) {
+        create_dir($_GET['dn']);
+        header('Location: .');
+    }
+    if (isset($_POST["fn"])){
+       if ($_FILES['uf']['error'] !== UPLOAD_ERR_OK) {
+            echo $_FILES['uf']['error'];
+       }
+       add_file($_FILES["uf"],$_POST["fn"]); 
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,6 +29,11 @@
             list_dirs(); 
         ?>
     </div>
+    <?php
+        if ($dir != "/"){
+            list_files();
+        }
+    ?>
     <div class="menu-container">
         <div class="new-menu">
             <ul>
@@ -31,7 +47,7 @@
     <div class="cnd_container">
         <div class="cnd">
             <h1>Create New Directory</h1>
-            <form action="" id="cnd_form">
+            <form id="cnd_form">
                 <h3>Directory Name</h3>
                 <input type="text" name="dn"><br>
                 <h3>Media Type</h3>
@@ -42,10 +58,24 @@
                         <option value="music">Music</option>
                         <option value="tv">TV</option>
                     </select> <br /> 
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="um_container">
+        <div class="um">
+            <h1>Upload Media</h1>
+            <form id="um_form" method="post" enctype="multipart/form-data">
+                <h3>File Name</h3>
+                <input type="text" name="fn"><br>
+                <h3>Upload File</h3>
+                <div class="fsubmit">
+                    <input type="file" name="uf">
                 </div>
                 <input type="submit" value="Submit">
             </form>
-        <div>
+        </div>
     </div>
 </body>
 </html>
