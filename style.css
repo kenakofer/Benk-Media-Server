@@ -1,6 +1,10 @@
+/*GLOBAL CSS*/
 html {
     font-family:Helvetica;
 }
+
+
+/*DIRECTORY BOXES*/
 .dir-container {
     font-size:25px;
     display:flex;
@@ -33,4 +37,111 @@ html {
    top:25px;
    margin: 0 auto;
    margin-bottom:50px;
+}
+
+
+/*ADD NEW BUTTON*/
+.new-button {
+    width:75px;
+    height:75px;
+    background-color:red;
+    position:fixed;
+    margin:50px;
+    bottom:0;
+    right:0;
+    transition:all 0.4s ease;
+}
+.new-menu {
+    pointer-events:none;
+    width:200px;
+    height:120px;
+    background-color:grey;
+    position:fixed;
+    margin:50px;
+    bottom: 125px;
+    right: 0;
+    opacity:0;
+    transition:all 0.4s ease;
+}
+.new-menu ul {
+    padding:0;
+}
+.new-menu li {
+    margin: 0 auto;
+    margin-bottom:10px;
+    list-style-type:none;
+    width:90%;
+    background-color:blue;
+    padding-top:10px;
+    padding-bottom:10px;
+    transition:all 0.2s ease;
+}
+.new-menu li:hover {
+    margin-top:-5px;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+.nb-active {
+    transform: rotate(45deg);
+}
+.nm-active {
+    opacity:1;
+    pointer-events:all;
+}
+
+/*Create New Directory Window*/
+.cnd_container {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color:#0006;
+    transition:all 0.4s ease;
+    opacity:0;
+    pointer-events:none;
+}
+.cnd-active {
+    opacity:1;
+    pointer-events:auto;
+}
+.cnd {
+    margin:0 auto;
+    margin-top:30vh;
+    background-color:blue;
+    height:300px;
+    width:500px;
+    padding:25px;
+    padding-bottom:50px;
+}
+.cnd h1 {
+    text-align:center;
+}
+.cnd h3 {
+    margin-bottom:8px;
+}
+.selectbox select {
+    border:none;
+    width:99%;
+    padding:10px;
+    margin-bottom:30px;
+}
+input[type=text] {
+    background-color:white;
+    width:95%;
+    padding:10px;
+    border:none;
+}
+input[type=submit] {
+    display:block;
+    margin:0 auto;
+    width:100px;
+    height:50px;
+    border:none;
+    transition:all 0.4s ease;
+}
+input[type=submit]:hover {
+    margin-top:-2px;
+    width:110px;
+    height:60px;
 }
