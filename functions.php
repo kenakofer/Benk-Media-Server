@@ -2,12 +2,11 @@
 function list_dirs() {
     $files = array_filter(glob('*'), 'is_dir');
     foreach($files as $file) {
-        echo "<a href='./".$file."/'>
-                  <div class='dir-box' >
-                      <div class='dir-box-icon'></div>
-                      $file
-                  </div>
-              </a>";
+        echo "<div class='box-container'>
+                <a class='box-del' href='./?boxdel=".$file."'>X</a>
+                <a class='dir-box' href='./".$file."/'>
+                <div class='dir-box-icon'></div>$file</a>
+            </div>";
     }
 }
 function list_files() {
@@ -15,7 +14,10 @@ function list_files() {
     foreach($files as $file) {
         if (is_file($file))
         {
-            echo "<a href='".$file."'>".$file."</a> <br />";
+            echo "<div class='item-container'>
+                    <a class='item-del' href='?itemdel=".$file."'>X</a>
+                    <a class='file-item' href='./".$file."'>".$file."</a>
+                  </div>";
         }
     }
 }
@@ -40,12 +42,23 @@ function add_file($file, $file_name) {
         echo "This server only supports audio and video files."; 
     }
 
-    echo $mime;
     if ($file_upload == 1) {
         if (move_uploaded_file($file["tmp_name"], $target_file)){
             echo "Your file was uploaded successfully!";
         }
     }
 
+}
+function removedir($dir){
+    if(is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != '.' && $object != '..') {
+                (filetype($dir . '/' . $object) == 'dir') ? removedir($dir.'/'.$object):unlink($dir.'/'.$object);
+            }
+        }
+        reset($objects);
+        rmdir($dir);
+    }
 }
 ?>

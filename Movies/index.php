@@ -12,6 +12,14 @@
        }
        add_file($_FILES["uf"],$_POST["fn"]); 
     }
+    if (isset($_GET['itemdel'])) {
+        unlink('./'.$_GET['itemdel']);
+        header('Location: .');
+    }
+    if (isset($_GET['boxdel'])) {
+        removedir($_GET['boxdel']);
+        header('Location: .');
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,16 +32,23 @@
     <script src="/.Scripts/add.js"></script>
 </head>
 <body>
+    <?php
+        if ($dir != "/"){
+        echo "<h1>".basename(__DIR__)."</h1>";
+        }
+    ?>
     <div class="dir-container">
         <?php 
             list_dirs(); 
         ?>
     </div>
-    <?php
-        if ($dir != "/"){
-            list_files();
-        }
-    ?>
+    <div class="file-container">
+        <?php
+            if ($dir != "/"){
+                list_files();
+            }
+        ?>
+    </div>
     <div class="menu-container">
         <div class="new-menu">
             <ul>
