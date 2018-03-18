@@ -1,0 +1,36 @@
+html {
+    font-family:Helvetica;
+}
+.dir-container {
+    font-size:25px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+
+}
+.dir-container a {
+    text-decoration:none;
+}
+.dir-box {
+    text-align:center;
+    height:200px;
+    width:200px;
+    background-color:#cdcdcd;
+    color:white;
+    margin:20px;
+    margin-bottom:75px;
+    transition:all 0.4s ease;
+}
+.dir-box:hover {
+   height:250px;
+   width:250px;
+   margin-top:-10px;
+}
+.dir-box-icon {
+   height:100px;
+   width:100px;
+   position:relative;
+   top:25px;
+   margin: 0 auto;
+   margin-bottom:50px;
+}
