@@ -18,7 +18,7 @@
     }
     if (isset($_GET['boxdel'])) {
         removedir($_GET['boxdel']);
-        header('Location: .?del=1');
+        header('Location: .');
     }
     if (isset($_GET['del'])) {
         echo "<div class='notify'>Your file was deleted successfully.</div>";
@@ -45,6 +45,7 @@
                 </div></div></a>
             </div>";
             echo "<h1 style='padding-top:50px;'>".basename(__DIR__)."</h1>";
+        }
         
     ?>
     <div class="dir-container">
@@ -67,6 +68,7 @@
             </ul>
         </div>
         <div class="new-button">
+            <img style='margin-left:7px;margin-top:7px;width:80%;height:80%;' src='/plus.png' />
         </div>
     </div>
     <div class="cnd_container">

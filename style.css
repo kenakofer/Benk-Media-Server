@@ -185,7 +185,7 @@ padding-left:50px;
 .new-button {
     width:75px;
     height:75px;
-    background-color:red;
+    background:linear-gradient(#f90,#ffcf00);
     cursor:pointer;
     position:fixed;
     margin:50px;
