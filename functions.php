@@ -11,6 +11,10 @@ function list_dirs() {
 }
 function list_files() {
     $files = array_diff(scandir('.'), array('.','..','index.php'));
+    if (empty($files)){
+        echo "<h3 style='text-align:center;'>There's nothing here! Why not add some files?</h3>";
+        return;
+    }
     foreach($files as $file) {
         if (is_file($file))
         {
@@ -68,7 +72,6 @@ function breadcrumbs(){
           </a>";
     $url = $_SERVER["REQUEST_URI"];
     if($url != '' && $url != '/'){
-        error_log('ah');
         $b = '';
         $links = explode('/',rtrim($url,'/'));
         foreach($links as $index => $l){

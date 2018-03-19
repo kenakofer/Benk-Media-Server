@@ -22,6 +22,7 @@ a {
 
 /*NAVIGATION*/
 .breadcrumbs {
+    background:linear-gradient(to right,lightgrey,white);
     display:flex;
     height:10px;
     background-color:white;
@@ -30,8 +31,9 @@ a {
     width:-moz-min-content;
 }
 .breadcrumb {
-    background-color:white;
+    background:linear-gradient(lightgrey,white);
     height:25px;
+    box-shadow:0px 0px 9px #0000004d;
     width:25px;
     float:right;
     margin:0 auto;
@@ -53,25 +55,23 @@ a {
     margin-top:10px;
 }
 #bch:hover .breadcrumb {
-    box-shadow:0px 0px 9px #0000004d;
     height:75px;
     width:75px;
 }
 .bc_c:hover .breadcrumb {
-    box-shadow:0px 0px 9px #0000004d;
     height:50px;
     width:50px;
 }
 .back {
-    background-color:red;
+    background:linear-gradient(#f90,#ffcf00);
     height:50px;
     width:50px;
     margin-left:100px;
+    box-shadow:0px 0px 9px #0000004d;
     transition:all 0.4s ease;
 }
 .back:hover {
     width:100px;
-    box-shadow:0px 0px 9px #0000004d;
 }
 .triangle {
     border-left: 7px solid; 
@@ -101,7 +101,7 @@ a {
     text-align:center;
     height:200px;
     width:200px;
-    background-color:white;
+    background:linear-gradient(lightgrey 10%, white);
     box-shadow:0px 0px 9px #0000004d;
     color:grey;
     transition:all 0.4s ease;
@@ -112,6 +112,7 @@ a {
     margin-right:5vw;
 }
 .box-container:hover .dir-box {
+   box-shadow:0px 0px 9px #f90;
    height:250px;
    width:250px;
    margin-top:-10px;
@@ -127,6 +128,7 @@ a {
    margin-bottom:50px;
 }
 .box-del {
+color:grey;
 opacity:0;
 float:right;
 transition:all 0.4s ease;
@@ -150,10 +152,11 @@ padding-left:50px;
     display:block;
     box-shadow:0px 0px 9px #0000004d;
     padding:25px;
-    background-color:white;
+    background:linear-gradient(to right, lightgrey -150%, white);
     transition:all 0.4s ease;
 }
 .item-container:hover .file-item {
+    box-shadow:0px 0px 9px #f90;
     padding-top:30px;
     padding-bottom:50px;
     margin-top:-10px;
@@ -167,6 +170,7 @@ padding-left:50px;
     float:right;
     transition:all 0.4s ease;
     margin-right:10px;
+    color:grey;
     margin-top:7px;
     padding-bottom:50px;
     padding-left:50px;
@@ -292,7 +296,11 @@ input[type=text] {
     border:none;
 }
 input[type=submit] {
-    background-color:#d4d4d4;
+    font-family:Avenir Bold;
+    cursor:pointer;
+    box-shadow:0px 0px 9px #0000004d;
+    background:linear-gradient(#f90,#ffcf00);
+    color:white;
     display:block;
     margin:0 auto;
     width:100px;
