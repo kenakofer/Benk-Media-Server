@@ -35,7 +35,7 @@ function add_file($file, $file_name) {
     $file_upload = 1;
 
     if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
+        echo "<div class='notify'>Sorry, file already exists.</div>";
         $file_upload = 0;
     }
 
@@ -43,12 +43,12 @@ function add_file($file, $file_name) {
     $mime = finfo_file($finfo, $file['tmp_name']);
     if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
         $file_upload = 0;
-        echo "This server only supports audio and video files."; 
+        echo "<div class='notify'>This server only supports audio and video files.</div>"; 
     }
 
     if ($file_upload == 1) {
         if (move_uploaded_file($file["tmp_name"], $target_file)){
-            echo "Your file was uploaded successfully!";
+            echo "<div class='notify'>Your file was uploaded successfully!</div>";
         }
     }
 
@@ -76,7 +76,11 @@ function breadcrumbs(){
         $links = explode('/',rtrim($url,'/'));
         foreach($links as $index => $l){
             $b .= $l;
-            if ($index == 0){
+            if (strpos($b, '?') !== False) {
+                $b = explode('?', $b)[0];
+                $l = explode('?', $l)[0];
+            }
+            if (substr($b, -1) == '/' || $index == 0){
                 $b .= '/';
                 continue;
             }
