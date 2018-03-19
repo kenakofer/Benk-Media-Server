@@ -61,4 +61,28 @@ function removedir($dir){
         rmdir($dir);
     }
 }
+function breadcrumbs(){
+    echo "<a id='bch' class='bc_c' href='/'>
+                <div class='breadcrumb'></div>
+                <div style='margin-top:10px;'>Home</div>
+          </a>";
+    $url = $_SERVER["REQUEST_URI"];
+    if($url != '' && $url != '/'){
+        error_log('ah');
+        $b = '';
+        $links = explode('/',rtrim($url,'/'));
+        foreach($links as $index => $l){
+            $b .= $l;
+            if ($index == 0){
+                $b .= '/';
+                continue;
+            }
+            echo "<a class='bc_c' href='".$b."/'>
+                        <div class='breadcrumb'></div>
+                        <div >".$l."</div>
+                  </a>";
+            $b .= '/';
+        }
+    }
+}
 ?>

@@ -4,12 +4,86 @@ html {
     height:100vh;
     background:radial-gradient(white 30%,#a7a7a7);
 }
+body {
+    margin:50px;
+}
 h1 {
+    font-family:Avenir Heavy;
+    font-size:60px;
+}
+h2 {
     font-family:Avenir Heavy;
 }
 a {
     color:black;
     text-decoration:none;
+}
+
+
+/*NAVIGATION*/
+.breadcrumbs {
+    display:flex;
+    height:10px;
+    background-color:white;
+    align-items:center;
+    width:min-content;
+    width:-moz-min-content;
+}
+.breadcrumb {
+    background-color:white;
+    height:25px;
+    width:25px;
+    float:right;
+    margin:0 auto;
+    transition:all 0.4s ease;
+}
+.bc_c {
+    margin-top:20px;
+    margin-left:75px;
+    display:flex;
+    flex-direction:column;
+}
+#bch {
+    margin-left:-25px;
+}
+#bch .breadcrumb {
+    transform: rotate(45deg);
+    width:50px;
+    height:50px;
+    margin-top:10px;
+}
+#bch:hover .breadcrumb {
+    box-shadow:0px 0px 9px #0000004d;
+    height:75px;
+    width:75px;
+}
+.bc_c:hover .breadcrumb {
+    box-shadow:0px 0px 9px #0000004d;
+    height:50px;
+    width:50px;
+}
+.back {
+    background-color:red;
+    height:50px;
+    width:50px;
+    margin-left:100px;
+    transition:all 0.4s ease;
+}
+.back:hover {
+    width:100px;
+    box-shadow:0px 0px 9px #0000004d;
+}
+.triangle {
+    border-left: 7px solid; 
+    border-top: 7px solid;
+    border-radius:1px;
+    border-color:white;
+    height: 20px;
+    width: 20px;
+    transform: rotate(-45deg);
+    margin-left:33%;
+    position:relative;
+    top:10px;
 }
 
 
@@ -56,8 +130,11 @@ a {
 opacity:0;
 float:right;
 transition:all 0.4s ease;
+margin-top:-5px;
 margin-right:5px;
 font-size:15px;
+padding-bottom:50px;
+padding-left:50px;
 }
 .box-del:hover {
     font-size:30px;
@@ -91,10 +168,11 @@ font-size:15px;
     transition:all 0.4s ease;
     margin-right:10px;
     margin-top:7px;
+    padding-bottom:50px;
+    padding-left:50px;
 }
 .item-del:hover{
     font-size:30px;
-    margin-top:-1px;
 }
 
 
@@ -186,7 +264,7 @@ font-size:15px;
     padding:25px;
     padding-bottom:50px;
 }
-.cnd h1, .um h1 {
+.cnd h2, .um h2 {
     text-align:center;
 }
 .cnd h3, .um h3 {

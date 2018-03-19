@@ -34,7 +34,14 @@
 <body>
     <?php
         if ($dir != "/"){
-        echo "<h1>".basename(__DIR__)."</h1>";
+            echo "<div class='breadcrumbs'>";
+                            breadcrumbs();
+            echo "<a href='..'>
+                    <div class='back'>
+                    <div class='triangle'>
+                </div></div></a>
+            </div>";
+            echo "<h1 style='padding-top:50px;'>".basename(__DIR__)."</h1>";
         }
     ?>
     <div class="dir-container">
@@ -61,7 +68,7 @@
     </div>
     <div class="cnd_container">
         <div class="cnd">
-            <h1>Create New Directory</h1>
+            <h2>Create New Directory</h2>
             <form id="cnd_form">
                 <h3>Directory Name</h3>
                 <input type="text" name="dn"><br>
@@ -80,7 +87,7 @@
     </div>
     <div class="um_container">
         <div class="um">
-            <h1>Upload Media</h1>
+            <h2>Upload Media</h2>
             <form id="um_form" method="post" enctype="multipart/form-data">
                 <h3>File Name</h3>
                 <input type="text" name="fn"><br>
