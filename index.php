@@ -68,11 +68,12 @@
             </ul>
         </div>
         <div class="new-button">
-            <img style='margin-left:7px;margin-top:7px;width:80%;height:80%;' src='/plus.png' />
+            <img style='margin-left:15px;margin-top:15px;width:60%;height:60%;' src='/.Images/plus.png' />
         </div>
     </div>
     <div class="cnd_container">
         <div class="cnd">
+            <div id='cndc' class="close">X</div>
             <h2>Create New Directory</h2>
             <form id="cnd_form">
                 <h3>Directory Name</h3>
@@ -92,6 +93,7 @@
     </div>
     <div class="um_container">
         <div class="um">
+            <div id='umc' class="close">X</div>
             <h2>Upload Media</h2>
             <form id="um_form" method="post" enctype="multipart/form-data">
                 <h3>File Name</h3>
