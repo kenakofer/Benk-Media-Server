@@ -1,26 +1,28 @@
 <?php 
-    $dir=$_SERVER['REQUEST_URI'];
+    $dir = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $functions = $_SERVER['DOCUMENT_ROOT']."/functions.php"; 
+    $del = 1;
     include_once($functions);
+    if (!file_exists($_SERVER['DOCUMENT_ROOT'].$dir.'index.php')) {
+        header('Location: /');
+    }
     if (isset($_GET['dn']) && isset($_GET['d_type'])) {
         create_dir($_GET['dn']);
-        header('Location: .');
+        header('Location: '.$dir);
     }
     if (isset($_POST["fn"])){
-       if ($_FILES['uf']['error'] !== UPLOAD_ERR_OK) {
-            echo $_FILES['uf']['error'];
-       }
        add_file($_FILES["uf"],$_POST["fn"]); 
+       $del = 0;
     }
     if (isset($_GET['itemdel'])) {
         unlink('./'.$_GET['itemdel']);
-        header('Location: .?del=1');
+        header('Location: '.$dir.'?del=1');
     }
     if (isset($_GET['boxdel'])) {
         removedir($_GET['boxdel']);
-        header('Location: .');
+        header('Location: '.$dir);
     }
-    if (isset($_GET['del'])) {
+    if (isset($_GET['del']) && $del == 1) {
         echo "<div class='notify'>Your file was deleted successfully.</div>";
     }
 ?>
