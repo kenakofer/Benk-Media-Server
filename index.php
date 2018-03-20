@@ -25,7 +25,6 @@
     if (isset($_GET['del']) && $del == 1) {
         echo "<div class='notify'>Your file was deleted successfully.</div>";
     }
-    grab_dl('Baby Driver');
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,6 +35,7 @@
     <link rel="stylesheet" href="/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/.Scripts/add.js"></script>
+    <script src="/.Scripts/tor.js"></script>
 </head>
 <body>
     <?php
