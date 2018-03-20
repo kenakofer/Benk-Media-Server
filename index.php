@@ -25,7 +25,7 @@
     if (isset($_GET['del']) && $del == 1) {
         echo "<div class='notify'>Your file was deleted successfully.</div>";
     }
-    grab_dl('Baby driver');
+    grab_dl('Baby Driver');
 ?>
 <!DOCTYPE html>
 <html>

