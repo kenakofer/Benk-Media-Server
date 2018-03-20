@@ -21,11 +21,19 @@ $(document).ready(function(){
         $('.new-button').removeClass('nb-active');
         $('.um_container').addClass('um-active');
     });
+    $('#dnf').on('click', function(e) {
+        $('.new-menu').removeClass('nm-active');
+        $('.new-button').removeClass('nb-active');
+        $('.dnf_container').addClass('dnf-active');
+    });
     $('#cndc').on('click', function(e) {
         $('.cnd_container').removeClass('cnd-active');
     });
     $('#umc').on('click', function(e) {
         $('.um_container').removeClass('um-active');
+    });
+    $('#dnfc').on('click', function(e) {
+        $('.dnf_container').removeClass('dnf-active');
     });
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();

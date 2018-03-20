@@ -67,6 +67,7 @@
         <div class="new-menu">
             <ul>
                 <li id='cnd'> Create new directory </li> 
+                <li id='dnf'> Download new </li>
                 <li id='um'> Upload media </li>
             </ul>
         </div>
@@ -92,6 +93,18 @@
                     <input type="submit" value="Submit">
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="dnf_container">
+        <div class="dnf">
+            <div id='dnfc' class="close">X</div>
+                <h2>Download New Media</h2>
+                <h3>Title</h3>
+                <input type="text" name="dn" id="dn"><br />
+                <button onclick="get_results()" >Search</button> 
+                <div id='result_container'>
+                </div>
+            </div>
         </div>
     </div>
     <div class="um_container">

@@ -207,7 +207,7 @@ padding-left:50px;
     background-color:white;
     box-shadow:0px 0px 9px #0000004d;
     width:200px;
-    height:120px;
+    height:170px;
     position:fixed;
     margin:50px;
     bottom: 125px;
@@ -246,8 +246,8 @@ padding-left:50px;
     pointer-events:all;
 }
 
-/*Create New Directory Window, Upload New Media*/
-.cnd_container, .um_container {
+/*Create New Directory Window, Download Media, Upload New Media*/
+.cnd_container, .um_container, .dnf_container {
     position:absolute;
     top:0;
     left:0;
@@ -258,7 +258,7 @@ padding-left:50px;
     opacity:0;
     pointer-events:none;
 }
-.cnd-active, .um-active {
+.cnd-active, .um-active, .dnf-active {
     opacity:1;
     pointer-events:auto;
 }
@@ -272,11 +272,51 @@ padding-left:50px;
     padding:25px;
     padding-bottom:50px;
 }
-.cnd h2, .um h2 {
+.cnd h2, .um h2{
     text-align:center;
 }
-.cnd h3, .um h3 {
+.cnd h3, .um h3{
     margin-bottom:8px;
+}
+.dnf {
+    background-color:white;
+    height:100vh;
+    width:100vw;
+    text-align:center;
+    overflow-y:auto;
+}
+.dnf h2 {
+    padding-top:50px;
+}
+.dnf h3 {
+    text-align:left;
+    width:600px;
+    margin:0 auto;
+    margin-bottom:8px;
+}
+#dnfc {
+    right:20px;
+    top:20px;
+}
+#dn {
+    width:600px;
+}
+.result {
+    width:80%;
+    height:auto;
+    background-color:white;
+    box-shadow:0px 0px 9px #0000004d;
+    margin:0 auto;
+    margin-top:50px;
+    padding:25px;
+    text-align:left;
+    cursor:pointer;
+    transition:all 0.4s ease;
+}
+.result:hover {
+    padding-top:40px;
+    padding-bottom:40px;
+    box-shadow:0px 0px 9px #f90;
 }
 .close{
     transition:all 0.4s ease;
@@ -314,7 +354,7 @@ input[type=text] {
     padding:10px;
     border:none;
 }
-input[type=submit] {
+input[type=submit], button {
     font-family:Avenir Bold;
     cursor:pointer;
     box-shadow:0px 0px 9px #0000004d;
@@ -327,10 +367,17 @@ input[type=submit] {
     border:none;
     transition:all 0.4s ease;
 }
-input[type=submit]:hover {
+input[type=submit]:hover, button:hover {
     margin-top:-2px;
     width:110px;
     height:60px;
+}
+button {
+    margin:0 auto;
+    margin-top:30px;
+}
+button:hover {
+    margin-top:28px;
 }
 .notify {
     color:white;
