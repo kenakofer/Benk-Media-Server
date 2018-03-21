@@ -27,7 +27,15 @@ function grab_dl($title, $site){
         if($links->length > 0){
             $choice = $links[0]->nodeValue;
         } else { echo 'No results found!'; }
-        exec('sudo aria2c -d ..'.$site.'/ --seed-time=0 '.$choice);
+        $title = str_replace(" ",".",$title);
+        $file = fopen("../.Partial/$title.benk", 'w');
+        fclose($file);
+        mkdir("../.Partial/$title");
+        //exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 '.$choice." &> ../.Partial/$title.benk");
+        exec("sudo transmission-cli -w ../.Partial/$title -u 0 \"$choice\" > ../.Partial/$title.benk");  
+        //exec("chown -R www-data:www-data ../.Partial/");
+        //rename("../.Partial/$title", "../$site");
+        //unlink("../.Partial/$title.benk");
     }
 }
 

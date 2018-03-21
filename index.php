@@ -67,14 +67,44 @@
         <div class="new-menu">
             <ul>
                 <li id='cnd'> Create new directory </li> 
-                <li id='dnf'> Download new </li>
-                <li id='um'> Upload media </li>
+                <?php if ($dir != "/"){
+                    echo "<li id='dnf'> Download new </li>
+                    <li id='um'> Upload media </li>";
+                }?>
             </ul>
         </div>
         <div class="new-button">
             <img style='margin-left:15px;margin-top:15px;width:60%;height:60%;' src='/.Images/plus.png' />
         </div>
     </div>
+    <?php if ($dir != "/"){ echo "
+    <div class=\"dnf_container\">
+        <div class=\"dnf\">
+            <div id='dnfc' class=\"close\">X</div>
+                <h2>Download New Media</h2>
+                <h3>Title</h3>
+                <input type=\"text\" name=\"dn\" id=\"dn\"><br />
+                <button onclick=\"get_results()\" >Search</button> 
+                <div id='result_container'>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=\"um_container\">
+        <div class=\"um\">
+            <div id='umc' class=\"close\">X</div>
+            <h2>Upload Media</h2>
+            <form id=\"um_form\" method=\"post\" enctype=\"multipart/form-data\">
+                <h3>File Name</h3>
+                <input type=\"text\" name=\"fn\"><br>
+                <h3>Upload File</h3>
+                <div class=\"fsubmit\">
+                    <input type=\"file\" name=\"uf\">
+                </div>
+                <input type=\"submit\" value=\"Submit\">
+            </form>
+        </div>
+    </div>";}?>
     <div class="cnd_container">
         <div class="cnd">
             <div id='cndc' class="close">X</div>
@@ -92,33 +122,6 @@
                     </select> <br /> 
                     <input type="submit" value="Submit">
                 </div>
-            </form>
-        </div>
-    </div>
-    <div class="dnf_container">
-        <div class="dnf">
-            <div id='dnfc' class="close">X</div>
-                <h2>Download New Media</h2>
-                <h3>Title</h3>
-                <input type="text" name="dn" id="dn"><br />
-                <button onclick="get_results()" >Search</button> 
-                <div id='result_container'>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="um_container">
-        <div class="um">
-            <div id='umc' class="close">X</div>
-            <h2>Upload Media</h2>
-            <form id="um_form" method="post" enctype="multipart/form-data">
-                <h3>File Name</h3>
-                <input type="text" name="fn"><br>
-                <h3>Upload File</h3>
-                <div class="fsubmit">
-                    <input type="file" name="uf">
-                </div>
-                <input type="submit" value="Submit">
             </form>
         </div>
     </div>
