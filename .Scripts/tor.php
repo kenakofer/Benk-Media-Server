@@ -28,15 +28,26 @@ function grab_dl($title, $site){
             $choice = $links[0]->nodeValue;
         } else { echo 'No results found!'; }
         $title = str_replace(" ",".",$title);
-        $file = fopen("../.Partial/$title.benk", 'w');
-        fclose($file);
+        //$file = fopen("../.Partial/$title.benk", 'w');
+        //fclose($file);
         mkdir("../.Partial/$title");
-        exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 '.$choice." &> ../.Partial/$title.benk");
+        exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 '.$choice." & echo $! >> ../.Partial/$title.benk");
         exec("sudo chown -R www-data:www-data ../.Partial/$title");
         remove_non_av("../.Partial/$title");
+        copy_index("../.Partial/$title");
         exec("mv ../.Partial/$title ..$site");
         unlink("../.Partial/$title.benk");
     } 
+}
+function copy_index($dir){
+    copy("../index.php", "$dir/index.php");
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if($object != '.' && $object != '..' && is_dir("$dir/$object")){
+                copy_index("$dir/$object");
+            }
+        }
+    reset($objects);
 }
 function remove_non_av($dir){
     if(is_dir($dir)){

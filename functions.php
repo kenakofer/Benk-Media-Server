@@ -86,7 +86,7 @@ function breadcrumbs(){
             }
             echo "<a class='bc_c' href='".$b."/'>
                         <div class='breadcrumb'></div>
-                        <div >".$l."</div>
+                        <div class='breadcrumb-title'>".$l."</div>
                   </a>";
             $b .= '/';
         }
