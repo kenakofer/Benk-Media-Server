@@ -5,9 +5,9 @@ To begin:
 
 aria2 must be installed
 
-www-data must have permssion to run aria2c and chown as sudo
+www-data must have permssion to run aria2c as sudo
 
-scan.php must run in the background (php benk-media-server/.Scripts/scan.php &)
+scan.php must run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
 
 And make sure to chown -R www-data:www-data and chmod -R 755 the install location!
 
@@ -15,17 +15,18 @@ And make sure to chown -R www-data:www-data and chmod -R 755 the install locatio
 
 Goals:
 
-Add a dashboard page for downloads, MAYBE report progress if I can figure out how to do that
 
-Play videos with video.js                          
+Play videos with video.js   
 
-Support more download hosts
-                           
-Allow users to upload multiple files at a time
+Report progress of downloads on dashboard   
+
+General UI improvements
 
 Allow users to delete multiple files at a time
 
 Allow users to transfer files to a directory (drag and drop?)
+
+Allow users to upload multiple files at a time
 
 Fix mobile styles
 
