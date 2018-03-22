@@ -1,4 +1,5 @@
 function cancel(torrent){
+//Cancels a downloading torrent
     $.ajax({
         url : '.Scripts/dashboard.php',
         data: {torrent_php: torrent},

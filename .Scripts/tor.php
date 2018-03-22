@@ -1,5 +1,6 @@
 <?php
 function get_results($site, $query){
+//Gets search results from one of two download providers by scraping their webpages
     error_log($site);
     if ($site == 'tc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.$query.'/0/99/0');
@@ -29,6 +30,7 @@ function get_results($site, $query){
 }
 
 function grab_dl($tor_site, $title, $site){
+//Initiates download from one of two providers by scraping their HTML
     $home = '/home/www-data';
     if ($tor_site == 'tc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.$title.'/0/99/0');
@@ -49,19 +51,18 @@ function grab_dl($tor_site, $title, $site){
         if($links->length > 0){
             $choice = $links[0]->nodeValue;
         } else { echo 'No results found!'; }
+
+        //Set up directory so scan.php can read it correctly
         $title = str_replace(" ",".",$title);
         mkdir("../.Partial/$title");
         exec("touch ../.Partial/$title.in_progress");
         exec("echo $site >> ../.Partial/$title.done");
         exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 "'.$choice."\" & echo $! >> ../.Partial/$title.done");
         unlink("../.Partial/$title.in_progress");
-        //exec("sudo chown -R www-data:www-data ../.Partial/$title");
-        //remove_non_av("$../.Partial/$title");
-        //copy_index("$../.Partial/$title");
-        //exec("mv $../.Partial/$title ..$site");
     } 
 }
 
+//Allow these functions to be called from tor.js
 if (isset($_POST['search_q'])){
     echo get_results($_POST['site_q'], $_POST['search_q']);
 }

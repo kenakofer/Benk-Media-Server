@@ -1,4 +1,5 @@
 function get_results(){
+//Checks active download provider and then grabs results from tor.php
     document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
     var input = document.getElementById('dn').value;
     var site = $('.t-choice-active').attr('id');
@@ -14,7 +15,7 @@ function get_results(){
 }
 
 function grab_dl(title){
-    console.log(window.location.pathname);
+//Initiates download of chosen file
     var tor_site = $('.t-choice-active').attr('id');
     $.ajax({
         url : '/.Scripts/tor.php',

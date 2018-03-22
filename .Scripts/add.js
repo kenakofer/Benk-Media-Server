@@ -1,4 +1,5 @@
 $(document).ready(function(){
+//Click detection for the UI
     var bs = 0;
     $("#dn").keyup(function(event) {
         if(event.keyCode == 13){
