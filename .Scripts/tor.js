@@ -1,9 +1,11 @@
 function get_results(){
     document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
     var input = document.getElementById('dn').value;
+    var site = $('.t-choice-active').attr('id');
+    console.log(site);
     $.ajax({
         url : '/.Scripts/tor.php',
-        data: {search_q: input},
+        data: {site_q: site, search_q: input},
         type:"POST",
         context: document.body
     }).done(function(data) {
@@ -13,9 +15,10 @@ function get_results(){
 
 function grab_dl(title){
     console.log(window.location.pathname);
+    var tor_site = $('.t-choice-active').attr('id');
     $.ajax({
         url : '/.Scripts/tor.php',
-        data: {grab_q: title, grab_l: window.location.pathname},
+        data: {tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
         type:"POST",
         context: document.body
     });

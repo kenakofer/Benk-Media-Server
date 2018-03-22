@@ -40,6 +40,14 @@ $(document).ready(function(){
     $('#dnfc').on('click', function(e) {
         $('.dnf_container').removeClass('dnf-active');
     });
+    $('#tc1').on('click', function(){
+        $(this).addClass('t-choice-active');
+        $('#tc2').removeClass('t-choice-active');
+    });
+    $('#tc2').on('click', function(){
+        $(this).addClass('t-choice-active');
+        $('#tc1').removeClass('t-choice-active');
+    });
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();
     });

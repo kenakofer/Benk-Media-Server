@@ -336,6 +336,7 @@ padding-left:50px;
     background-repeat:no-repeat;
     background-position-y:center;
     box-shadow:0px 0px 9px #0000004d;
+    cursor:pointer;
     margin-right:25px;
     transition:all 0.4s ease;
 }
@@ -346,7 +347,7 @@ padding-left:50px;
     margin-top:-10px;
 }
 .t-choice-active {
-    background:linear-gradient(#f90,#ffcf00);
+    box-shadow:0px 0px 9px #f90;
 }
 #tc1 {
     background-image:url("/.Images/tpb.png");

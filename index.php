@@ -82,7 +82,7 @@
         <div class=\"dnf\">
             <div id='dnfc' class=\"close\">X</div>
             <div class='t-chooser'>
-                <div id='tc1' class='t-choice'></div>
+                <div id='tc1' class='t-choice t-choice-active'></div>
                 <div id='tc2' class='t-choice'></div>
             </div>
             <h2>Download New Media</h2>

@@ -1,5 +1,4 @@
 function cancel(torrent){
-    console.log(torrent);
     $.ajax({
         url : '.Scripts/dashboard.php',
         data: {torrent_php: torrent},
