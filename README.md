@@ -3,9 +3,9 @@ Media server webapp built on LAMP that stores, downloads, and allows the upload 
 
 To begin:
 
-transmission-cli must be installed
+aria2 must be installed
 
-www-data must have permssion to run transmission-cli as sudo
+www-data must have permssion to run aria2c and chown as sudo
 
 scan.php must run in the background (php benk-media-server/.Scripts/scan.php &)
 
@@ -15,16 +15,18 @@ And make sure to chown -R www-data:www-data and chmod -R 755 the install locatio
 
 Goals:
 
-Play media on the server (It already does this, but I would like to make a better player, at least for music;
-                           currently, it only uses the default audio/video player included in the browser. Furthermore,
-                           a lot of browser players don't support stuff like .mkv, so maybe use video.js?)
-                           
-Download manager
+Add a dashboard page for downloads, MAYBE report progress if I can figure out how to do that
+
+Play videos with video.js                          
+
+Support more download hosts
                            
 Allow users to upload multiple files at a time
 
 Allow users to delete multiple files at a time
 
-Allow users to transfer files to a directory
+Allow users to transfer files to a directory (drag and drop?)
+
+Fix mobile styles
 
 Possibly create a Desktop app to go with it? (Probs not)
