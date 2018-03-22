@@ -14,7 +14,7 @@ function get_results($query){
             }
         } else { echo 'No results found!'; }
         echo $inject;
-    }
+    } else {echo "<div style='margin-top:150px;'>Could not load download list: website not responding</div>";}
 }
 
 function grab_dl($title, $site){
@@ -31,11 +31,28 @@ function grab_dl($title, $site){
         $file = fopen("../.Partial/$title.benk", 'w');
         fclose($file);
         mkdir("../.Partial/$title");
-        //exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 '.$choice." &> ../.Partial/$title.benk");
-        exec("sudo transmission-cli -w ../.Partial/$title -u 0 \"$choice\" > ../.Partial/$title.benk");  
-        //exec("chown -R www-data:www-data ../.Partial/");
-        //rename("../.Partial/$title", "../$site");
-        //unlink("../.Partial/$title.benk");
+        exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 '.$choice." &> ../.Partial/$title.benk");
+        exec("sudo chown -R www-data:www-data ../.Partial/$title");
+        remove_non_av("../.Partial/$title");
+        exec("mv ../.Partial/$title ..$site");
+        unlink("../.Partial/$title.benk");
+    } 
+}
+function remove_non_av($dir){
+    if(is_dir($dir)){
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != '.' && $object != '..' && $object != 'index.php'){
+                if (is_file("$dir/".$object)){
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mime = finfo_file($finfo, "$dir/".$object);
+                    if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
+                        unlink($dir.'/'.$object);
+                    }
+                } else { remove_non_av($dir.'/'.$object); }
+            }
+            reset($objects);
+        }
     }
 }
 

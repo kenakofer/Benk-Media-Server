@@ -1,5 +1,10 @@
 $(document).ready(function(){
     var bs = 0;
+    $("#dn").keyup(function(event) {
+        if(event.keyCode == 13){
+            $("#dnb").click();
+        }
+    });
     $('.new-button').on('click', function(){
         if (bs == 0) {
                 $('.new-menu').addClass('nm-active');

@@ -9,7 +9,6 @@ while (True){
             if (!strpos($data, '%') !== false && $data != ""){
                exec("pkill -f ".substr($file, 0, -5)); 
             }
-            echo $data;
             fclose($fp); 
         }
     }

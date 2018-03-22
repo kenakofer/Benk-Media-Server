@@ -1,4 +1,5 @@
 function get_results(){
+    document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
     var input = document.getElementById('dn').value;
     $.ajax({
         url : '/.Scripts/tor.php',
@@ -6,7 +7,7 @@ function get_results(){
         type:"POST",
         context: document.body
     }).done(function(data) {
-        document.getElementById('result_container').innerHTML += data;
+        document.getElementById('result_container').innerHTML = data;
     });
 }
 
