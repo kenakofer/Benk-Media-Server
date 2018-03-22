@@ -8,10 +8,12 @@ $(document).ready(function(){
     });
     $('.new-button').on('click', function(){
         if (bs == 0) {
+                $('.dl-button').addClass('nb-active-dl');
                 $('.new-menu').addClass('nm-active');
                 $(this).addClass('nb-active');
                 bs = 1;
         } else {
+                $('.dl-button').removeClass('nb-active-dl');
                 $('.new-menu').removeClass('nm-active');
                 $(this).removeClass('nb-active');
                 bs = 0;
@@ -53,6 +55,7 @@ $(document).ready(function(){
         e.stopPropagation();
     });
     $(document).on('click', function(e){
+        $('.dl-button').removeClass('nb-active-dl');
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
         bs = 0;

@@ -204,7 +204,10 @@ padding-left:50px;
 
 
 /*ADD NEW BUTTON*/
-.new-button {
+.button-container {
+    display:flex;
+}
+.new-button, .dl-button {
     width:75px;
     height:75px;
     box-shadow:0px 0px 9px #0000004d;
@@ -215,6 +218,22 @@ padding-left:50px;
     bottom:0;
     right:0;
     transition:all 0.4s ease;
+}
+.dl-button {
+    right:100px;
+    width:40px;
+    background:linear-gradient(#f90,#ffcf00);
+    text-align:center;
+    height:40px;
+    bottom:17px;
+    opacity:1;
+}
+.dl-button:hover {
+    height:50px;
+    width:50px;
+    right:95px;
+    bottom:10px;
+    pointer-events:all;
 }
 .new-button:hover {
     width:90px;
@@ -260,6 +279,10 @@ padding-left:50px;
     width:75px !important;
     height:75px !important;
     margin:50px !important;
+}
+.nb-active-dl {
+    opacity:0;
+    pointer-events:none;
 }
 .nm-active {
     opacity:1;

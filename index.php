@@ -73,6 +73,9 @@
                 }?>
             </ul>
         </div>
+        <a href="/downloads.php" class="dl-button">
+            <img style='width:60%;margin-top:8px;' src='/.Images/dl.svg' />
+        </a>
         <div class="new-button">
             <img style='margin-left:15px;margin-top:15px;width:60%;height:60%;' src='/.Images/plus.png' />
         </div>
