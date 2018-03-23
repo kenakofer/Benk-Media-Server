@@ -18,12 +18,15 @@ function list_files() {
         echo "<h3 style='text-align:center;'>There's nothing here! Why not add some files?</h3>";
         return;
     }
+    $vid_id = 0;
     foreach($files as $file) {
         if (is_file($file))
+        $vid_id += 1;
         {
-            echo "<div class='item-container'>
+            echo "<div id='vid$vid_id' class='video-container'></div>
+                    <div class='item-container'>
                     <a class='item-del' href='?itemdel=".$file."'>X</a>
-                    <a class='file-item' href='./".$file."'>".$file."</a>
+                    <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file."</div>
                   </div>";
         }
     }

@@ -6,6 +6,10 @@ $(document).ready(function(){
             $("#dnb").click();
         }
     });
+    $('.video-container').on('click', function(){
+        $(this).removeClass('video-container-active');
+        $(this).html("");
+    });
     $('.new-button').on('click', function(){
         if (bs == 0) {
                 $('.dl-button').addClass('nb-active-dl');
