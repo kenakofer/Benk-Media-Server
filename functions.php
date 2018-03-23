@@ -78,7 +78,9 @@ function removedir($dir){
 function breadcrumbs(){
 //Generate a breadcrumb naviagtion trail
     echo "<a id='bch' class='bc_c' href='/'>
-                <div class='breadcrumb'></div>
+                <div class='breadcrumb'>
+                    <img style='width:70%;transform:rotate(-45deg);margin-top:6px;margin-left:5px;' src='/.Images/home.svg'></img>
+                </div>
                 <div style='margin-top:10px;'>Home</div>
           </a>";
     //Get the current URI as a string and split it by /, so you get each page individually

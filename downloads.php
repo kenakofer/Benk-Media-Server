@@ -12,6 +12,11 @@ include_once(".Scripts/dashboard.php");
     <script src=".Scripts/dashboard.js"></script>
 </head>
 <body>
+    <a id="bch" class="bc_c" href="/">
+        <div id='dbc' class="breadcrumb">
+            <img style="width:70%;transform:rotate(-45deg);margin-top:6px;margin-left:5px;"src="/.Images/home.svg">
+        </div>
+    </a>
     <h1>Downloads</h1>
     <?php get_dls(); ?>
 </body>

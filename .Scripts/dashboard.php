@@ -12,7 +12,7 @@ function get_dls(){
         }
     }
     if ($output == ""){
-        $output = "<p style='text-align:center;margin-top:50px;'>There are no active downloads.</p>";
+        $output = "<p style='text-align:center;margin-top:20vh;'>There are no active downloads.</p>";
     }
     echo $output;
 }
