@@ -21,8 +21,8 @@ function list_files() {
     $vid_id = 0;
     foreach($files as $file) {
         if (is_file($file))
-        $vid_id += 1;
         {
+            $vid_id += 1;
             echo "<div id='vid$vid_id' class='video-container'></div>
                     <div class='item-container'>
                     <a class='item-del' href='?itemdel=".$file."'>X</a>

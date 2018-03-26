@@ -29,21 +29,30 @@ function remove_non_av($dir){
         }
     }
 }
-
+exec('aria2c --enable-rpc --rpc-allow-origin-all -c -D');
+include 'Aria2.php';
+$aria2 = new Aria2();
 while(True){
 //Runs continuously in background listening for download events
+    error_log(print_r($aria2->tellActive()));
     $objects = scandir("../.Partial");
     foreach ($objects as $object) {
         if($object != '.' && $object != '..' && is_dir("../.Partial/$object")){
+	    if (file_exists("../.Partial/$object.start")){
+		$magnet = exec("cat ../.Partial/$object.start");
+		error_log($magnet);
+		error_log(print_r($aria2->addUri([$magnet],['dir'=>"../.Partial/$object"]))); 
+		unlink("../.Partial/$object.start");
+	    }
             //If torrent has finished downloading, chown the directory to www-data, run the above functions, and move it to the right location
-            if (!file_exists("../.Partial/$object.in_progress")){
-                $to_path = exec("head -1 ../.Partial/$object.done");
-                exec('chown -R www-data:www-data ../.Partial/'.$object);
-                remove_non_av("../.Partial/$object");
-                copy_index("../.Partial/$object");
-                exec("mv ../.Partial/$object ..$to_path");
-                unlink("../.Partial/$object.done");
-            }
+           // if (!file_exists("../.Partial/$object.in_progress")){
+           //     $to_path = exec("head -1 ../.Partial/$object.done");
+           //     exec('chown -R www-data:www-data ../.Partial/'.$object);
+           //     remove_non_av("../.Partial/$object");
+           //     copy_index("../.Partial/$object");
+           //     exec("mv ../.Partial/$object ..$to_path");
+           //     unlink("../.Partial/$object.done");
+           // }
             //If the file is set to be canceled, get the PID of the running aria2 process and kill it, then clean up the directory
             if (file_exists("../.Partial/$object.cancel")){
                 $pid = exec("tail -1 ../.Partial/$object.done");

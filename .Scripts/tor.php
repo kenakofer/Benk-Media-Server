@@ -55,10 +55,10 @@ function grab_dl($tor_site, $title, $site){
         //Set up directory so scan.php can read it correctly
         $title = str_replace(" ",".",$title);
         mkdir("../.Partial/$title");
-        exec("touch ../.Partial/$title.in_progress");
-        exec("echo $site >> ../.Partial/$title.done");
-        exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 "'.$choice."\" & echo $! >> ../.Partial/$title.done");
-        unlink("../.Partial/$title.in_progress");
+        exec("echo $choice >> ../.Partial/$title.start");
+        //exec("echo $site >> ../.Partial/$title.done");
+        //exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 "'.$choice."\" & echo $! >> ../.Partial/$title.done");
+        //unlink("../.Partial/$title.in_progress");
     } 
 }
 
