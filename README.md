@@ -3,11 +3,11 @@ Media server webapp built on LAMP that stores, downloads, and allows the upload 
 
 To begin:
 
-aria2 must be installed
+aria2 and php-xml must be installed
 
-www-data must have permssion to run aria2c as sudo
+scan.php must be given the correct full path to run Aria2 and run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
 
-scan.php must run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
+To allow upload of bigger files, edit php.ini
 
 And make sure to chown -R www-data:www-data and chmod -R 755 the install location!
 
