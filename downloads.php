@@ -1,6 +1,3 @@
-<?php
-include_once(".Scripts/dashboard.php");
-?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,7 +15,7 @@ include_once(".Scripts/dashboard.php");
         </div>
     </a>
     <h1>Downloads</h1>
-    <?php get_dls(); ?>
+    <div id='dl_container'></div>
 </body>
 </html>
     

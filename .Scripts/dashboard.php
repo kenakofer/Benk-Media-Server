@@ -2,14 +2,19 @@
 function get_dls(){
 //Gets a list of all active downloads by checking for their directories in .Partial
     $output = "";
-    $objects = scandir(".Partial");
-    foreach ($objects as $object) {
-        if($object != '.' && $object != '..' && is_dir(".Partial/$object")){
-            $output = $output."<div id=$object class='partial-listing'>
-                                <div class='close' onclick='cancel(this.parentNode.id)'>X</div>
-                                <div class='loading'></div>
-                                ".$object."</div>"; 
-        }
+    $dls_in_progress = explode("\n", file_get_contents('../.Partial/downloads'));
+    foreach($dls_in_progress as $line){
+	if ($line == ""){
+	    continue;
+	}
+
+	$line = explode("|", $line);
+        $name = substr($line[0], strrpos($line[0], '/') + 1);
+	$output = $output."<div class='partial-listing'>
+				<div class='close' onclick=\"cancel('$line[1]','$name')\">X</div>
+				<div class='loading'></div>
+				$name
+				<p style='float:right;margin-right:30px;margin-top:2px;'>".$line[2]."</div>";
     }
     if ($output == ""){
         $output = "<p style='text-align:center;margin-top:20vh;'>There are no active downloads.</p>";
@@ -17,15 +22,17 @@ function get_dls(){
     echo $output;
 }
 
-function cancel($torrent){
+function cancel($gid, $name){
     //Cancels a torrent by creating a file that is read by scan.php
-    $file = fopen("../.Partial/$torrent.cancel", 'w');
+    $file = fopen("../.Partial/$name.$gid", 'w');
     fclose($file);
 }
 
-if (isset($_POST['torrent_php'])){
+if (isset($_POST['gid_post'])){
     //Allows the cancel function to be called from JS
-    cancel($_POST['torrent_php']);
-    sleep(10);
+    cancel($_POST['gid_post'], $_POST['name_post']);
+    sleep(5);
+} else {
+    get_dls();
 }
 ?>

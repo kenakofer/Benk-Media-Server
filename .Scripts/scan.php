@@ -29,43 +29,71 @@ function remove_non_av($dir){
         }
     }
 }
-exec('aria2c --enable-rpc --rpc-allow-origin-all -c -D');
+
+exec('aria2c --enable-rpc --rpc-allow-origin-all -D');
+$locations = [];
 include 'Aria2.php';
 $aria2 = new Aria2();
+
 while(True){
+$aria2->purgeDownloadResult();
 //Runs continuously in background listening for download events
-    error_log(print_r($aria2->tellActive()));
+    $in_progress = "";
+
+    foreach ($aria2->tellActive(["status","gid","dir","completedLength","totalLength"])['result'] as $result){
+        $gid = $result['gid'];
+        $dir = $result['dir'];
+
+	if (file_exists("$dir.start")){
+	    $file_contents = file_get_contents("$dir.start");
+	    $file_contents = explode("\n", $file_contents);
+            $location = $file_contents[1];
+            if(!array_key_exists($location, $locations)){
+                $locations[$gid] = $location;
+            } 
+            unlink("$dir.start");
+        }
+
+        if (file_exists("$dir.$gid")){
+            $aria2->remove($gid);
+            exec("rm -r $dir");
+            unset($locations[$gid]);
+            unlink("$dir.$gid");
+            continue;
+        }
+	    
+        $amount_done = $result['completedLength'];
+        $total = $result['totalLength'];
+	$percent = round($amount_done / $total, 2) * 100;
+
+	if ($percent == 100){
+	   $aria2->remove($gid); 
+	   exec("chown -R www-data:www-data $dir");
+	   copy_index($dir);
+	   remove_non_av($dir);
+           exec("mv $dir ..".$locations[$gid]);
+           unset($locations[$gid]);
+	}
+	$in_progress = $in_progress."$dir|$gid|$percent\n";
+    }
+
+    exec("echo '$in_progress' > ../.Partial/downloads");
     $objects = scandir("../.Partial");
+
     foreach ($objects as $object) {
         if($object != '.' && $object != '..' && is_dir("../.Partial/$object")){
 	    if (file_exists("../.Partial/$object.start")){
-		$magnet = exec("cat ../.Partial/$object.start");
-		error_log($magnet);
-		error_log(print_r($aria2->addUri([$magnet],['dir'=>"../.Partial/$object"]))); 
-		unlink("../.Partial/$object.start");
+		$file_contents = file_get_contents("../.Partial/$object.start");
+		$file_contents = explode("\n", $file_contents);
+		$aria2->addUri(
+			[$file_contents[0]],
+			['dir'=>"/var/www/bryceyoder.com/media_public_html/.Partial/$object",
+			'seed-time'=>0]);
 	    }
-            //If torrent has finished downloading, chown the directory to www-data, run the above functions, and move it to the right location
-           // if (!file_exists("../.Partial/$object.in_progress")){
-           //     $to_path = exec("head -1 ../.Partial/$object.done");
-           //     exec('chown -R www-data:www-data ../.Partial/'.$object);
-           //     remove_non_av("../.Partial/$object");
-           //     copy_index("../.Partial/$object");
-           //     exec("mv ../.Partial/$object ..$to_path");
-           //     unlink("../.Partial/$object.done");
-           // }
-            //If the file is set to be canceled, get the PID of the running aria2 process and kill it, then clean up the directory
-            if (file_exists("../.Partial/$object.cancel")){
-                $pid = exec("tail -1 ../.Partial/$object.done");
-                $pid = $pid + 1;
-                exec("kill $pid");
-                unlink("../.Partial/$object.done"); 
-                unlink("../.Partial/$object.cancel"); 
-                unlink("../.Partial/$object.in_progress"); 
-                exec("rm -r ../.Partial/$object");
-            }
+
         }
     }
-    sleep(10);
+    sleep(5);
 }
 
 ?>
