@@ -16,18 +16,14 @@ And make sure to chown -R www-data:www-data and chmod -R 755 the install locatio
 Goals:
 
 
-Play videos with video.js   
+Improve music player (album art, skip buttons?)
 
-Report progress of downloads on dashboard   
+Fix mobile styles
 
-General UI improvements
+Upload files in background
 
 Allow users to delete multiple files at a time
 
 Allow users to transfer files to a directory (drag and drop?)
-
-Allow users to upload multiple files at a time
-
-Fix mobile styles
 
 Possibly create a Desktop app to go with it? (Probs not)
