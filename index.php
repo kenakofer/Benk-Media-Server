@@ -55,7 +55,7 @@ session_start();
                 </div></div></a>
             </div>";
             echo "<h1 style='padding-top:50px;'>".basename(__DIR__)."</h1>";
-        }
+        } else {echo "<img class='logo' src='/.Images/benk_logo.svg' />";}
         
     ?>
     <div class="dir-container">
