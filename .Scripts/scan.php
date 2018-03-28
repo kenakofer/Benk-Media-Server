@@ -73,6 +73,7 @@ $aria2->purgeDownloadResult();
 	   remove_non_av($dir);
            exec("mv $dir ..".$locations[$gid]);
            unset($locations[$gid]);
+           continue;
 	}
 	$in_progress = $in_progress."$dir|$gid|$percent\n";
     }
@@ -93,7 +94,7 @@ $aria2->purgeDownloadResult();
 
         }
     }
-    sleep(5);
+    sleep(2);
 }
 
 ?>

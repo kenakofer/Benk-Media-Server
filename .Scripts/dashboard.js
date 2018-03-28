@@ -4,6 +4,8 @@ setInterval(refresh, 5000);
 });
 function cancel(gid, name){
 //Cancels a downloading torrent
+    console.log(gid);
+    $('#'+gid).addClass("canceled");
     $.ajax({
         url : '.Scripts/dashboard.php',
         data: {gid_post: gid, name_post: name},

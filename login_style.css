@@ -1,0 +1,126 @@
+body {
+overflow-y:hidden;
+}
+#logo {
+    height:325px;
+    margin-top:-75px;
+    opacity:0;
+    animation: fade-in 0.5s ease 2.25s forwards;
+}
+#logo-container {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin-top:40vh;
+    animation: logo-container 0.5s ease 2.25s forwards;
+}
+#play-container {
+     background-color:white;
+     height:150px;
+     width:150px;
+     animation: play-container 1.25s ease 1s forwards, play-container-2 0.5s ease 2.25s forwards;
+ }
+ #play {
+     background-color:#f90;
+     width:100px;
+     height:100px;
+     transition:all 0.4s ease;
+     clip-path:polygon(75% 50%, 0 0, 0 100%);
+     animation: play 1.25s ease 1s forwards;
+     margin-left:40px;
+     position:relative;
+     top:25px;
+ }
+ #play-bar {
+     position:absolute;
+     background-color:white;
+     width:25px;
+     height:0px;
+     transform:rotate(-45deg);
+     margin-top:-55px;
+     margin-left:14px;
+     animation: play-bar 0.5s ease 2.15s forwards;
+ }
+#login-container {
+    text-align:center;
+    animation:fade-in 1s ease 3.5s forwards;
+    opacity:0;
+}
+input[type=password]{
+    border:none;
+    padding:20px;
+    width:800px;
+    background-color:lightgrey;
+    text-align:center;
+}
+input[type=submit]{
+    font-family:Avenir Bold;
+    box-shadow:0px 0px 9px #0000004d;
+    cursor:pointer;
+    background:linear-gradient(#f90,#ffcf00);
+    color:white;
+    display:block;
+    margin:0 auto;
+    margin-top:50px;
+    width:100px;
+    height:50px;
+    border:none;
+    transition:all 0.4s ease;
+}
+input[type=submit]:hover{
+    margin-top:48px;
+    width:110px;
+    height:60px;
+}
+
+
+@keyframes play-bar {
+     from {height:0px;margin-top:118px;margin-left:88px;}
+     to {height:200px;}
+ }
+ @keyframes logo-container {
+    from {margin-top:40vh;}
+    to {margin-top:10vh;}
+ }
+ @keyframes play-container {
+     0% {width:150px;height:150px;}
+     20% {width:160px;height:160px;background-color:white;margin-left:0px;}
+     60% {width:125px;height:125px;background-color:#ffc369;margin-left:-5px;transform:none;}
+     100%{width:175px;height:175px;background-color:#f90;margin-left:-15px;transform:rotate(45deg);}
+ }
+ @keyframes play-container-2 {
+     from {margin-top:0vh;}
+     to {margin-top:0vh;}
+ }
+ @keyframes fade-in {
+    from{opacity:0;}
+    to {opacity:1;}
+ }
+@keyframes play {
+     0% {width:100px;height:100px;}
+     20% {width:110px;
+         height:110px;
+         top:23px;
+         margin-left:43px;
+         }
+     60% {width:75px;
+         height:75px;
+         background-color:#f90;
+         transform:none;
+         top:23px;
+         margin-left:38px;
+         }
+     100%{
+         width:115px;
+         height:115px;
+         background-color:white;
+         transform:rotate(-45deg);
+         top:10px;
+         margin-left:55px;
+     }
+ }
+@font-face {
+    font-family: Avenir Bold;
+    src: url(.Fonts/AvenirNextLTPro-Bold.otf);
+}

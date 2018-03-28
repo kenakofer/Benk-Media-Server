@@ -37,29 +37,38 @@ function create_dir($dir_name) {
     copy('./index.php', './'.$dir_name.'/index.php');
 }
 
-function add_file($file, $file_name) {
+function add_file($files, $file_name) {
 //Upload a file via the browser
-    $imageFileType = strtolower(pathinfo($file["name"],PATHINFO_EXTENSION));
-    $target_file = "./".$file_name.".".$imageFileType;
-    $file_upload = 1;
+    foreach ($files['name'] as $f => $name){
+        error_log($name);
+        error_log($f);
 
-    //Check if already exists
-    if (file_exists($target_file)) {
-        echo "<div class='notify'>Sorry, file already exists.</div>";
-        $file_upload = 0;
-    }
+        if ($file_name == ""){
+            $new_file_name = $name;
+        } else {$new_file_name = $file_name;}
 
-    //Verify that the file is audio or video
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $file['tmp_name']);
-    if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
-        $file_upload = 0;
-        echo "<div class='notify'>This server only supports audio and video files.</div>"; 
-    }
-
-    if ($file_upload == 1) {
-        if (move_uploaded_file($file["tmp_name"], $target_file)){
-            echo "<div class='notify'>Your file was uploaded successfully!</div>";
+        $imageFileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
+        $target_file = "./".$new_file_name.".".$imageFileType;
+        $file_upload = 1;
+    
+        //Check if already exists
+        if (file_exists($target_file)) {
+            echo "<div class='notify'>Sorry, file already exists.</div>";
+            $file_upload = 0;
+        }
+    
+        //Verify that the file is audio or video
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $files['tmp_name'][$f]);
+        if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
+            $file_upload = 0;
+            echo "<div class='notify'>This server only supports audio and video files.</div>"; 
+        }
+    
+        if ($file_upload == 1) {
+            if (move_uploaded_file($files["tmp_name"][$f], $target_file)){
+                echo "<div class='notify'>Your file was uploaded successfully!</div>";
+            }
         }
     }
 }
@@ -84,20 +93,22 @@ function breadcrumbs(){
                 <div class='breadcrumb'>
                     <img style='width:70%;transform:rotate(-45deg);margin-top:6px;margin-left:5px;' src='/.Images/home.svg'></img>
                 </div>
-                <div style='margin-top:10px;'>Home</div>
+                <div style='margin-top:10px;'></div>
           </a>";
     //Get the current URI as a string and split it by /, so you get each page individually
     $url = $_SERVER["REQUEST_URI"];
     if($url != '' && $url != '/'){
         $b = '';
-        $links = explode('/',rtrim($url,'/'));
+        $links = explode('?',$url);
+        $links = explode('/',rtrim($links[0],'/'));
+        $count = count($links);
         foreach($links as $index => $l){
             $b .= $l;
-            if (strpos($b, '?') !== False) {
-                $b = explode('?', $b)[0];
-                $l = explode('?', $l)[0];
+            if (--$count <= 0){
+                break;
             }
             if (substr($b, -1) == '/' || $index == 0){
+
                 $b .= '/';
                 continue;
             }

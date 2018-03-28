@@ -10,7 +10,7 @@ function get_dls(){
 
 	$line = explode("|", $line);
         $name = substr($line[0], strrpos($line[0], '/') + 1);
-	$output = $output."<div class='partial-listing'>
+	$output = $output."<div id='$line[1]' class='partial-listing'>
 				<div class='close' onclick=\"cancel('$line[1]','$name')\">X</div>
 				<div class='loading'></div>
 				$name
@@ -31,7 +31,6 @@ function cancel($gid, $name){
 if (isset($_POST['gid_post'])){
     //Allows the cancel function to be called from JS
     cancel($_POST['gid_post'], $_POST['name_post']);
-    sleep(5);
 } else {
     get_dls();
 }

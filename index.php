@@ -1,4 +1,8 @@
 <?php 
+session_start();
+    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != 1){
+        header("Location: /login.php");
+    }
     $dir = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $functions = $_SERVER['DOCUMENT_ROOT']."/functions.php"; 
     $del = 1;
@@ -10,8 +14,8 @@
         create_dir($_GET['dn']);
         header('Location: '.$dir);
     }
-    if (isset($_POST["fn"])){
-       add_file($_FILES["uf"],$_POST["fn"]); 
+    if (isset($_POST['fn'])){
+       add_file($_FILES['uf'],$_POST["fn"]); 
        $del = 0;
     }
     if (isset($_GET['itemdel'])) {
@@ -108,7 +112,7 @@
                 <input type=\"text\" name=\"fn\"><br>
                 <h3>Upload File</h3>
                 <div class=\"fsubmit\">
-                    <input type=\"file\" name=\"uf\">
+                    <input type=\"file\" multiple=\"multiple\" name=\"uf[]\">
                 </div>
                 <input type=\"submit\" value=\"Submit\">
             </form>
