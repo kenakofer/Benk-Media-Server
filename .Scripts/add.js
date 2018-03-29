@@ -1,12 +1,30 @@
 $(document).ready(function(){
 //Click detection for the UI
+    var base = -210;
+    var children = $('.breadcrumbs').children().length;
+    for (var child = 0; child < $('.breadcrumbs').children().length - 2; child++){
+        base = base - 70;
+    }
+    if ($(window).width() < 760){
+        $('.breadcrumbs').css("margin-top", base);
+    }
     var bs = 0;
+    $(window).resize(function() {
+        if ($(window).width() < 760){
+            $('.breadcrumbs').css("margin-top", base);
+        }else {
+            $('.breadcrumbs').css("margin-top", "50px");
+    }});
     $("#dn").keyup(function(event) {
         if(event.keyCode == 13){
             $("#dnb").click();
         }
     });
-    $('.video-container').on('click', function(){
+    $('.mobile-bc-tog').on('click', function(){
+        $(this).addClass('mbt-active');
+        $('.breadcrumbs').addClass('mbc-active');
+    });
+    $('.video-container').on('click', function(e){
         $(this).removeClass('video-container-active');
         $(this).html("");
     });
@@ -37,6 +55,7 @@ $(document).ready(function(){
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
         $('.dnf_container').addClass('dnf-active');
+        $('body').addClass('dnf-body');
     });
     $('#cndc').on('click', function(e) {
         $('.cnd_container').removeClass('cnd-active');
@@ -45,6 +64,7 @@ $(document).ready(function(){
         $('.um_container').removeClass('um-active');
     });
     $('#dnfc').on('click', function(e) {
+        $('body').removeClass('dnf-body');
         $('.dnf_container').removeClass('dnf-active');
     });
     $('#tc1').on('click', function(){
@@ -58,10 +78,15 @@ $(document).ready(function(){
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();
     });
+    $('.breadcrumbs').on('click', function(e) {
+        e.stopPropagation();
+    });
     $(document).on('click', function(e){
         $('.dl-button').removeClass('nb-active-dl');
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
+        //$('.mobile-bc-tog').removeClass('mbt-active');
+        //$('.breadcrumbs').removeClass('mbc-active');
         bs = 0;
     });
 });

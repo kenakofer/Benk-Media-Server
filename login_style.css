@@ -74,6 +74,11 @@ input[type=submit]:hover{
     height:60px;
 }
 
+@media all and (max-width:760px){
+    input[type=password] {
+        width:90%;
+    }
+}
 
 @keyframes play-bar {
      from {height:0px;margin-top:118px;margin-left:88px;}

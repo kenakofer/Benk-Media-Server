@@ -34,7 +34,7 @@ session_start();
 <html>
 <head>
     <title>Benk Media Server</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
     <meta charset="UTF-8"> 
     <link rel="stylesheet" href="/style.css">
     <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
@@ -47,14 +47,14 @@ session_start();
 <body>
     <?php
         if ($dir != "/"){
+            echo "<div class='mobile-bc-tog'>. . .</div>";
             echo "<div class='breadcrumbs'>";
                             breadcrumbs();
             echo "<a href='..'>
                     <div class='back'>
-                    <div class='triangle'>
                 </div></div></a>
             </div>";
-            echo "<h1 style='padding-top:50px;'>".basename(__DIR__)."</h1>";
+            echo "<h1 class='page_title'>".basename(__DIR__)."</h1>";
         } else {echo "<img class='logo' src='/.Images/benk_logo.svg' />";}
         
     ?>
