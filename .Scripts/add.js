@@ -1,6 +1,6 @@
 $(document).ready(function(){
 //Click detection for the UI
-    var base = -210;
+    var base = -220;
     var children = $('.breadcrumbs').children().length;
     for (var child = 0; child < $('.breadcrumbs').children().length - 2; child++){
         base = base - 70;
@@ -20,7 +20,7 @@ $(document).ready(function(){
             $("#dnb").click();
         }
     });
-    $('.mobile-bc-tog').on('click', function(){
+    $('.mobile-bc-tog').on('click', function(e){
         $(this).addClass('mbt-active');
         $('.breadcrumbs').addClass('mbc-active');
     });
@@ -78,6 +78,9 @@ $(document).ready(function(){
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();
     });
+    $('.mobile-bc-tog').on('click', function(e) {
+        e.stopPropagation();
+    });
     $('.breadcrumbs').on('click', function(e) {
         e.stopPropagation();
     });
@@ -85,8 +88,8 @@ $(document).ready(function(){
         $('.dl-button').removeClass('nb-active-dl');
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
-        //$('.mobile-bc-tog').removeClass('mbt-active');
-        //$('.breadcrumbs').removeClass('mbc-active');
+        $('.mobile-bc-tog').removeClass('mbt-active');
+        $('.breadcrumbs').removeClass('mbc-active');
         bs = 0;
     });
 });

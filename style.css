@@ -61,7 +61,7 @@ a {
     background:linear-gradient(lightgrey,white);
     position:absolute;
     height:25px;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,.3);
     width:25px;
     float:right;
     margin:0 auto;
@@ -109,13 +109,18 @@ a {
     margin-top:-30px;
 }
 .back {
-    background:url('/.Images/back.svg'), linear-gradient(lightgrey, white);
+    background:linear-gradient(lightgrey, white);
     height:50px;
     width:50px;
     margin-left:100px;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,.3);
     background-repeat:no-repeat;
     transition:all 0.4s ease;
+    text-align:center;
+}
+.back img {
+    height:40px;
+    margin-top:4px;
 }
 .back:hover {
     width:100px;
@@ -147,7 +152,7 @@ a {
     height:200px;
     width:200px;
     background:linear-gradient(lightgrey 10%, white);
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,.3);
     color:grey;
     transition:all 0.4s ease;
 }
@@ -195,7 +200,7 @@ padding-left:50px;
 .file-item {
     margin-bottom:25px;
     display:block;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,.3);
     padding:25px;
     background:linear-gradient(to right, lightgrey -150%, white);
     transition:all 0.4s ease;
@@ -262,7 +267,7 @@ padding-left:50px;
 .new-button, .dl-button {
     width:75px;
     height:75px;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     background:linear-gradient(#f90,#ffcf00);
     cursor:pointer;
     position:fixed;
@@ -296,7 +301,7 @@ padding-left:50px;
 .new-menu {
     pointer-events:none;
     background-color:white;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     width:200px;
     height:170px;
     position:fixed;
@@ -351,7 +356,7 @@ padding-left:50px;
     left:0;
     width:100vw;
     height:100vh;
-    background-color:#0006;
+    background-color:rgba(0,0,0,0.4);
     transition:all 0.4s ease;
     opacity:0;
     pointer-events:none;
@@ -364,7 +369,7 @@ padding-left:50px;
     margin:0 auto;
     margin-top:30vh;
     background-color:white;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     height:300px;
     width:500px;
     padding:25px;
@@ -413,7 +418,7 @@ padding-left:50px;
     background-size:contain;
     background-repeat:no-repeat;
     background-position-y:center;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     cursor:pointer;
     margin-right:25px;
     transition:all 0.4s ease;
@@ -437,7 +442,7 @@ padding-left:50px;
     width:80%;
     height:auto;
     background-color:white;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     margin:0 auto;
     margin-top:50px;
     padding:25px;
@@ -489,7 +494,7 @@ input[type=text] {
 input[type=submit], button {
     font-family:Avenir Bold;
     cursor:pointer;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     background:linear-gradient(#f90,#ffcf00);
     color:white;
     display:block;
@@ -513,7 +518,7 @@ button:hover {
 }
 .notify {
     color:white;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     animation: n_in 0.6s ease forwards, n_in 0.6s ease 5s reverse forwards;
     float:right;
     background:linear-gradient(#f90, #ffcf00);
@@ -533,7 +538,7 @@ button:hover {
     height:20px;
     padding:35px;
     padding-left:40px;
-    box-shadow:0px 0px 9px #0000004d;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
     transition:all 0.4s ease;
 }
 .partial-listing .loading {
@@ -605,12 +610,14 @@ button:hover {
         width:95%;
     }
     .breadcrumbs {
+        position:relative;
         margin: 0 auto;
         flex-direction:column;
         width:10px;
         height:auto;
-        margin-top:-210px;
+        margin-top:-1000px;
         transition:all 0.4s ease;
+        opacity:0;
     }
     .bc_c {
         margin-left:0px;
@@ -642,6 +649,7 @@ button:hover {
     }
     .mbc-active {
         margin-top:50px !important;
+        opacity:1;
     }
 }
 

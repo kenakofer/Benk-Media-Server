@@ -36,6 +36,7 @@ include 'Aria2.php';
 $aria2 = new Aria2();
 
 while(True){
+error_log(print_r($locations));
 $aria2->purgeDownloadResult();
 //Runs continuously in background listening for download events
     $in_progress = "";
@@ -94,7 +95,7 @@ $aria2->purgeDownloadResult();
 
         }
     }
-    sleep(2);
+    sleep(5);
 }
 
 ?>

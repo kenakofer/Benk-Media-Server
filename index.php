@@ -52,6 +52,7 @@ session_start();
                             breadcrumbs();
             echo "<a href='..'>
                     <div class='back'>
+                    <img src='/.Images/back.svg'/>
                 </div></div></a>
             </div>";
             echo "<h1 class='page_title'>".basename(__DIR__)."</h1>";
