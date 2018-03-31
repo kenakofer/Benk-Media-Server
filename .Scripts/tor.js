@@ -24,5 +24,5 @@ function grab_dl(title){
         context: document.body
     });
     $('.dnf_container').removeClass('dnf-active');
-    $(document.body).prepend("<div class='notify'>Your download has started!</div>");
+    $(document.body).prepend("<div class='notify'>Your download will start soon!</div>");
 }

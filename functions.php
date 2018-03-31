@@ -112,7 +112,11 @@ function breadcrumbs(){
                 $b .= '/';
                 continue;
             }
-            echo "<a class='bc_c' href='".$b."/'>
+            $margin = strlen($l) * 7;
+            if ($margin > 75){
+                $margin = "style='margin-right:".($margin/2)."px;margin-left:".$margin."px;'";
+            }
+            echo "<a $margin class='bc_c' href='".$b."/'>
                         <div class='breadcrumb'></div>
                         <div class='breadcrumb-title'>".$l."</div>
                   </a>";

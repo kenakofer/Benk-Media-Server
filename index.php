@@ -56,7 +56,14 @@ session_start();
                 </div></div></a>
             </div>";
             echo "<h1 class='page_title'>".basename(__DIR__)."</h1>";
-        } else {echo "<img class='logo' src='/.Images/benk_logo.svg' />";}
+        } else {
+                $dt = round(disk_total_space("/")/1000000000,1);
+                $df = round(disk_free_space("/")/1000000000,1);
+                if (($dt - $df) >= ($dt * 0.9)){
+                    $space_warning = "style='color:#d00;'";
+                } else { $space_warning = ""; }
+                echo "<p $space_warning id='ds1'>".($dt - $df)."GB</p><p $space_warning id='ds2'>/".$dt."GB</p>
+                <img class='logo' src='/.Images/benk_logo.svg' />";}
         
     ?>
     <div class="dir-container">

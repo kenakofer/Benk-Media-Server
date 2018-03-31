@@ -43,6 +43,19 @@ a {
     width:300px;
     height:300px;
 }
+#ds1,#ds2 {
+    display:inline;
+    font-family:Avenir Heavy;
+    font-size:40px;
+    position:relative;
+    top:50px;
+    margin-left:50px;
+}
+#ds2 {
+    font-family:Avenir Bold;
+    font-size:30px;
+    margin:0px;
+}
 
 
 /*NAVIGATION*/
@@ -112,7 +125,7 @@ a {
     background:linear-gradient(lightgrey, white);
     height:50px;
     width:50px;
-    margin-left:100px;
+    margin-left:50px;
     box-shadow:0px 0px 9px rgba(0,0,0,.3);
     background-repeat:no-repeat;
     transition:all 0.4s ease;
@@ -229,7 +242,7 @@ padding-left:50px;
     font-size:30px;
 }
 .video-container {
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     height:100vh;
@@ -579,6 +592,7 @@ button:hover {
     }
     .file-container{
         margin-left:0px;
+        padding:0;
     }
     h1 {
         margin-left:-40px;
@@ -620,7 +634,8 @@ button:hover {
         opacity:0;
     }
     .bc_c {
-        margin-left:0px;
+        margin-left:0px !important;
+        margin-right:0px !important;
         margin-top:60px;
 
     }
@@ -630,7 +645,6 @@ button:hover {
     }
     #bch .breadcrumb {
         margin-top:-75px;
-        margin-left:25px;
     }
     .back {
         margin-top:50px;
@@ -650,6 +664,20 @@ button:hover {
     .mbc-active {
         margin-top:50px !important;
         opacity:1;
+    }
+    #ds1,#ds2 {
+        top:25px;
+        text-align:center;
+        font-size:20px;
+        margin:0 auto;
+        display:block;
+    }
+    #ds2 {
+        font-size:10px;
+    }
+    .item-container {
+        margin: 0 auto;
+        width:90%;
     }
 }
 
