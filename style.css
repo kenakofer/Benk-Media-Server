@@ -1,5 +1,6 @@
 /*GLOBAL CSS*/
 html {
+    user-drag:none;
     user-select:none;
     -moz-user-select:none;
     font-family:Avenir Regular;
@@ -107,10 +108,10 @@ a {
 .bc_c #dbc {
     float:none;
     margin:0 auto;
-    margin-top:-10px;
+    margin-top:20px;
 }
 .bc_c:hover #dbc {
-    margin-top:-20px;
+    margin-top:0px;
 }
 #bch:hover .breadcrumb {
     height:75px;
@@ -141,8 +142,8 @@ a {
 .mobile-bc-tog {
     height:50px;
     width:100%;
-    background:linear-gradient(lightgrey,white);
-    color:grey;
+    background:linear-gradient(#f90,#ffcf00);
+    color:white;
     text-align:center;
     font-family:Avenir Heavy;
     font-size:30px;
@@ -168,8 +169,24 @@ a {
     box-shadow:0px 0px 9px rgba(0,0,0,.3);
     color:grey;
     transition:all 0.4s ease;
+    line-height:300px;
+}
+#dbmo {
+    background:url("/.Images/film.svg"),linear-gradient(lightgrey 10%, white);
+}
+#dbtv {
+    background:url("/.Images/tv.svg"),linear-gradient(lightgrey 10%, white);
+}
+#dbmu {
+    background:url("/.Images/music.svg"),linear-gradient(lightgrey 10%, white);
+}
+#dbmo, #dbtv, #dbmu {
+    background-repeat:no-repeat;
+    background-size:40% 40%, 100% 100%;
+    background-position:50% 20%;
 }
 .box-container {
+    position:relative;
     margin-bottom:75px;
     margin-left:5vw;
     margin-right:5vw;
@@ -183,23 +200,16 @@ a {
 .box-container:hover .box-del {
     opacity:1;
 }
-.dir-box-icon {
-   height:100px;
-   width:100px;
-   position:relative;
-   margin: 0 auto;
-   margin-bottom:50px;
-}
 .box-del {
 color:grey;
 opacity:0;
-float:right;
 transition:all 0.4s ease;
-margin-top:-5px;
-margin-right:5px;
 font-size:15px;
-padding-bottom:50px;
-padding-left:50px;
+padding-bottom:25px;
+padding-left:25px;
+position:absolute;
+right:20px;
+cursor:pointer;
 }
 .box-del:hover {
     font-size:30px;
@@ -216,6 +226,7 @@ padding-left:50px;
     box-shadow:0px 0px 9px rgba(0,0,0,.3);
     padding:25px;
     background:linear-gradient(to right, lightgrey -150%, white);
+    cursor:pointer;
     transition:all 0.4s ease;
 }
 .item-container:hover .file-item {
@@ -363,7 +374,7 @@ padding-left:50px;
 .dnf-body {
     overflow:hidden;
 }
-.cnd_container, .um_container, .dnf_container {
+.cnd_container, .um_container, .dnf_container, .dd_container {
     position:absolute;
     top:0;
     left:0;
@@ -374,11 +385,11 @@ padding-left:50px;
     opacity:0;
     pointer-events:none;
 }
-.cnd-active, .um-active, .dnf-active {
+.cnd-active, .um-active, .dnf-active, .dd-active {
     opacity:1;
     pointer-events:auto;
 }
-.cnd, .um {
+.cnd, .um, .dd {
     margin:0 auto;
     margin-top:30vh;
     background-color:white;
@@ -388,11 +399,28 @@ padding-left:50px;
     padding:25px;
     padding-bottom:50px;
 }
-.cnd h2, .um h2{
+.cnd, .dd {
+    height:200px;
+    margin-top:40vh;
+}
+.cnd h2, .um h2, .dd h2{
     text-align:center;
 }
-.cnd h3, .um h3{
+.cnd h3, .um h3, .dd h3{
     margin-bottom:8px;
+}
+#dds_container {
+    text-align:center;
+}
+.dd_container button {
+    display:inline-block;
+}
+#dd_submit {
+    display:inline-block;
+}
+#ddc {
+    background:linear-gradient(lightgrey, white);
+    color:grey;
 }
 .dnf {
     background-color:white;
@@ -595,13 +623,17 @@ button:hover {
         padding:0;
     }
     h1 {
+        font-size:30px;
+        text-align:center;
         margin-left:-40px;
+        margin-top:50px;
     }
     .box-del {
+        right:5px;
         padding:10px;
         opacity:1;
     }
-    .cnd-container, .cnd, .um_container, .um {
+    .cnd-container, .cnd, .um_container, .um, .dd-container, .dd {
         width:100%;
         padding:0;
         padding-top:20px;
@@ -679,11 +711,33 @@ button:hover {
         margin: 0 auto;
         width:90%;
     }
+    .notify {
+        float:none;
+        padding:0;
+        padding-top:25px;
+        padding-bottom:25px;
+        margin:0;
+        text-align:center;
+        position:fixed;
+        bottom:-100px;
+        width:100%;
+        animation: n_in_m 0.6s ease forwards, n_in_m 0.6s ease 5s reverse forwards;
+    }
+    .bc_c #dbc {
+        margin-top:-20px;
+    }
+    .bc_c:hover #dbc {
+        margin-top:-40px;
+    }
 }
 
 @keyframes n_in {
     from {margin-right:-750px;}
     to {margin-right:-50px;}
+}
+@keyframes n_in_m {
+    from {bottom:-100px;}
+    to {bottom:0px;}
 }
 @keyframes rotate {
     from {transform:rotate(0deg);}

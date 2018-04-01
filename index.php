@@ -10,7 +10,7 @@ session_start();
     if (!file_exists($_SERVER['DOCUMENT_ROOT'].$dir.'index.php')) {
         header('Location: /');
     }
-    if (isset($_GET['dn']) && isset($_GET['d_type'])) {
+    if (isset($_GET['dn'])) {
         create_dir($_GET['dn']);
         header('Location: '.$dir);
     }
@@ -55,7 +55,8 @@ session_start();
                     <img src='/.Images/back.svg'/>
                 </div></div></a>
             </div>";
-            echo "<h1 class='page_title'>".basename(__DIR__)."</h1>";
+            $dir_name = str_replace("~"," ",basename(__DIR__));
+            echo "<h1 class='page_title'>".$dir_name."</h1>";
         } else {
                 $dt = round(disk_total_space("/")/1000000000,1);
                 $df = round(disk_free_space("/")/1000000000,1);
@@ -132,18 +133,19 @@ session_start();
             <h2>Create New Directory</h2>
             <form id="cnd_form">
                 <h3>Directory Name</h3>
-                <input type="text" name="dn"><br>
-                <h3>Media Type</h3>
-                <div class="selectbox">
-                    <select name="d_type" form="cnd_form">
-                        <option value="none">None</option>
-                        <option value="movies">Movies</option>
-                        <option value="music">Music</option>
-                        <option value="tv">TV</option>
-                    </select> <br /> 
-                    <input type="submit" value="Submit">
-                </div>
+                <input type="text" name="dn"><br><br>
+                <input type="submit" value="Submit">
             </form>
+        </div>
+    </div>
+    <div class="dd_container">
+        <div class="dd">
+            <h2>Are you sure you want to delete this directory?</h2>
+            <div id="dds_container">
+                <div id='dd_submit'></div>
+                <div style="width:50px;display:inline-block;"></div>
+                <button id='ddc'>No</button>
+            </div>
         </div>
     </div>
 </body>

@@ -50,13 +50,13 @@ function grab_dl($tor_site, $title, $site){
         }
         if($links->length > 0){
             $choice = $links[0]->nodeValue;
-        } else { error_log( 'No results found!'); }
-	    error_log($choice);
+        } else { echo "error"; return;}
 
         //Set up directory so scan.php can read it correctly
         $title = str_replace(" ",".",$title);
         mkdir("../.Partial/$title");
         exec("echo '$choice\n$site' >> '../.Partial/$title.start'");
+        echo "success";
         //exec("echo $site >> ../.Partial/$title.done");
         //exec('sudo aria2c -d ../.Partial/'.$title.' --seed-time=0 "'.$choice."\" & echo $! >> ../.Partial/$title.done");
         //unlink("../.Partial/$title.in_progress");

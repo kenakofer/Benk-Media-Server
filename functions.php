@@ -3,11 +3,19 @@ function list_dirs() {
 //List all directories in a location
     $files = array_filter(glob('*'), 'is_dir');
     foreach($files as $file) {
+        $file_orig = $file;
+        $file = str_replace("~"," ",$file);
         echo "<div class='box-container'>
-                <a class='box-del' href='./?boxdel=".$file."'>X</a>
-                <a class='dir-box' href='./".$file."/'>
-                <div class='dir-box-icon'></div>$file</a>
-            </div>";
+                <div class='box-del' id='./?boxdel=".$file_orig."'>X</div>";
+        if ($file == "Movies"){
+            echo "<a id='dbmo' class='dir-box' href='./".$file_orig."/'>$file</a>";
+        } else if ($file == "TV") {
+            echo "<a id='dbtv' class='dir-box' href='./".$file_orig."/'>$file</a>";
+        } else if ($file == "Music") {
+            echo "<a id='dbmu' class='dir-box' href='./".$file_orig."/'>$file</a>";
+        } else {echo "<a class='dir-box' href='./".$file_orig."/'>$file</a>";}
+        
+        echo "</div>";
     }
 }
 
@@ -33,6 +41,7 @@ function list_files() {
 }
 
 function create_dir($dir_name) {
+    $dir_name = str_replace(" ", "~", $dir_name);
     mkdir('./'.$dir_name, 0777, true);
     copy('./index.php', './'.$dir_name.'/index.php');
 }
@@ -116,9 +125,10 @@ function breadcrumbs(){
             if ($margin > 75){
                 $margin = "style='margin-right:".($margin/2)."px;margin-left:".$margin."px;'";
             }
+            $l_repl = str_replace("~"," ",$l);
             echo "<a $margin class='bc_c' href='".$b."/'>
                         <div class='breadcrumb'></div>
-                        <div class='breadcrumb-title'>".$l."</div>
+                        <div class='breadcrumb-title'>".$l_repl."</div>
                   </a>";
             $b .= '/';
         }

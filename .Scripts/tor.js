@@ -22,7 +22,13 @@ function grab_dl(title){
         data: {tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
         type:"POST",
         context: document.body
+    }).done(function(data) {
+        if (data == "success"){
+            $('.dnf_container').removeClass('dnf-active');
+            $(document.body).prepend("<div class='notify'>Your download will start soon!</div>");
+        } else {
+            $('.dnf_container').removeClass('dnf-active');
+            $(document.body).prepend("<div class='notify'>An error has occurred. Please try again.</div>");
+        }
     });
-    $('.dnf_container').removeClass('dnf-active');
-    $(document.body).prepend("<div class='notify'>Your download will start soon!</div>");
 }
