@@ -5,7 +5,7 @@ To begin:
 
 aria2 and php-xml must be installed
 
-scan.php must be given the correct full path to run Aria2 and run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
+scan.php must be given the correct full path to run Aria2 on multiple lines and run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
 
 To allow upload of bigger files, edit php.ini
 
@@ -18,12 +18,10 @@ Goals:
 
 Improve music player (album art, skip buttons?)
 
-Fix mobile styles
-
 Upload files in background
 
 Allow users to delete multiple files at a time
 
-Allow users to transfer files to a directory (drag and drop?)
+Allow users to move and rename files (Drag and Drop?)
 
 Possibly create a Desktop app to go with it? (Probs not)
