@@ -57,6 +57,9 @@ a {
     font-size:30px;
     margin:0px;
 }
+.box-container.ui-draggable-dragging{
+    z-index:99;
+}
 
 
 /*NAVIGATION*/
@@ -159,7 +162,7 @@ a {
     justify-content:center;
 
 }
-.dir-box {
+.dir-box{
     font-family:Avenir Bold;
     display:block;
     text-align:center;
@@ -190,6 +193,7 @@ a {
     margin-bottom:75px;
     margin-left:5vw;
     margin-right:5vw;
+    z-index:1;
 }
 .box-container:hover .dir-box {
    box-shadow:0px 0px 9px #f90;
@@ -669,7 +673,6 @@ button:hover {
         margin-left:0px !important;
         margin-right:0px !important;
         margin-top:60px;
-
     }
     .breadcrumb-title {
         margin-top:-20px;

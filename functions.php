@@ -134,4 +134,12 @@ function breadcrumbs(){
         }
     }
 }
+if (isset($_POST['dest'])){
+    if (count(explode("/", $_POST['source'])) > 2){
+        $end_dest = end(explode("/", $_POST['source']));
+    } else {$end_dest = $_POST['source'];}
+
+    error_log($end_dest);
+    rename('.'.$_POST['source'],'.'.$_POST['dest'].'/'.$end_dest);
+}
 ?>

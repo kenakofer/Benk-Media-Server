@@ -40,9 +40,9 @@ session_start();
     <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
     <script src="http://vjs.zencdn.net/6.6.3/video.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/.Scripts/add.js"></script>
     <script src="/.Scripts/tor.js"></script>
-    <script src="/.Scripts/play.js"></script>
 </head>
 <body>
     <?php
