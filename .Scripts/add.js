@@ -20,6 +20,22 @@ $(document).ready(function(){
             $("#dnb").click();
         }
     });
+    $("#rena").keyup(function(event) {
+        if(event.keyCode == 13){
+            $("#renas").click();
+        }
+    });
+    $('.item-ren').on('click', function(){
+        $('.ren_container').addClass('ren-active');
+        $(this).siblings('.file-item').attr('id','rename');
+    });
+    $('#renc').on('click', function(){
+        $('.ren_container').removeClass('ren-active');
+        $('#rename').removeAttr('id');
+    });
+    $('#renas').on('click', function(){
+        rename($('#rename').html(), $('#rena').val());
+    });
     $('.mobile-bc-tog').on('click', function(e){
         $(this).addClass('mbt-active');
         $('.breadcrumbs').addClass('mbc-active');
@@ -102,13 +118,39 @@ $(document).ready(function(){
         bs = 0;
     });
 });
+function rename(file, name) {
+    file = window.location.pathname + file;
+    $.ajax({
+        url: '/functions.php',
+        data: {file_q: file, name_q: name},
+        type:"POST",
+        context: document.body
+    }).done(function() {
+        location.reload();
+    });
+}
 $(function() {
-    $(".box-container").draggable({ revert:"invalid"});
-    $(".bc_c,.box-container").droppable({
+    $(".box-container").draggable({
+        start: function(event, ui){
+            $('.box-del').css("opacity","0");
+        },
+        stop: function(event, ui){
+            $('.box-del').css("opacity","");
+        },
+        revert:"invalid",
+        cursor:"move",cursorAt:{top:100,left:100}
+    });
+    $(".breadcrumb,.box-container").droppable({
+        over: function(event, ui) {
+            $('.ui-draggable-dragging .dir-box').addClass('hover-active');
+        },
+        out: function(event, ui) {
+            $('.ui-draggable-dragging .dir-box').removeClass('hover-active');
+        },
         drop: function(event, ui){
             var path = window.location.pathname;
-            if ($(this).hasClass("bc_c")){
-                var loc = $(this).attr("href").split("/")[1];
+            if ($(this).hasClass("breadcrumb")){
+                var loc = "/"+$(this).parent().attr("href").split("/")[1];
             } else {var loc = path+$(this).children("a").attr("href").split("/")[1];}
 
             var orig = path+$(ui.draggable[0]).children("a").attr("href").split("/")[1];

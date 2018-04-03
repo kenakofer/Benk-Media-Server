@@ -10,6 +10,10 @@ session_start();
     if (!file_exists($_SERVER['DOCUMENT_ROOT'].$dir.'index.php')) {
         header('Location: /');
     }
+    if (isset($_GET['rena'])){
+        rename($_GET['rena']);
+        header('Location: '.$dir);
+    }
     if (isset($_GET['dn'])) {
         create_dir($_GET['dn']);
         header('Location: '.$dir);
@@ -145,6 +149,16 @@ session_start();
                 <div id='dd_submit'></div>
                 <div style="width:50px;display:inline-block;"></div>
                 <button id='ddc'>No</button>
+            </div>
+        </div>
+    </div>
+    <div class="ren_container">
+        <div class="ren">
+            <div id='renc' class="close">X</div>
+            <h2>Change name to:</h2>
+            <div id="rena_form">
+                <input type="text" id="rena"><br><br>
+                <button id='renas' >Submit</button>
             </div>
         </div>
     </div>

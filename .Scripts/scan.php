@@ -19,11 +19,12 @@ function remove_non_av($dir, $destination){
         foreach ($objects as $object) {
             if ($object != '.' && $object != '..' && $object != 'index.php'){
                 if (is_file("$dir/".$object)){
+                    $object_new = str_replace(" ","~",$object);
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $mime = finfo_file($finfo, "$dir/".$object);
                     if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
                         unlink($dir.'/'.$object);
-                    } else {rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object);}
+                    } else {rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new);}
                 } else { remove_non_av($dir.'/'.$object, $destination); }
             }
             reset($objects);

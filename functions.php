@@ -28,14 +28,17 @@ function list_files() {
     }
     $vid_id = 0;
     foreach($files as $file) {
-        if (is_file($file))
-        {
-            $vid_id += 1;
-            echo "<div id='vid$vid_id' class='video-container'></div>
-                    <div class='item-container'>
-                    <a class='item-del' href='?itemdel=".$file."'>X</a>
-                    <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file."</div>
-                  </div>";
+        if (is_file($file)){
+            $file = str_replace('~',' ',$file);
+            {
+                $vid_id += 1;
+                echo "<div id='vid$vid_id' class='video-container'></div>
+                        <div class='item-container'>
+                        <a class='item-del' href='?itemdel=".$file."'>X</a>
+                        <div class='item-ren'>A</div>
+                        <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file."</div>
+                      </div>";
+            }
         }
     }
 }
@@ -44,6 +47,14 @@ function create_dir($dir_name) {
     $dir_name = str_replace(" ", "~", $dir_name);
     mkdir('./'.$dir_name, 0777, true);
     copy('./index.php', './'.$dir_name.'/index.php');
+}
+
+function change_name($file, $name){
+    $file = str_replace(' ','~',$file);
+    $name = str_replace(' ','~',$name);
+    $path = array_slice(explode('/',$file), 0, -1);
+    $path = implode('/',$path).'/'.$name;
+    rename('.'.$file, '.'.$path);
 }
 
 function add_file($files, $file_name) {
@@ -139,7 +150,9 @@ if (isset($_POST['dest'])){
         $end_dest = end(explode("/", $_POST['source']));
     } else {$end_dest = $_POST['source'];}
 
-    error_log($end_dest);
     rename('.'.$_POST['source'],'.'.$_POST['dest'].'/'.$end_dest);
+}
+if (isset($_POST['file_q'])){
+   change_name($_POST['file_q'], $_POST['name_q']); 
 }
 ?>

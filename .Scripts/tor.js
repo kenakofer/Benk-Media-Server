@@ -1,4 +1,5 @@
 function play(id, title){
+    title = title.replace(/ /g,"~");
     $('#vid'+id).addClass('video-container-active');
     $(".menu-container").addClass('nb-active-dl');
     $(".item-del").addClass('nb-active-dl');
@@ -11,7 +12,6 @@ function get_results(){
     document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
     var input = document.getElementById('dn').value;
     var site = $('.t-choice-active').attr('id');
-    console.log(site);
     $.ajax({
         url : '/.Scripts/tor.php',
         data: {site_q: site, search_q: input},

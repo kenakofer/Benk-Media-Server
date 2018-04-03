@@ -1,7 +1,6 @@
 <?php
 function get_results($site, $query){
 //Gets search results from one of two download providers by scraping their webpages
-    error_log($site);
     if ($site == 'tc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.$query.'/0/99/0');
     }
