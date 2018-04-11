@@ -77,12 +77,12 @@ session_start();
             list_dirs(); 
         ?>
     </div>
-    <div class="file-container">
-        <?php
-            if ($dir != "/"){
-                list_files();
-            }
-        ?>
+    <?php if ($dir != "/"){
+        echo '<div class="file-container">';
+        list_files();
+        echo '</div>';
+    }
+?>
     </div>
     <div class="menu-container">
         <div class="new-menu">

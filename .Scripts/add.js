@@ -16,6 +16,35 @@ $(document).ready(function(){
         }else {
             $('.breadcrumbs').css("margin-top", "50px");
     }});
+    $('body').keyup(function(event) {
+        var key = String.fromCharCode(event.keyCode).toLowerCase();
+        document.getElementById(key).scrollIntoView();
+    });
+    $('.letter-head').on('click',function(){
+        var letter = 65;
+        var str ="<div class='letter-chooser'>";
+        while (letter < 91){
+            str +="<span class='letter'>"+String.fromCharCode(letter).toUpperCase()+"</span>";
+            letter++;
+        }
+        var self = this;
+        $(this).fadeOut(400);
+        setTimeout(function(){
+            $(self).html(str);
+            $('.letter').on('click',function(){
+                $(this).parent().parent().addClass('letter-chooser-active');
+                var key = $(this).html().toLowerCase();
+                document.getElementById(key).scrollIntoView();
+            });
+        }, 400);
+        $(this).fadeIn(400);
+        setTimeout(function(){
+            if ($(self).hasClass('letter-chooser-active')){
+                $(self).html($(self).attr('id').toUpperCase());
+                $(self).removeClass('letter-chooser-active');
+            }
+        }, 400);
+    });
     $("#dn").keyup(function(event) {
         if(event.keyCode == 13){
             $("#dnb").click();
@@ -25,6 +54,12 @@ $(document).ready(function(){
         if(event.keyCode == 13){
             $("#renas").click();
         }
+    });
+    $('.letter-head-tog').on('click',function(){
+        if ($('.letter-head').hasClass('letter-head-active')){
+            $('.letter-head').removeClass('letter-head-active');
+        } else {
+            $('.letter-head').addClass('letter-head-active');}
     });
     $('.item-ren').on('click', function(){
         $('.ren_container').addClass('ren-active');

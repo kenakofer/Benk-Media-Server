@@ -27,8 +27,14 @@ function list_files() {
         return;
     }
     $vid_id = 0;
+    $current_letter = '-';
+    echo "<div class='letter-head-tog'>abc</div>";
     foreach($files as $file) {
         if (is_file($file)){
+            if (strtolower(substr($file, 0, 1)) != strtolower($current_letter)){
+                $current_letter = substr($file, 0, 1);
+                echo "<div id='".strtolower($current_letter)."' class='letter-head'>".strtoupper($current_letter)."</div>";
+            } 
             $file_new = str_replace('~',' ',$file);
             $file_new = explode(".",$file_new);
             array_pop($file_new);

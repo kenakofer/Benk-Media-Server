@@ -297,6 +297,39 @@ cursor:pointer;
     opacity:1;
     pointer-events:all;
 }
+.letter-head {
+    font-size:30px;
+    font-family: Avenir Bold;
+    margin-bottom:10px;
+    transition:font-size 0.4s ease;
+    width:100%;
+    cursor:pointer;
+    display:none;
+}
+.letter-head-active {
+    display:inherit;
+}
+.letter-head:hover {
+    font-size:35px;
+}
+.letter-head-tog {
+    float:right;
+    cursor:pointer;
+    margin-top:-30px;
+}
+.letter-chooser {
+    display:flex;
+    font-size:30px;
+    justify-content:space-between;
+    width:100%;
+}
+.letter {
+    transition:all 0.4s ease;
+}
+.letter:hover {
+    font-size:40px;
+    margin-top:-5px;
+}
 
 
 /*ADD NEW BUTTON*/
