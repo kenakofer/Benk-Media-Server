@@ -29,14 +29,17 @@ function list_files() {
     $vid_id = 0;
     foreach($files as $file) {
         if (is_file($file)){
-            $file = str_replace('~',' ',$file);
+            $file_new = str_replace('~',' ',$file);
+            $file_new = explode(".",$file_new);
+            array_pop($file_new);
+            $file_new = implode(".",$file_new);
             {
                 $vid_id += 1;
                 echo "<div id='vid$vid_id' class='video-container'></div>
                         <div class='item-container'>
-                        <a class='item-del' href='?itemdel=".$file."'>X</a>
+                        <a class='item-del' href=\"?itemdel=".$file."\">X</a>
                         <div class='item-ren'>A</div>
-                        <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file."</div>
+                        <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file_new."</div>
                       </div>";
             }
         }
@@ -50,6 +53,8 @@ function create_dir($dir_name) {
 }
 
 function change_name($file, $name){
+    $file = $file.'.mp4';
+    $name = $name.'.mp4';
     $file = str_replace(' ','~',$file);
     $name = str_replace(' ','~',$name);
     $path = array_slice(explode('/',$file), 0, -1);
@@ -59,9 +64,11 @@ function change_name($file, $name){
 
 function add_file($files, $file_name) {
 //Upload a file via the browser
+    if ($files['name'][0] == ''){
+            echo "<div class='notify'>Please select a file to upload.</div>";
+            return false;
+    }
     foreach ($files['name'] as $f => $name){
-        error_log($name);
-        error_log($f);
 
         if ($file_name == ""){
             $new_file_name = $name;

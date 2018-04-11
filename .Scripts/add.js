@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 //Click detection for the UI
     var base = -220;
     var children = $('.breadcrumbs').children().length;
@@ -7,7 +8,7 @@ $(document).ready(function(){
     }
     if ($(window).width() < 760){
         $('.breadcrumbs').css("margin-top", base);
-    }
+     }
     var bs = 0;
     $(window).resize(function() {
         if ($(window).width() < 760){
@@ -40,9 +41,9 @@ $(document).ready(function(){
         $(this).addClass('mbt-active');
         $('.breadcrumbs').addClass('mbc-active');
     });
-    $('.video-container').on('click', function(e){
-        $(this).removeClass('video-container-active');
-        $(this).html("");
+    $('.vid-close-active').on('click', function(e){
+        $(this).parent().removeClass('video-container-active');
+        $(this).parent().html("");
         $(".menu-container").removeClass('nb-active-dl');
         $(".item-del").removeClass('nb-active-dl');
     });

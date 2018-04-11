@@ -1,4 +1,5 @@
 <?php
+ini_set('session.cookie_lifetime', 60 * 60 * 24);
 session_start();
     error_log($_SESSION['logged_in']);
     if (isset($_SESSION['logged_in']) && ($_SESSION['logged_in'] == 1)){

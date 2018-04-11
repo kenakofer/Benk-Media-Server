@@ -1,4 +1,5 @@
 <?php 
+ini_set('session.cookie_lifetime', 60 * 60 * 24);
 session_start();
     if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != 1){
         header("Location: /login.php");
@@ -23,6 +24,8 @@ session_start();
        $del = 0;
     }
     if (isset($_GET['itemdel'])) {
+        $item = $_GET['itemdel'];
+        $item = str_replace(" ","~",$item);
         unlink('./'.$_GET['itemdel']);
         header('Location: '.$dir.'?del=1');
     }
@@ -41,8 +44,6 @@ session_start();
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
     <meta charset="UTF-8"> 
     <link rel="stylesheet" href="/style.css">
-    <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
-    <script src="http://vjs.zencdn.net/6.6.3/video.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/.Scripts/add.js"></script>

@@ -1,10 +1,25 @@
 function play(id, title){
     title = title.replace(/ /g,"~");
+    console.log(title);
     $('#vid'+id).addClass('video-container-active');
     $(".menu-container").addClass('nb-active-dl');
-    $(".item-del").addClass('nb-active-dl');
+    $(".item-container").css('pointer-events','none');
     document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
-        "<video id='_vid"+id+"' controls preload='auto' width='100%' height='99%' data-setup='{}'><source src='./"+title+"'></video>";
+        "<video src=\"./"+title+".mp4\" id='_vid"+id+"' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
+    $('.vid-close').on('click', function(e){
+        $(this).parent().removeClass('video-container-active');
+        $(this).parent().html("");
+        $(".menu-container").removeClass('nb-active-dl');
+        $(".item-container").css('pointer-events','');
+    });
+    $(document).keyup(function(event) {
+        if(event.keyCode == 27){
+            $('.video-container').removeClass('video-container-active');
+            $('.video-container').html("");
+            $(".menu-container").removeClass('nb-active-dl');
+            $(".item-container").css('pointer-events','');
+        }
+    });
 }
 
 function get_results(){
@@ -25,9 +40,10 @@ function get_results(){
 function grab_dl(title){
 //Initiates download of chosen file
     var tor_site = $('.t-choice-active').attr('id');
+    var view_choice = $('.t2-choice-active').attr('id');
     $.ajax({
         url : '/.Scripts/tor.php',
-        data: {tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
+        data: {view_choice_q: view_choice, tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
         type:"POST",
         context: document.body
     }).done(function(data) {
