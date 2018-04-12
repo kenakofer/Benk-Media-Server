@@ -45,6 +45,15 @@ $(document).ready(function(){
             }
         }, 400);
     });
+    $('.search-button').on('click',function(e){
+        if ($('.search-form').hasClass('search-form-active')){
+            $(this).removeClass('search-button-m-active');
+            $('.search-form').removeClass('search-form-active');
+        } else {
+            $('.search-form').addClass('search-form-active');
+            $(this).addClass('search-button-m-active');
+        }
+    });
     $("#dn").keyup(function(event) {
         if(event.keyCode == 13){
             $("#dnb").click();
@@ -136,6 +145,12 @@ $(document).ready(function(){
         $(this).addClass('t-choice-active');
         $('#tc1').removeClass('t-choice-active');
     });
+    $('.search-button').on('click', function(e) {
+        e.stopPropagation();
+    });
+    $('.search-form').on('click', function(e) {
+        e.stopPropagation();
+    });
     $('.menu-container').on('click', function(e) {
         e.stopPropagation();
     });
@@ -146,6 +161,8 @@ $(document).ready(function(){
         e.stopPropagation();
     });
     $(document).on('click', function(e){
+        $('.search-form').removeClass('search-form-active');
+        $('.search-button').removeClass('search-button-m-active');
         $('.dl-button').removeClass('nb-active-dl');
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
@@ -155,10 +172,10 @@ $(document).ready(function(){
     });
 });
 function rename(file, name) {
-    file = window.location.pathname + file;
+    file_prefix = window.location.pathname;
     $.ajax({
         url: '/functions.php',
-        data: {file_q: file, name_q: name},
+        data: {file_prefix_q: file_prefix, file_q: file, name_q: name},
         type:"POST",
         context: document.body
     }).done(function() {

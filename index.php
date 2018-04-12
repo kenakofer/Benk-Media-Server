@@ -8,9 +8,6 @@ session_start();
     $functions = $_SERVER['DOCUMENT_ROOT']."/functions.php"; 
     $del = 1;
     include_once($functions);
-    if (!file_exists($_SERVER['DOCUMENT_ROOT'].$dir.'index.php')) {
-        header('Location: /');
-    }
     if (isset($_GET['rena'])){
         rename($_GET['rena']);
         header('Location: '.$dir);
@@ -61,14 +58,18 @@ session_start();
                 </div></div></a>
             </div>";
             $dir_name = str_replace("~"," ",basename(__DIR__));
-            echo "<h1 class='page_title'>".$dir_name."</h1>";
+            echo "<h1 class='page_title'>".rawurldecode($dir_name)."</h1>";
         } else {
+                echo "<form class='search-form' action='search.php' >
+                        <input type='text' name='search'><br /><br />
+                        <input type='submit' value='Search'></form>";
                 $dt = round(disk_total_space("/")/1000000000,1);
                 $df = round(disk_free_space("/")/1000000000,1);
                 if (($dt - $df) >= ($dt * 0.9)){
                     $space_warning = "style='color:#d00;'";
                 } else { $space_warning = ""; }
                 echo "<p $space_warning id='ds1'>".($dt - $df)."GB</p><p $space_warning id='ds2'>/".$dt."GB</p>
+                <div class='search-button'></div>
                 <img class='logo' src='/.Images/benk_logo.svg' />";}
         
     ?>
@@ -136,7 +137,7 @@ session_start();
         <div class="cnd">
             <div id='cndc' class="close">X</div>
             <h2>Create New Directory</h2>
-            <form id="cnd_form">
+            <form id="cnd_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES);?>">
                 <h3>Directory Name</h3>
                 <input type="text" name="dn"><br><br>
                 <input type="submit" value="Submit">

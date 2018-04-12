@@ -6,14 +6,14 @@ function list_dirs() {
         $file_orig = $file;
         $file = str_replace("~"," ",$file);
         echo "<div class='box-container'>
-                <div class='box-del' id='./?boxdel=".$file_orig."'>X</div>";
+                <div class='box-del' id=\"./?boxdel=".rawurlencode($file_orig)."\">X</div>";
         if ($file == "Movies"){
             echo "<a id='dbmo' class='dir-box' href='./".$file_orig."/'>$file</a>";
         } else if ($file == "TV") {
             echo "<a id='dbtv' class='dir-box' href='./".$file_orig."/'>$file</a>";
         } else if ($file == "Music") {
             echo "<a id='dbmu' class='dir-box' href='./".$file_orig."/'>$file</a>";
-        } else {echo "<a class='dir-box' href='./".$file_orig."/'>$file</a>";}
+        } else {echo "<a class='dir-box' href='./".rawurlencode($file_orig)."/'>".rawurldecode($file)."</a>";}
         
         echo "</div>";
     }
@@ -28,24 +28,25 @@ function list_files() {
     }
     $vid_id = 0;
     $current_letter = '-';
-    echo "<div class='letter-head-tog'>abc</div>";
     foreach($files as $file) {
         if (is_file($file)){
+            if ($current_letter == '-'){
+                echo "<div class='letter-head-tog'>abc</div>";
+            }
             if (strtolower(substr($file, 0, 1)) != strtolower($current_letter)){
                 $current_letter = substr($file, 0, 1);
                 echo "<div id='".strtolower($current_letter)."' class='letter-head'>".strtoupper($current_letter)."</div>";
             } 
-            $file_new = str_replace('~',' ',$file);
-            $file_new = explode(".",$file_new);
+            $file_new = explode(".",$file);
             array_pop($file_new);
             $file_new = implode(".",$file_new);
             {
                 $vid_id += 1;
                 echo "<div id='vid$vid_id' class='video-container'></div>
                         <div class='item-container'>
-                        <a class='item-del' href=\"?itemdel=".$file."\">X</a>
+                        <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
                         <div class='item-ren'>A</div>
-                        <div onclick='play($vid_id, this.innerHTML)' class='file-item' >".$file_new."</div>
+                        <div onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' >".rawurldecode($file_new)."</div>
                       </div>";
             }
         }
@@ -53,18 +54,15 @@ function list_files() {
 }
 
 function create_dir($dir_name) {
-    $dir_name = str_replace(" ", "~", $dir_name);
-    mkdir('./'.$dir_name, 0777, true);
-    copy('./index.php', './'.$dir_name.'/index.php');
+    mkdir('./'.rawurlencode($dir_name), 0777, true);
+    copy('./index.php', './'.rawurlencode($dir_name).'/index.php');
 }
 
-function change_name($file, $name){
-    $file = $file.'.mp4';
+function change_name($prefix, $file, $name){
+    $file = $prefix.rawurlencode($file).'.mp4';
     $name = $name.'.mp4';
-    $file = str_replace(' ','~',$file);
-    $name = str_replace(' ','~',$name);
     $path = array_slice(explode('/',$file), 0, -1);
-    $path = implode('/',$path).'/'.$name;
+    $path = implode('/',$path).'/'.rawurlencode($name);
     rename('.'.$file, '.'.$path);
 }
 
@@ -81,7 +79,7 @@ function add_file($files, $file_name) {
         } else {$new_file_name = $file_name;}
 
         $imageFileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
-        $target_file = "./".$new_file_name.".".$imageFileType;
+        $target_file = "./".rawurlencode($new_file_name).".".$imageFileType;
         $file_upload = 1;
     
         //Check if already exists
@@ -166,6 +164,6 @@ if (isset($_POST['dest'])){
     rename('.'.$_POST['source'],'.'.$_POST['dest'].'/'.$end_dest);
 }
 if (isset($_POST['file_q'])){
-   change_name($_POST['file_q'], $_POST['name_q']); 
+   change_name($_POST['file_prefix_q'], $_POST['file_q'], $_POST['name_q']); 
 }
 ?>

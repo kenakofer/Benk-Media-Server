@@ -13,13 +13,11 @@ function copy_index($dir){
 
 function remove_non_av($dir, $destination){
     //Deletes all non audio/video files by checking MIME types
-    //$destination = implode('/',array_slice(explode('/', $destination), 0, -1)); 
     if(is_dir($dir)){
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != '.' && $object != '..' && $object != 'index.php'){
                 if (is_file("$dir/".$object)){
-                    $object_new = str_replace(" ","~",$object);
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $mime = finfo_file($finfo, "$dir/".$object);
                     if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
@@ -33,7 +31,7 @@ function remove_non_av($dir, $destination){
                        //     unlink($dir.'/'.$object);
                        //     rename($dir.'/'.$object_new.'.mp4', '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new.'.mp4');
                        // } else { rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new); }
-                        rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new); 
+                        rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.rawurlencode($object).'.mp4'); 
                     }
                 } else { remove_non_av($dir.'/'.$object, $destination); }
             }

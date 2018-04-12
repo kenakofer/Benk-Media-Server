@@ -1,11 +1,17 @@
-function play(id, title){
-    title = title.replace(/ /g,"~");
-    console.log(title);
+function play(id, title, type){
     $('#vid'+id).addClass('video-container-active');
     $(".menu-container").addClass('nb-active-dl');
     $(".item-container").css('pointer-events','none');
-    document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
-        "<video src=\"./"+title+".mp4\" id='_vid"+id+"' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
+
+    if (type == 'name'){
+        //title = title.replace(/ /g,"~");
+        document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
+        "<video src=\"./"+title+"\" id='_vid"+id+"' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
+    } else {
+        document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
+        "<video src=\""+title+"\" id='_vid"+id+"' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
+    }
+
     $('.vid-close').on('click', function(e){
         $(this).parent().removeClass('video-container-active');
         $(this).parent().html("");
@@ -43,7 +49,7 @@ function grab_dl(title){
     var view_choice = $('.t2-choice-active').attr('id');
     $.ajax({
         url : '/.Scripts/tor.php',
-        data: {view_choice_q: view_choice, tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
+        data: {tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
         type:"POST",
         context: document.body
     }).done(function(data) {

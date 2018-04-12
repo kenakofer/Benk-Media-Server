@@ -28,7 +28,7 @@ function get_results($site, $query){
     } else {echo "<div style='margin-top:150px;'>Could not load download list: website not responding</div>";}
 }
 
-function grab_dl($view_choice, $tor_site, $title, $site){
+function grab_dl($tor_site, $title, $site){
 //Initiates download from one of two providers by scraping their HTML
     $home = '/home/www-data';
     if ($tor_site == 'tc1'){
@@ -51,17 +51,12 @@ function grab_dl($view_choice, $tor_site, $title, $site){
             $choice = $links[0]->nodeValue;
         } else { echo "error"; return;}
 
-        if ($view_choice == 'tc3'){
-            //Set up directory so scan.php can read it correctly
-            $title = str_replace(" ",".",$title);
-            $title = str_replace("'",".",$title);
-            mkdir("../.Partial/$title");
-            exec("echo '$choice\n$site' >> '../.Partial/$title.start'");
-            echo "success";
-        } else {
-            error_log($choice);
-            echo $choice;
-        }
+        //Set up directory so scan.php can read it correctly
+        $title = str_replace(" ",".",$title);
+        $title = str_replace("'",".",$title);
+        mkdir("../.Partial/$title");
+        exec("echo '$choice\n$site' >> '../.Partial/$title.start'");
+        echo "success";
     } 
 }
 
@@ -70,6 +65,6 @@ if (isset($_POST['search_q'])){
     echo get_results($_POST['site_q'], $_POST['search_q']);
 }
 if (isset($_POST['grab_q'])){
-    echo grab_dl($_POST['view_choice_q'], $_POST['tor_site_q'], $_POST['grab_q'], $_POST['grab_l']);
+    echo grab_dl($_POST['tor_site_q'], $_POST['grab_q'], $_POST['grab_l']);
 }
 ?>

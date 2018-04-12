@@ -49,13 +49,40 @@ a {
     font-family:Avenir Heavy;
     font-size:40px;
     position:relative;
-    top:50px;
+    top:80px;
     margin-left:50px;
 }
 #ds2 {
     font-family:Avenir Bold;
     font-size:30px;
     margin:0px;
+}
+.search-form {
+    width:100%;
+    background-color:white;
+    text-align:center;
+    padding-top:20px;
+    padding-bottom:20px;
+    margin-top:-210px;
+    transition:all 0.4s ease;
+}
+.search-form input[type=text] {
+    font-size:20px;
+    padding:20px;
+    width:30%;
+}
+.search-form-active {
+    margin-top:0px !important;
+}
+.search-button {
+    position:relative;
+    width:40px;
+    height:40px;
+    background-image:url('/.Images/search.svg');
+    float:right;
+    top:75px;
+    margin-right:75px;
+    cursor:pointer;
 }
 .box-container.ui-draggable-dragging{
     z-index:99;
@@ -787,6 +814,43 @@ button:hover {
         margin-left:0px;
         padding:0px;
         padding:35px;
+        width:70%;
+    }
+    .letter-head {
+        width:90%;
+        margin:0 auto;
+        font-size:20px;
+    }
+    .letter-chooser {
+        font-size:20px;
+        flex-wrap:wrap;
+    }
+    .letter {
+        padding-right:5px;
+    }
+    .letter:hover {
+        font-size:25px;
+    }
+    .letter-head-tog {
+        margin-right:35px;
+    }
+    .search-button {
+        position:absolute;
+        width:30px;
+        height:30px;
+        top:30px;
+        right:-45px;
+        opacity:1;
+        transition:opacity 0.4s ease;
+    }
+    .search-button-m-active {
+        opacity:0;
+    }
+    .search-form {
+        margin-top:-177px;
+    }
+    .search-form input[type=text] {
+        padding:15px;
         width:70%;
     }
 }
