@@ -11,7 +11,7 @@ function search($dir, $term, $arr){
                     if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
                         continue;
                     } else {
-                    array_push($results, array($object, "$dir/".$object)); 
+                    array_push($results, array(rawurldecode($object), "$dir/".rawurlencode($object))); 
                     }
                 }
             } else {$results = search("$dir/".$object, $term, $results);}

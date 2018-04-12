@@ -4,7 +4,6 @@ function play(id, title, type){
     $(".item-container").css('pointer-events','none');
 
     if (type == 'name'){
-        //title = title.replace(/ /g,"~");
         document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
         "<video src=\"./"+title+"\" id='_vid"+id+"' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
     } else {
