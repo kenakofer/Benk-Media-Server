@@ -63,7 +63,7 @@ a {
     text-align:center;
     padding-top:20px;
     padding-bottom:20px;
-    margin-top:-210px;
+    margin-top:-177px;
     transition:all 0.4s ease;
 }
 .search-form input[type=text] {
@@ -363,7 +363,7 @@ cursor:pointer;
 .button-container {
     display:flex;
 }
-.new-button, .dl-button {
+.new-button, .dl-button{
     width:75px;
     height:75px;
     box-shadow:0px 0px 9px rgba(0,0,0,0.3);
@@ -375,7 +375,7 @@ cursor:pointer;
     right:0;
     transition:all 0.4s ease;
 }
-.dl-button {
+.dl-button{
     right:100px;
     width:40px;
     background:linear-gradient(#f90,#ffcf00);
@@ -383,8 +383,9 @@ cursor:pointer;
     height:40px;
     bottom:17px;
     opacity:1;
+    pointer-events:all;
 }
-.dl-button:hover {
+.dl-button:hover{
     height:50px;
     width:50px;
     right:95px;
@@ -448,7 +449,7 @@ cursor:pointer;
 .dnf-body {
     overflow:hidden;
 }
-.cnd_container, .um_container, .dnf_container, .dd_container, .ren_container {
+.cnd_container, .um_container, .dnf_container, .dd_container, .ren_container{
     position:fixed;
     top:0;
     left:0;
@@ -459,7 +460,7 @@ cursor:pointer;
     opacity:0;
     pointer-events:none;
 }
-.cnd-active, .um-active, .dnf-active, .dd-active, .ren-active {
+.cnd-active, .um-active, .dnf-active, .dd-active, .ren-active{
     opacity:1;
     pointer-events:auto;
 }
@@ -496,37 +497,37 @@ cursor:pointer;
     background:linear-gradient(lightgrey, white);
     color:grey;
 }
-.dnf {
+.dnf{
     background-color:white;
     height:100vh;
     width:100vw;
     text-align:center;
     overflow-y:auto;
 }
-.dnf h2 {
+.dnf h2{
     padding-top:50px;
 }
-.dnf h3 {
+.dnf h3{
     text-align:left;
     width:600px;
     margin:0 auto;
     margin-bottom:8px;
 }
-#dnfc {
+#dnfc{
     right:20px;
     top:20px;
 }
-#dn {
+#dn{
     width:600px;
 }
-.t-chooser {
+.t-chooser{
     display:flex;
     position:absolute;
     float:left;
     margin-top:20px;
     margin-left:20px;
 }
-.t-choice {
+.t-choice{
     width:35px;
     height:35px;
     background:linear-gradient(lightgrey -150%, white);
@@ -538,24 +539,20 @@ cursor:pointer;
     margin-right:15px;
     transition:all 0.4s ease;
 }
-.t-choice:hover {
+.t-choice:hover{
     width:50px;
     height:50px;
     margin-left:-5px;
     margin-top:-10px;
 }
-.t-choice-active, .t2-choice-active {
+.t-choice-active, .t2-choice-active{
     box-shadow:0px 0px 9px #f90;
 }
-#tc1 {
+#tc1{
     background-image:url("/.Images/tpb.png");
 }
-#tc2 {
+#tc2{
     background-image:url("/.Images/btdb.png");
-}
-#tc3, #tc4 {
-    opacity:0;
-    pointer-events:none;
 }
 .result {
     width:80%;
@@ -713,6 +710,9 @@ button:hover {
     .box-del {
         right:5px;
         padding:10px;
+        opacity:1;
+    }
+    .item-del, .item-ren {
         opacity:1;
     }
     .cnd-container, .cnd, .um_container, .um, .dd-container, .dd, .ren_container, .ren {

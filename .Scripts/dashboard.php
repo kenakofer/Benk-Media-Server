@@ -9,12 +9,18 @@ function get_dls(){
 	}
 
 	$line = explode("|", $line);
-        $name = substr($line[0], strrpos($line[0], '/') + 1);
+    $name = substr($line[0], strrpos($line[0], '/') + 1);
+    $percent = $line[2];
+    if ($percent == 'NAN'){
+       $percent = "Initializing..."; 
+    } else if ($percent == "0"){
+       $percent = "Validating..."; 
+    }
 	$output = $output."<div id='$line[1]' class='partial-listing'>
 				<div class='close' onclick=\"cancel('$line[1]','$name')\">X</div>
 				<div class='loading'></div>
 				$name
-				<p style='float:right;margin-right:30px;margin-top:2px;'>".$line[2]."</div>";
+				<p style='float:right;margin-right:30px;margin-top:2px;'>".$percent."</div>";
     }
     if ($output == ""){
         $output = "<p style='text-align:center;margin-top:20vh;'>There are no active downloads.</p>";

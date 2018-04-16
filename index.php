@@ -19,6 +19,7 @@ session_start();
     if (isset($_POST['fn'])){
        add_file($_FILES['uf'],$_POST["fn"]); 
        $del = 0;
+       header('Location: '.$dir);
     }
     if (isset($_GET['itemdel'])) {
         $item = $_GET['itemdel'];
@@ -43,6 +44,8 @@ session_start();
     <link rel="stylesheet" href="/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="/video-js.css">
     <script src="/.Scripts/add.js"></script>
     <script src="/.Scripts/tor.js"></script>
 </head>
@@ -137,7 +140,7 @@ session_start();
         <div class="cnd">
             <div id='cndc' class="close">X</div>
             <h2>Create New Directory</h2>
-            <form id="cnd_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES);?>">
+            <form id="cnd_form" >
                 <h3>Directory Name</h3>
                 <input type="text" name="dn"><br><br>
                 <input type="submit" value="Submit">

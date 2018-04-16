@@ -150,7 +150,7 @@ function breadcrumbs(){
             $l_repl = str_replace("~"," ",$l);
             echo "<a $margin class='bc_c' href='".$b."/'>
                         <div class='breadcrumb'></div>
-                        <div class='breadcrumb-title'>".$l_repl."</div>
+                        <div class='breadcrumb-title'>".rawurldecode(rawurldecode($l_repl))."</div>
                   </a>";
             $b .= '/';
         }

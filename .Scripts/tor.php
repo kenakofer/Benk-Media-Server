@@ -1,4 +1,5 @@
 <?php
+
 function get_results($site, $query){
 //Gets search results from one of two download providers by scraping their webpages
     if ($site == 'tc1'){
@@ -21,7 +22,7 @@ function get_results($site, $query){
             $inject = "";
             foreach ($links as $link){
                 $link = $link->textContent;
-                $inject = $inject.'<div onclick="grab_dl(this.innerHTML)" class="result">'.$link.'</div>'; 
+                $inject = $inject.'<div onclick="grab_dl(this.innerHTML, \''.$method.'\')" class="result">'.$link.'</div>'; 
             }
         } else { echo 'No results found!'; }
         echo $inject;
@@ -51,11 +52,11 @@ function grab_dl($tor_site, $title, $site){
             $choice = $links[0]->nodeValue;
         } else { echo "error"; return;}
 
-        //Set up directory so scan.php can read it correctly
-        $title = str_replace(" ",".",$title);
-        $title = str_replace("'",".",$title);
+        $title = rawurlencode($title);
         mkdir("../.Partial/$title");
-        exec("echo '$choice\n$site' >> '../.Partial/$title.start'");
+
+        //Set up directory so scan.php can read it correctly
+        exec("echo '$choice\n".rawurldecode($site)."' >> '../.Partial/$title.start'");
         echo "success";
     } 
 }

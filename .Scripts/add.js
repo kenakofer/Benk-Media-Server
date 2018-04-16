@@ -1,6 +1,12 @@
 $(document).ready(function(){
 
+    if (screen.width >= 760){
+        $('head').append('<script src="http://vjs.zencdn.net/6.6.3/video.js"></script>');
+    }
+
 //Click detection for the UI
+    var bs = 0;
+    var dlss = 0;
     var base = -220;
     var children = $('.breadcrumbs').children().length;
     for (var child = 0; child < $('.breadcrumbs').children().length - 2; child++){
@@ -9,7 +15,6 @@ $(document).ready(function(){
     if ($(window).width() < 760){
         $('.breadcrumbs').css("margin-top", base);
      }
-    var bs = 0;
     $(window).resize(function() {
         if ($(window).width() < 760){
             $('.breadcrumbs').css("margin-top", base);
@@ -88,13 +93,11 @@ $(document).ready(function(){
     $('.vid-close-active').on('click', function(e){
         $(this).parent().removeClass('video-container-active');
         $(this).parent().html("");
-        $(".menu-container").removeClass('nb-active-dl');
-        $(".item-del").removeClass('nb-active-dl');
     });
     $('.new-button').on('click', function(){
         if (bs == 0) {
-                $('.dl-button').addClass('nb-active-dl');
                 $('.new-menu').addClass('nm-active');
+                $('.dl-button').addClass('nb-active-dl');
                 $(this).addClass('nb-active');
                 bs = 1;
         } else {
