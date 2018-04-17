@@ -57,13 +57,13 @@ function grab_dl($tor_site, $title, $site){
             $choice = $links[0]->nodeValue;
         } else { echo "error"; return;}
 
-        $title = rawurlencode($title);
-        mkdir("../.Partial/$title");
 
         if ($tor_site == 'tc2' || $tor_site == 'tc1'){
-        //Set up directory so scan.php can read it correctly
-        exec("echo '$choice\n".rawurldecode($site)."' >> '../.Partial/$title.start'");
-        echo "success";
+            //Set up directory so scan.php can read it correctly
+            $title = rawurlencode($title);
+            mkdir("../.Partial/$title");
+            exec("echo '$choice\n".rawurldecode($site)."' >> '../.Partial/$title.start'");
+            echo "success";
         } else {
             echo $choice;
         }

@@ -85,16 +85,24 @@ function grab_dl(title, method){
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>An error has occurred. Please try again.</div>");
         } else {
+            $('.snf_container').removeClass('snf-active');
+            $('body').prepend('<div id="svid" style="z-index:99;width:100%;height:120%;background-color:black;position:fixed;"></div>');
+
+            var to = setTimeout(function () {
+                $('#svid').append('<p style="color:white;margin-top:60vh;text-align:center;">This torrent does not support streaming.</p>');
+            }, 5000);
+
             var client = new WebTorrent();
             console.log(data);
             var torrentId = data;
 
             client.add(torrentId, function (torrent) {
+                clearTimeout(to);
                 var file = torrent.files.find(function (file) {
                     return file.name.endsWith('.mp4');
                 })
 
-                file.appendTo('body');
+                file.appendTo('#svid');
             })
         }
     });

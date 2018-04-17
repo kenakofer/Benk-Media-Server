@@ -23,14 +23,14 @@ function remove_non_av($dir, $destination){
                     if (!(strpos($mime, 'video') !== false) && !(strpos($mime, 'audio') !== false)) {
                         unlink($dir.'/'.$object);
                     } else {
-                       // $type_check_array = explode('.',$object);
-                       // if (end($type_check_array) == 'mkv'){
-                       //     $type_check_array = array_slice($type_check_array, 0, -1);
-                       //     $object_new = implode('.',$type_check_array);
-                       //     shell_exec("ffmpeg -i '".$dir.'/'.$object."' -c:v copy -c:a copy '".$dir.'/'.$object_new.".mp4' &");
-                       //     unlink($dir.'/'.$object);
-                       //     rename($dir.'/'.$object_new.'.mp4', '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new.'.mp4');
-                       // } else { rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new); }
+                        //$type_check_array = explode('.',$object);
+                        //if (end($type_check_array) == 'mkv'){
+                        //    $type_check_array = array_slice($type_check_array, 0, -1);
+                        //    $object_new = implode('.',$type_check_array);
+                        //    shell_exec("ffmpeg -i '".$dir.'/'.$object."' -c copy -movflags +faststart '/var/www/media.bryceyoder.com$destination/$object_new.mp4' &");
+                        //    unlink($dir.'/'.$object);
+                        //    rename($dir.'/'.$object_new.'.mp4', '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new.'.mp4');
+                        //} else { rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new); }
                         rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.rawurlencode($object).'.mp4'); 
                     }
                 } else { remove_non_av($dir.'/'.$object, $destination); }
