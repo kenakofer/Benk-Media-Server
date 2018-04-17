@@ -94,15 +94,29 @@ $(document).ready(function(){
         $(this).parent().removeClass('video-container-active');
         $(this).parent().html("");
     });
+    $('.new-button').hover(function() {
+        $('#sm-hover').css('pointer-events', 'all');
+        $('.dl-button,.st-button').removeClass('sm-buttons-in');
+        $('#sm-hover').hover(function() {
+            $('.dl-button,.st-button').removeClass('sm-buttons-in');
+        }, function () {
+            $(this).css('pointer-events', 'none');
+            $('.dl-button,.st-button').addClass('sm-buttons-in');
+        });
+    }, function() {
+            $('.dl-button,.st-button').addClass('sm-buttons-in');
+    });
     $('.new-button').on('click', function(){
         if (bs == 0) {
                 $('.new-menu').addClass('nm-active');
                 $('.dl-button').addClass('nb-active-dl');
+                $('.st-button').addClass('nb-active-dl');
                 $(this).addClass('nb-active');
                 bs = 1;
         } else {
                 $('.dl-button').removeClass('nb-active-dl');
                 $('.new-menu').removeClass('nm-active');
+                $('.st-button').removeClass('nb-active-dl');
                 $(this).removeClass('nb-active');
                 bs = 0;
         }
@@ -123,6 +137,12 @@ $(document).ready(function(){
         $('.dnf_container').addClass('dnf-active');
         $('body').addClass('dnf-body');
     });
+    $('.st-button').on('click', function(e) {
+        $('.new-menu').removeClass('nm-active');
+        $('.new-button').removeClass('nb-active');
+        $('.snf_container').addClass('snf-active');
+        $('body').addClass('snf-body');
+    });
     $(".box-del").on('click', function(){
         $(".dd_container").addClass('dd-active');
         $("#dd_submit").html("<a href='"+$(this).attr('id')+"'><button>Yes</button></a>");
@@ -140,6 +160,10 @@ $(document).ready(function(){
         $('body').removeClass('dnf-body');
         $('.dnf_container').removeClass('dnf-active');
     });
+    $('#snfc').on('click', function(e) {
+        $('body').removeClass('snf-body');
+        $('.snf_container').removeClass('snf-active');
+    });
     $('#tc1').on('click', function(){
         $(this).addClass('t-choice-active');
         $('#tc2').removeClass('t-choice-active');
@@ -147,6 +171,14 @@ $(document).ready(function(){
     $('#tc2').on('click', function(){
         $(this).addClass('t-choice-active');
         $('#tc1').removeClass('t-choice-active');
+    });
+    $('#sc1').on('click', function(){
+        $(this).addClass('s-choice-active');
+        $('#sc2').removeClass('s-choice-active');
+    });
+    $('#sc2').on('click', function(){
+        $(this).addClass('s-choice-active');
+        $('#sc1').removeClass('s-choice-active');
     });
     $('.search-button').on('click', function(e) {
         e.stopPropagation();
@@ -167,6 +199,7 @@ $(document).ready(function(){
         $('.search-form').removeClass('search-form-active');
         $('.search-button').removeClass('search-button-m-active');
         $('.dl-button').removeClass('nb-active-dl');
+        $('.st-button').removeClass('nb-active-dl');
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
         $('.mobile-bc-tog').removeClass('mbt-active');

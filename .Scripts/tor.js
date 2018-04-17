@@ -39,24 +39,38 @@ function play(id, title, type){
     });
 }
 
-function get_results(){
+function get_results(method){
     //Checks active download provider and then grabs results from tor.php
-    document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
-    var input = document.getElementById('dn').value;
-    var site = $('.t-choice-active').attr('id');
+    if (method == 'stream'){
+        document.getElementById('sresult_container').innerHTML = "<div class='loading'></div>";
+        var input = document.getElementById('sn').value;
+        var site = $('.s-choice-active').attr('id');
+    } else {
+        document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
+        var input = document.getElementById('dn').value;
+        var site = $('.t-choice-active').attr('id');
+    }
     $.ajax({
         url : '/.Scripts/tor.php',
         data: {site_q: site, search_q: input},
         type:"POST",
         context: document.body
     }).done(function(data) {
-        document.getElementById('result_container').innerHTML = data;
+        if (method == 'stream'){
+            document.getElementById('sresult_container').innerHTML = data;
+        } else {
+            document.getElementById('result_container').innerHTML = data;
+        }
     });
 }
 
 function grab_dl(title, method){
     //Initiates download of chosen file
-    var tor_site = $('.t-choice-active').attr('id');
+    if (method == 'dl'){
+        var tor_site = $('.t-choice-active').attr('id');
+    } else {
+        var tor_site = $('.s-choice-active').attr('id');
+    }
     $.ajax({
         url : '/.Scripts/tor.php',
         data: {tor_site_q: tor_site, grab_q: title, grab_l: window.location.pathname},
@@ -66,9 +80,11 @@ function grab_dl(title, method){
         if (data == "success"){
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>Your download will start soon!</div>");
-        } else {
+        } else if (data == "error") {
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>An error has occurred. Please try again.</div>");
+        } else {
+            console.log(data);
         }
     });
 }

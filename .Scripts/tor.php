@@ -2,20 +2,24 @@
 
 function get_results($site, $query){
 //Gets search results from one of two download providers by scraping their webpages
-    if ($site == 'tc1'){
+    if ($site == 'tc1' || $site == 'sc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.$query.'/0/99/0');
-    }
-    if ($site == 'tc2'){
+    } else if ($site == 'tc2' || $site == 'sc2'){
         $html = file_get_contents('https://btdb.to/q/'.$query.'/?sort=popular');
+    }
+    if ($site == 'tc1' || $site == 'tc2'){
+        $method = 'dl';
+    } else {
+        $method = 'stream';
     }
     $doc = new DOMDocument();
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
-        if ($site == 'tc1'){
+        if ($site == 'tc1' || $site == 'sc1'){
             $links = $xpath->query('//a[@class="detLink"]');
         }
-        if ($site == 'tc2'){
+        if ($site == 'tc2' || $site == 'sc2'){
             $links = $xpath->query('//h2[@class="item-title"]/a/@title');
         }
         if($links->length > 0){
@@ -32,20 +36,20 @@ function get_results($site, $query){
 function grab_dl($tor_site, $title, $site){
 //Initiates download from one of two providers by scraping their HTML
     $home = '/home/www-data';
-    if ($tor_site == 'tc1'){
+    if ($tor_site == 'tc1' || $tor_site == 'sc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.$title.'/0/99/0');
     }
-    if ($tor_site == 'tc2'){
+    if ($tor_site == 'tc2' || $tor_site == 'sc2'){
         $html = file_get_contents('https://btdb.to/q/'.$title.'/?sort=popular');
     }
     $doc = new DOMDocument();
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
-        if ($tor_site == 'tc1'){
+        if ($tor_site == 'tc1' || $tor_site == 'sc1'){
             $links = $xpath->query('//a[@title="Download this torrent using magnet"]/@href');
         }
-        if ($tor_site == 'tc2'){
+        if ($tor_site == 'tc2' || $tor_site == 'sc2'){
             $links = $xpath->query('//a[@class="magnet"]/@href');
         }
         if($links->length > 0){
@@ -55,9 +59,13 @@ function grab_dl($tor_site, $title, $site){
         $title = rawurlencode($title);
         mkdir("../.Partial/$title");
 
+        if ($tor_site == 'tc2' || $tor_site == 'tc1'){
         //Set up directory so scan.php can read it correctly
         exec("echo '$choice\n".rawurldecode($site)."' >> '../.Partial/$title.start'");
         echo "success";
+        } else {
+            echo $choice;
+        }
     } 
 }
 

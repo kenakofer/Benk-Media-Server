@@ -98,9 +98,12 @@ session_start();
                 }?>
             </ul>
         </div>
-        <a href="/downloads.php" class="dl-button">
+        <div id='sm-hover'>
+        <div class="st-button sm-buttons-in"></div>
+        <a href="/downloads.php" class="dl-button sm-buttons-in">
             <img style='width:60%;margin-top:8px;' src='/.Images/dl.svg' />
         </a>
+        </div>
         <div class="new-button">
             <img style='margin-left:15px;margin-top:15px;width:60%;height:60%;' src='/.Images/plus.png' />
         </div>
@@ -116,7 +119,7 @@ session_start();
             <h2>Download New Media</h2>
             <h3>Title</h3>
             <input type=\"text\" name=\"dn\" id=\"dn\"><br />
-            <button id='dnb' onclick=\"get_results()\" >Search</button> 
+            <button id='dnb' onclick=\"get_results('dl')\" >Search</button> 
             <div id='result_container'>
             </div>
         </div>
@@ -136,6 +139,21 @@ session_start();
             </form>
         </div>
     </div>";}?>
+    <div class="snf_container">
+        <div class="snf">
+            <div id='snfc' class="close">X</div>
+            <div class='s-chooser'>
+                <div id='sc1' class='s-choice s-choice-active'></div>
+                <div id='sc2' class='s-choice'></div>
+            </div>
+            <h2>Stream Media</h2>
+            <h3>Title</h3>
+            <input type="text" name="dn" id="sn"><br />
+           <button id='snb' onclick="get_results('stream')" >Search</button> 
+            <div id='sresult_container'>
+            </div>
+        </div>
+    </div>
     <div class="cnd_container">
         <div class="cnd">
             <div id='cndc' class="close">X</div>
