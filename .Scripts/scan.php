@@ -76,7 +76,7 @@ while(True){
             continue;
         }
 
-        if (file_exists("$dir.in_progress") && $percent >= 25){
+        if (file_exists("$dir.in_progress") && $percent >= 90){
             $file_contents = file_get_contents("$dir.in_progress");
             $file_contents = explode("\n", $file_contents);
             $location = $file_contents[1];

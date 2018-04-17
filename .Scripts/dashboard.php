@@ -19,7 +19,7 @@ function get_dls(){
 	$output = $output."<div id='$line[1]' class='partial-listing'>
 				<div class='close' onclick=\"cancel('$line[1]','$name')\">X</div>
 				<div class='loading'></div>
-				$name
+				".rawurldecode($name)."
 				<p style='float:right;margin-right:30px;margin-top:2px;'>".$percent."</div>";
     }
     if ($output == ""){

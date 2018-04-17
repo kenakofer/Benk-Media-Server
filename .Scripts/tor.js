@@ -77,6 +77,7 @@ function grab_dl(title, method){
         type:"POST",
         context: document.body
     }).done(function(data) {
+        $('body').removeClass('dnf-body');
         if (data == "success"){
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>Your download will start soon!</div>");
@@ -84,7 +85,17 @@ function grab_dl(title, method){
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>An error has occurred. Please try again.</div>");
         } else {
+            var client = new WebTorrent();
             console.log(data);
+            var torrentId = data;
+
+            client.add(torrentId, function (torrent) {
+                var file = torrent.files.find(function (file) {
+                    return file.name.endsWith('.mp4');
+                })
+
+                file.appendTo('body');
+            })
         }
     });
 }

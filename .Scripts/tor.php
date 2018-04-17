@@ -3,9 +3,9 @@
 function get_results($site, $query){
 //Gets search results from one of two download providers by scraping their webpages
     if ($site == 'tc1' || $site == 'sc1'){
-        $html = file_get_contents('https://thepiratebay.org/search/'.$query.'/0/99/0');
+        $html = file_get_contents('https://thepiratebay.org/search/'.rawurlencode($query).'/0/99/0');
     } else if ($site == 'tc2' || $site == 'sc2'){
-        $html = file_get_contents('https://btdb.to/q/'.$query.'/?sort=popular');
+        $html = file_get_contents('https://btdb.to/q/'.rawurlencode($query).'/?sort=popular');
     }
     if ($site == 'tc1' || $site == 'tc2'){
         $method = 'dl';
@@ -36,11 +36,12 @@ function get_results($site, $query){
 function grab_dl($tor_site, $title, $site){
 //Initiates download from one of two providers by scraping their HTML
     $home = '/home/www-data';
+    error_log($title);
     if ($tor_site == 'tc1' || $tor_site == 'sc1'){
-        $html = file_get_contents('https://thepiratebay.org/search/'.$title.'/0/99/0');
+        $html = file_get_contents('https://thepiratebay.org/search/'.rawurlencode($title).'/0/99/0');
     }
     if ($tor_site == 'tc2' || $tor_site == 'sc2'){
-        $html = file_get_contents('https://btdb.to/q/'.$title.'/?sort=popular');
+        $html = file_get_contents('https://btdb.to/q/'.rawurlencode($title).'/?sort=popular');
     }
     $doc = new DOMDocument();
     if(!empty($html)){

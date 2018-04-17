@@ -42,6 +42,7 @@ session_start();
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
     <meta charset="UTF-8"> 
     <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/webtorrent/latest/webtorrent.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="http://vjs.zencdn.net/6.6.3/video-js.css" rel="stylesheet">
@@ -99,7 +100,9 @@ session_start();
             </ul>
         </div>
         <div id='sm-hover'>
-        <div class="st-button sm-buttons-in"></div>
+        <div class="st-button sm-buttons-in">
+            <img style='width:60%;margin-top:8px;' src='/.Images/stream.svg' />
+        </div>
         <a href="/downloads.php" class="dl-button sm-buttons-in">
             <img style='width:60%;margin-top:8px;' src='/.Images/dl.svg' />
         </a>
@@ -147,6 +150,7 @@ session_start();
                 <div id='sc2' class='s-choice'></div>
             </div>
             <h2>Stream Media</h2>
+            <p style='width:650px;margin:0 auto;text-align:left;padding-top:20px;padding-bottom:30px;line-height:30px;'>This feature uses WebTorrent, which requires that the torrents streamed through it be seeded by WebRTC-enabled clients. Currently, this protocol is not widely supported, and as such, you probably aren't going to find a streamable torrent. Ever. The feature is being left here in case WebRTC becomes more popular in the near future (a possibility), or if I find the time to write my own torrent streamer over the summer. Enjoy?</p>
             <h3>Title</h3>
             <input type="text" name="dn" id="sn"><br />
            <button id='snb' onclick="get_results('stream')" >Search</button> 

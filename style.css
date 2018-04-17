@@ -403,11 +403,11 @@ cursor:pointer;
     right:25px;
 }
 #sm-hover {
-    height:75px;
-    width:200px;
-    right:50px;
+    height:150px;
+    width:300px;
+    right:0px;
     position:fixed;
-    bottom:50px;
+    bottom:10px;
 }
 .new-button:hover {
     width:90px;

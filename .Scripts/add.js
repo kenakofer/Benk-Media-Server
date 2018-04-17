@@ -94,17 +94,13 @@ $(document).ready(function(){
         $(this).parent().removeClass('video-container-active');
         $(this).parent().html("");
     });
-    $('.new-button').hover(function() {
-        $('#sm-hover').css('pointer-events', 'all');
-        $('.dl-button,.st-button').removeClass('sm-buttons-in');
-        $('#sm-hover').hover(function() {
+    $('#sm-hover').hover(function() {
+        $('.new-button').hover(function() {
             $('.dl-button,.st-button').removeClass('sm-buttons-in');
-        }, function () {
-            $(this).css('pointer-events', 'none');
-            $('.dl-button,.st-button').addClass('sm-buttons-in');
+        }, function() {
         });
-    }, function() {
-            $('.dl-button,.st-button').addClass('sm-buttons-in');
+    }, function () {
+        $('.dl-button,.st-button').addClass('sm-buttons-in');
     });
     $('.new-button').on('click', function(){
         if (bs == 0) {
