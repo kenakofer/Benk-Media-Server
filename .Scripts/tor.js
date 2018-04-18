@@ -41,26 +41,16 @@ function play(id, title, type){
 
 function get_results(method){
     //Checks active download provider and then grabs results from tor.php
-    if (method == 'stream'){
-        document.getElementById('sresult_container').innerHTML = "<div class='loading'></div>";
-        var input = document.getElementById('sn').value;
-        var site = $('.s-choice-active').attr('id');
-    } else {
-        document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
-        var input = document.getElementById('dn').value;
-        var site = $('.t-choice-active').attr('id');
-    }
+    document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
+    var input = document.getElementById('dn').value;
+    var site = $('.t-choice-active').attr('id');
     $.ajax({
         url : '/.Scripts/tor.php',
         data: {site_q: site, search_q: input},
         type:"POST",
         context: document.body
     }).done(function(data) {
-        if (method == 'stream'){
-            document.getElementById('sresult_container').innerHTML = data;
-        } else {
-            document.getElementById('result_container').innerHTML = data;
-        }
+        document.getElementById('result_container').innerHTML = data;
     });
 }
 
@@ -68,8 +58,6 @@ function grab_dl(title, method){
     //Initiates download of chosen file
     if (method == 'dl'){
         var tor_site = $('.t-choice-active').attr('id');
-    } else {
-        var tor_site = $('.s-choice-active').attr('id');
     }
     $.ajax({
         url : '/.Scripts/tor.php',
@@ -84,27 +72,20 @@ function grab_dl(title, method){
         } else if (data == "error") {
             $('.dnf_container').removeClass('dnf-active');
             $(document.body).prepend("<div class='notify'>An error has occurred. Please try again.</div>");
-        } else {
-            $('.snf_container').removeClass('snf-active');
-            $('body').prepend('<div id="svid" style="z-index:99;width:100%;height:120%;background-color:black;position:fixed;"></div>');
-
-            var to = setTimeout(function () {
-                $('#svid').append('<p style="color:white;margin-top:60vh;text-align:center;">This torrent does not support streaming.</p>');
-            }, 5000);
-
-            var client = new WebTorrent();
-            console.log(data);
-            var torrentId = data;
-
-            client.add(torrentId, function (torrent) {
-                clearTimeout(to);
-                var file = torrent.files.find(function (file) {
-                    return file.name.endsWith('.mp4');
-                })
-
-                file.appendTo('#svid');
-            })
         }
     });
 }
 
+function stream(){
+    var query = document.getElementById('sn').value;
+    console.log(query);
+    $.ajax({
+        url : '/.Scripts/tor.php',
+        data: {s_search_q: query},
+        type:"POST",
+        context: document.body
+    }).done(function(data) {
+        //$('#sresult_container').html('<iframe src='+data+'; allowfullscreen="true" style="margin-top:50px;margin-bottom:50px;width:700px;height:400px;" />');
+        window.open(data, '_blank');
+    });
+}

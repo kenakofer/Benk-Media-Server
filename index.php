@@ -145,15 +145,11 @@ session_start();
     <div class="snf_container">
         <div class="snf">
             <div id='snfc' class="close">X</div>
-            <div class='s-chooser'>
-                <div id='sc1' class='s-choice s-choice-active'></div>
-                <div id='sc2' class='s-choice'></div>
-            </div>
             <h2>Stream Media</h2>
-            <p style='width:650px;margin:0 auto;text-align:left;padding-top:20px;padding-bottom:30px;line-height:30px;'>This feature uses WebTorrent, which requires that the torrents streamed through it be seeded by WebRTC-enabled clients. Currently, this protocol is not widely supported, and as such, you probably aren't going to find a streamable torrent. Ever. The feature is being left here in case WebRTC becomes more popular in the near future (a possibility), or if I find the time to write my own torrent streamer over the summer. Enjoy?</p>
+            <p style='text-align:left;margin:0 auto;width:650px;margin-top:50px;line-height:30px;margin-bottom:50px;'>This feature is experimental and scrapes streaming sites for their links. As such, videos may be slow, low-quality, or contain pop-ups. It is recommended to continue using the download feature except for recent/currently-in-theater movies, which are more likely to trigger a response from production companies when torrenting.</p>
             <h3>Title</h3>
             <input type="text" name="dn" id="sn"><br />
-           <button id='snb' onclick="get_results('stream')" >Search</button> 
+           <button id='snb' onclick='stream()'>Search</button> 
             <div id='sresult_container'>
             </div>
         </div>
