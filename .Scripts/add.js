@@ -1,17 +1,36 @@
 $(document).ready(function(){
 
+    //Don't use VideoJS on mobile
     if (screen.width >= 760){
         $('head').append('<script src="http://vjs.zencdn.net/6.6.3/video.js"></script>');
     }
 
-//Click detection for the UI
+    //Click detection for the UI
     var bs = 0;
     var dlss = 0;
+
+    //Dynamically calculate the distance between breadcrumbs based on title length
     var base = -220;
     var children = $('.breadcrumbs').children().length;
     for (var child = 0; child < $('.breadcrumbs').children().length - 2; child++){
         base = base - 70;
     }
+
+    //Get movie data from IMDb
+    var get_meta;
+    var meta;
+    if (window.location.pathname.indexOf('Movies') > -1 || window.location.pathname.indexOf('TV') > -1){
+        $('.item-container').hover(function () {
+            var here = $(this);
+            get_meta = setTimeout(meta=get_metadata, 1500, $(this).children('.file-item').children().html(), $(this).children('.file-item').attr('id'));
+        }, function () {
+            clearTimeout(get_meta);
+            $(this).children('.file-item').removeClass('file-item-active');
+            $(this).children('.file-item').children('.details').remove();
+        });
+    }
+
+    //Mobile style changey stuff
     if ($(window).width() < 760){
         $('.breadcrumbs').css("margin-top", base);
      }
@@ -21,10 +40,15 @@ $(document).ready(function(){
         }else {
             $('.breadcrumbs').css("margin-top", "50px");
     }});
+
+
+    //Move to alphabetical category on keystroke
     $('body').keyup(function(event) {
         var key = String.fromCharCode(event.keyCode).toLowerCase();
         document.getElementById(key).scrollIntoView();
     });
+
+    //Show clickable alphabet list when clicking a letter
     $('.letter-head').on('click',function(){
         var letter = 65;
         var str ="<div class='letter-chooser'>";
@@ -50,6 +74,8 @@ $(document).ready(function(){
             }
         }, 400);
     });
+
+    //Show search bar
     $('.search-button').on('click',function(e){
         if ($('.search-form').hasClass('search-form-active')){
             $(this).removeClass('search-button-m-active');
@@ -59,6 +85,8 @@ $(document).ready(function(){
             $(this).addClass('search-button-m-active');
         }
     });
+
+    //Let enter work for searching on torrent search and rename dialogue
     $("#dn").keyup(function(event) {
         if(event.keyCode == 13){
             $("#dnb").click();
@@ -69,12 +97,16 @@ $(document).ready(function(){
             $("#renas").click();
         }
     });
+
+    //Toggle alphabetical categories
     $('.letter-head-tog').on('click',function(){
         if ($('.letter-head').hasClass('letter-head-active')){
             $('.letter-head').removeClass('letter-head-active');
         } else {
             $('.letter-head').addClass('letter-head-active');}
     });
+
+    //Show rename dialogue
     $('.item-ren').on('click', function(){
         $('.ren_container').addClass('ren-active');
         $(this).siblings('.file-item').attr('id','rename');
@@ -84,16 +116,22 @@ $(document).ready(function(){
         $('#rename').removeAttr('id');
     });
     $('#renas').on('click', function(){
-        rename($('#rename').html(), $('#rena').val());
+        rename($('#rename').children('.fip').html(), $('#rena').val());
     });
+
+    //Show mobile breadcrumbs on tap
     $('.mobile-bc-tog').on('click', function(e){
         $(this).addClass('mbt-active');
         $('.breadcrumbs').addClass('mbc-active');
     });
+
+    //Close video
     $('.vid-close-active').on('click', function(e){
         $(this).parent().removeClass('video-container-active');
         $(this).parent().html("");
     });
+
+    //Fancy hover stuff with + button
     $('#sm-hover').hover(function() {
         $('.new-button').hover(function() {
             $('.dl-button,.st-button').removeClass('sm-buttons-in');
@@ -117,6 +155,8 @@ $(document).ready(function(){
                 bs = 0;
         }
     });
+
+    //Show different dialogues (create new directory, upload media, download new file, stream)
     $('#cnd').on('click', function(e) {
         $('.new-menu').removeClass('nm-active');
         $('.new-button').removeClass('nb-active');
@@ -139,10 +179,14 @@ $(document).ready(function(){
         $('.snf_container').addClass('snf-active');
         $('body').addClass('snf-body');
     });
+
+    //Show deletion dialogue
     $(".box-del").on('click', function(){
         $(".dd_container").addClass('dd-active');
         $("#dd_submit").html("<a href='"+$(this).attr('id')+"'><button>Yes</button></a>");
     });
+
+    //Close dialogues
     $("#ddc").on('click', function(){
         $(".dd_container").removeClass('dd-active');
     });
@@ -164,18 +208,14 @@ $(document).ready(function(){
         $(this).addClass('t-choice-active');
         $('#tc2').removeClass('t-choice-active');
     });
+
+    //Switch torrent source
     $('#tc2').on('click', function(){
         $(this).addClass('t-choice-active');
         $('#tc1').removeClass('t-choice-active');
     });
-    $('#sc1').on('click', function(){
-        $(this).addClass('s-choice-active');
-        $('#sc2').removeClass('s-choice-active');
-    });
-    $('#sc2').on('click', function(){
-        $(this).addClass('s-choice-active');
-        $('#sc1').removeClass('s-choice-active');
-    });
+
+    //Items that are toggled when clicking the button, and deactivated when clicking anywhere else
     $('.search-button').on('click', function(e) {
         e.stopPropagation();
     });
@@ -191,6 +231,7 @@ $(document).ready(function(){
     $('.breadcrumbs').on('click', function(e) {
         e.stopPropagation();
     });
+
     $(document).on('click', function(e){
         $('.search-form').removeClass('search-form-active');
         $('.search-button').removeClass('search-button-m-active');
@@ -203,6 +244,37 @@ $(document).ready(function(){
         bs = 0;
     });
 });
+
+function get_metadata(term, id){
+    $.ajax({
+        url: '/functions.php',
+        data: {term_q: term},
+        type: 'POST',
+        context: document.body
+    }).done(function(data){
+        for (var i = 0; i < data.length; ++i){
+            var chr = data.charAt(i);
+            if (chr == '{'){
+                var chr = i;
+                break;
+            }
+        }
+        data = data.slice(chr, data.length-1);
+        data_1 = JSON.parse(data);
+        imdbid = data_1.d[0].id;
+        $.ajax({
+            url: '/functions.php',
+            data: {imdbid_q: imdbid},
+            type: 'POST',
+            context: document.body
+        }).done(function(data){
+            expand = $('#'+id).addClass('file-item-active');
+            $('#'+id).append("<div class='details'><img src='"+data_1.d[0].i+"' /><div class='desc'><h2>"+data_1.d[0].y+"</h2><h3>"+data_1.d[0].s+"</h3></div></div>");
+           $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
+        });
+    });
+}
+
 function rename(file, name) {
     file_prefix = window.location.pathname;
     $.ajax({
@@ -214,6 +286,7 @@ function rename(file, name) {
         location.reload();
     });
 }
+
 $(function() {
     $(".box-container").draggable({
         start: function(event, ui){

@@ -46,7 +46,7 @@ function list_files() {
                         <div class='item-container'>
                         <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
                         <div class='item-ren'>A</div>
-                        <div onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' >".rawurldecode($file_new)."</div>
+                        <div id='fileitem$vid_id' onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' ><p class='fip'>".rawurldecode($file_new)."</p></div>
                       </div>";
             }
         }
@@ -156,14 +156,41 @@ function breadcrumbs(){
         }
     }
 }
-if (isset($_POST['dest'])){
-    if (count(explode("/", $_POST['source'])) > 2){
-        $end_dest = end(explode("/", $_POST['source']));
-    } else {$end_dest = $_POST['source'];}
 
-    rename('.'.$_POST['source'],'.'.$_POST['dest'].'/'.$end_dest);
+function get_metadata($term){
+    $ch1 = strtolower($term[0]);
+    $jsonurl = "http://sg.media-imdb.com/suggests/".$ch1."/".$term.".json";
+    $json = file_get_contents($jsonurl);
+    echo $json;
+}
+
+function get_description($id) {
+    libxml_use_internal_errors(true);
+    $html = file_get_contents('https://imdb.com/title/'.$id);
+    $doc = new DOMDocument();
+    if(!empty($html)){
+        $doc->loadHTML($html);
+        $xpath = new DOMXPath($doc);
+        $links = $xpath->query('//div[@class="summary_text"]');
+        $link = $links[0]->textContent;
+    }
+    echo $link;
+}
+
+if (isset($_POST['dest'])){
+    if (count(explode("/", rawurldecode($_POST['source']))) > 2){
+        $end_dest = end(explode("/", rawurldecode($_POST['source'])));
+    } else {$end_dest = rawurldecode($_POST['source']);}
+
+    rename('.'.rawurldecode($_POST['source']),'.'.rawurldecode($_POST['dest']).'/'.$end_dest);
 }
 if (isset($_POST['file_q'])){
    change_name($_POST['file_prefix_q'], $_POST['file_q'], $_POST['name_q']); 
+}
+if (isset($_POST['term_q'])){
+    get_metadata($_POST['term_q']);
+}
+if (isset($_POST['imdbid_q'])){
+    get_description($_POST['imdbid_q']);
 }
 ?>
