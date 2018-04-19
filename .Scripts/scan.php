@@ -49,6 +49,11 @@ while(True){
     $aria2->purgeDownloadResult();
     //Runs continuously in background listening for download events
     $in_progress = "";
+
+    foreach ($locations as $gid => $value){
+        $locations[$gid][1] = 0;
+    }
+
     foreach ($aria2->tellActive(["status","gid","dir","completedLength","totalLength"])['result'] as $result){
 
         $gid = $result['gid'];
@@ -68,22 +73,27 @@ while(True){
         $percent = round($amount_done / $total, 2) * 100;
 
         if ($percent == 100){
+            unlink("$dir.in_progress");
             exec("chown -R www-data:www-data '$dir'");
-            remove_non_av($dir, $locations[$gid]);
+            remove_non_av($dir, $locations[$gid][0]);
             unset($locations[$gid]);
             $aria2->remove($gid); 
             exec("rm -r '$dir'");
             continue;
         }
 
-        if (file_exists("$dir.in_progress") && $percent >= 90){
-            $file_contents = file_get_contents("$dir.in_progress");
-            $file_contents = explode("\n", $file_contents);
-            $location = $file_contents[1];
-            $locations[$gid] = $location;
-            unlink("$dir.in_progress");
-        }
+        $file_contents = file_get_contents("$dir.in_progress");
+        $file_contents = explode("\n", $file_contents);
+        $location = $file_contents[1];
+        $locations[$gid] = array($location, 1);
+
         $in_progress = $in_progress."$dir|$gid|$percent\n";
+    }
+
+    foreach ($locations as $gid => $value){
+        if ($locations[$gid][1] == 0){
+            unset($locations[$gid]);
+        }
     }
 
     exec("echo '$in_progress' > ../.Partial/downloads");

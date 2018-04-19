@@ -50,6 +50,8 @@ function search($dir, $term, $arr){
                     $val = array(rawurldecode($object), "$dir/".$object, $relevant);
                     if (count($results) == 0 || $relevant < end($results)[2]){
                         array_push($results, $val); 
+                    } else if ($relevant >= ($results)[0][2]){
+                        array_unshift($results, $val);
                     } else if (count($results) == 1) {
                         if ($results[0][2] < $relevant){
                             array_unshift($results, $val);
