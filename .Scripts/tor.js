@@ -78,14 +78,26 @@ function grab_dl(title, method){
 
 function stream(){
     var query = document.getElementById('sn').value;
-    console.log(query);
     $.ajax({
         url : '/.Scripts/tor.php',
         data: {s_search_q: query},
         type:"POST",
         context: document.body
     }).done(function(data) {
+        $('#sresult_container').html(data);
         //$('#sresult_container').html('<iframe src='+data+'; allowfullscreen="true" style="margin-top:50px;margin-bottom:50px;width:700px;height:400px;" />');
+        //window.open(data, '_blank');
+    });
+}
+
+function grab_stream(link){
+    $.ajax({
+        url: '/.Scripts/tor.php',
+        data: {link_q: link},
+        type: "POST",
+        context: document.body
+    }).done(function(data){
         window.open(data, '_blank');
+        //$('#sresult_container').html('<iframe src='+data+'; allowfullscreen="true" style="margin-top:50px;margin-bottom:50px;width:700px;height:400px;" />');
     });
 }

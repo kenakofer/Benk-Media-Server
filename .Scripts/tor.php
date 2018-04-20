@@ -67,32 +67,59 @@ function grab_dl($tor_site, $title, $site){
     } 
 }
 
-function stream($search_term){
+function grab_stream($link){
     libxml_use_internal_errors(true);
-    $search_term = str_replace(" ", "-", $search_term);
-    $html = file_get_contents('https://putlockerfit.net/'.$search_term.'/');
+    $html = file_get_contents($link); 
     $doc = new DOMDocument();
-    if(empty($html)){
+    if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
-        $link = $xpath->query('//iframe[@id="iframe-embed"]/@src');
-        if($link->length > 0){
-            echo $link[0]->textContent;
-            return;
-        } else { echo "error"; return;}
-    } else {
-        $html = file_get_contents('https://solarmoviesc.co/'.$search_term.'/?action=watching');
-        $doc = new DOMDocument();
-        if(!empty($html)){
-            $doc->loadHTML($html);
-            $xpath = new DOMXPath($doc);
-            $link = $xpath->query('//iframe/@src');
-            if($link->length > 0){
-                echo $link[0]->nodeValue;
-            } else { echo "error"; return;}
-        }
+        $links = $xpath->query('//span[@id="inchannel"]/iframe/@src');
+        echo $links[0]->textContent;
     }
 }
+
+function stream($search_term){
+    libxml_use_internal_errors(true);
+    $search_term = str_replace(" ", "+", $search_term);
+    $html = file_get_contents('https://search.stream.cr/main/?query='.$search_term); 
+    $doc = new DOMDocument();
+    if(!empty($html)){
+        $doc->loadHTML($html);
+        $xpath = new DOMXPath($doc);
+        $links = $xpath->query('//a[@class="rl"]/@href');
+        $titles = $xpath->query('//a[@class="rl"]');
+        $results = '';
+        for ($i = 0; $i < $links->length; $i++){
+            $link = $links->item($i)->value;
+            $title = substr($titles->item($i)->textContent, 0, -5);
+            $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
+        }
+    }
+    echo $results;
+}
+//    $html = file_get_contents('https://putlockerfit.net/'.$search_term.'/');
+//    $doc = new DOMDocument();
+//    if(empty($html)){
+//        $doc->loadHTML($html);
+//        $xpath = new DOMXPath($doc);
+//        $link = $xpath->query('//iframe[@id="iframe-embed"]/@src');
+//        if($link->length > 0){
+//            echo $link[0]->textContent;
+//            return;
+//        } else { echo "error"; return;}
+//    } else {
+//        $html = file_get_contents('https://solarmoviesc.co/'.$search_term.'/?action=watching');
+//        $doc = new DOMDocument();
+//        if(!empty($html)){
+//            $doc->loadHTML($html);
+//            $xpath = new DOMXPath($doc);
+//            $link = $xpath->query('//iframe/@src');
+//            if($link->length > 0){
+//                echo $link[0]->nodeValue;
+//            } else { echo "error"; return;}
+//        }
+//    }
 
 //Allow these functions to be called from tor.js
 if (isset($_POST['search_q'])){
@@ -103,5 +130,8 @@ if (isset($_POST['grab_q'])){
 }
 if (isset($_POST['s_search_q'])){
     echo stream($_POST['s_search_q']);
+}
+if (isset($_POST['link_q'])){
+    echo grab_stream($_POST['link_q']);
 }
 ?>

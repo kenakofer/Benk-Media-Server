@@ -281,6 +281,10 @@ cursor:pointer;
 .file-item-active {
     min-height:300px;
 }
+.item-container {
+    width:100%;
+    transition:width 0.4s ease;
+}
 .item-container:hover .file-item {
     box-shadow:0px 0px 9px #f90;
     padding-top:30px;
@@ -314,7 +318,7 @@ cursor:pointer;
     animation:fade_in 1s ease forwards;
 }
 .details img {
-    width:230px;
+    width:200px;
 }
 .details .desc {
    margin-left: 30px;
@@ -325,6 +329,7 @@ cursor:pointer;
     width:650px;
 }
 .video-container {
+    z-index:99;
     position:fixed;
     top:0;
     left:0;
@@ -602,6 +607,9 @@ cursor:pointer;
 }
 #tc2, #sc2{
     background-image:url("/.Images/btdb.png");
+}
+#result_container, #sresult_container {
+    margin-bottom:150px;
 }
 .result {
     width:80%;
