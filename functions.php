@@ -30,13 +30,22 @@ function list_files() {
     $current_letter = '-';
     foreach($files as $file) {
         if (is_file($file)){
+            if ( strpos(file_get_contents($_SERVER["DOCUMENT_ROOT"]."/.Scripts/video_validation.log"), $file) !== false){
+                error_log('a');
+                $color = 'style=\'color:red;\'';
+            } else {
+                $color = 'style=\'color:black;\'';
+            }
+
             if ($current_letter == '-'){
                 echo "<div class='letter-head-tog'>abc</div>";
             }
+
             if (strtolower(substr($file, 0, 1)) != strtolower($current_letter)){
                 $current_letter = substr($file, 0, 1);
                 echo "<div id='".strtolower($current_letter)."' class='letter-head'>".strtoupper($current_letter)."</div>";
             } 
+
             $file_new = explode(".",$file);
             array_pop($file_new);
             $file_new = implode(".",$file_new);
@@ -46,7 +55,7 @@ function list_files() {
                         <div class='item-container'>
                         <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
                         <div class='item-ren'>A</div>
-                        <div id='fileitem$vid_id' onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' ><p class='fip'>".rawurldecode($file_new)."</p></div>
+                        <div id='fileitem$vid_id' $color onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' ><p class='fip'>".rawurldecode($file_new)."</p></div>
                       </div>";
             }
         }

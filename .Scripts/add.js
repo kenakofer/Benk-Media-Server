@@ -265,6 +265,7 @@ $(document).ready(function(){
     });
 });
 
+// Get movie info from IMDb database
 function get_metadata(term, id){
     $.ajax({
         url: '/functions.php',
@@ -272,6 +273,8 @@ function get_metadata(term, id){
         type: 'POST',
         context: document.body
     }).done(function(data){
+
+        // Not returned in JSON format, so format it
         for (var i = 0; i < data.length; ++i){
             var chr = data.charAt(i);
             if (chr == '{'){
@@ -282,12 +285,16 @@ function get_metadata(term, id){
         data = data.slice(chr, data.length-1);
         data_1 = JSON.parse(data);
         imdbid = data_1.d[0].id;
+
+        //Plot summary isn't part of data, so use returned ID to scrape the page for the plot summary
         $.ajax({
             url: '/functions.php',
             data: {imdbid_q: imdbid},
             type: 'POST',
             context: document.body
         }).done(function(data){
+
+            //Inject into page
             expand = $('#'+id).addClass('file-item-active');
             $('#'+id).append("<div class='details'><img src='"+data_1.d[0].i+"' /><div class='desc'><h2>"+data_1.d[0].y+"</h2><h3>"+data_1.d[0].s+"</h3></div></div>");
            $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
@@ -307,6 +314,7 @@ function rename(file, name) {
     });
 }
 
+// Allow directories and files to be dragged and dropped into new locations
 $(function() {
     $(".box-container").draggable({
         start: function(event, ui){
@@ -319,6 +327,7 @@ $(function() {
         distance: 20,
         cursor:"move",cursorAt:{top:100,left:100}
     });
+
     $(".item-container").draggable({
         start: function(event, ui){
             var size= 75;
@@ -340,6 +349,7 @@ $(function() {
         distance: 20,
         cursor:"move",cursorAt:{top:60,left:50}
     });
+
     $(".breadcrumb,.box-container").droppable({
         over: function(event, ui) {
             $('.ui-draggable-dragging .dir-box').addClass('hover-active');
@@ -348,6 +358,7 @@ $(function() {
             $('.ui-draggable-dragging .dir-box').removeClass('hover-active');
         },
         tolerance: 'pointer',
+
         drop: function(event, ui){
             var path = window.location.pathname;
             if ($(this).hasClass("breadcrumb")){

@@ -1,9 +1,11 @@
+// Dynamically insert video into page
 function play(id, title, type){
     $('#vid'+id).addClass('video-container-active');
     $(".menu-container").addClass('nb-active-dl');
     $(".item-container").css('pointer-events','none');
     $('body').css('overflow-y', 'hidden');
 
+    // Videos have to be inserted differently if it's a normal page or a search page
     if (type == 'name'){
         document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
             "<video src=\"./"+title+"\" id='_vid"+id+"' class='video-js vjs-default-skin' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
@@ -11,10 +13,15 @@ function play(id, title, type){
         document.getElementById('vid'+id).innerHTML = "<div id='vid"+id+"' class='vid-close'>X</div>"+
             "<video src=\""+title+"\" id='_vid"+id+"' class='video-js vjs-default-skin' autoplay controls='true' preload='auto' width='100%' height='99%' data-setup='{}'><source src=\"./"+title+"\" type='video/mp4'><source src=\"./"+title+"\" type='video/webm'></video>";
     }
+
+    // Only use VideoJS if not mobile
     if (screen.width >= 760){
         videojs('_vid'+id, {}, function(){
         });
     }
+
+    // Close vids with ESC (sorta broken for some reason?)
+    // rn it only works on the first video
     $(document).keyup(function(event) {
         if(event.keyCode == 27){
             if (screen.width >= 760){
@@ -27,6 +34,8 @@ function play(id, title, type){
             $('body').css('overflow-y', 'auto');
         }
     });
+
+    // Close video when clicking X
     $('.vid-close').on('click', function(e){
         if (screen.width >= 760){
             videojs("_vid"+id).dispose();
@@ -39,8 +48,8 @@ function play(id, title, type){
     });
 }
 
+// Checks active download provider and then grabs results from tor.php
 function get_results(method){
-    //Checks active download provider and then grabs results from tor.php
     document.getElementById('result_container').innerHTML = "<div class='loading'></div>";
     var input = document.getElementById('dn').value;
     var site = $('.t-choice-active').attr('id');
@@ -54,8 +63,8 @@ function get_results(method){
     });
 }
 
+//Initiates download of chosen file
 function grab_dl(title, method){
-    //Initiates download of chosen file
     if (method == 'dl'){
         var tor_site = $('.t-choice-active').attr('id');
     }
@@ -76,6 +85,7 @@ function grab_dl(title, method){
     });
 }
 
+// Get streaming search results
 function stream(){
     var query = document.getElementById('sn').value;
     $.ajax({
@@ -90,6 +100,7 @@ function stream(){
     });
 }
 
+// Get link from search results
 function grab_stream(link){
     $.ajax({
         url: '/.Scripts/tor.php',

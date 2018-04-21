@@ -1,8 +1,9 @@
 <?php
 
-function get_results($site, $query){
 //Gets search results from one of two download providers by scraping their webpages
+function get_results($site, $query){
     libxml_use_internal_errors(true);
+
     if ($site == 'tc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.rawurlencode($query).'/0/99/0');
     } else if ($site == 'tc2'){
@@ -11,19 +12,23 @@ function get_results($site, $query){
     if ($site == 'tc1' || $site == 'tc2'){
         $method = 'dl';
     }
+
     $doc = new DOMDocument();
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
+
         if ($site == 'tc1'){
             $links = $xpath->query('//a[@class="detLink"]');
         }else if ($site == 'tc2'){
             $links = $xpath->query('//h2[@class="item-title"]/a/@title');
         }
+
         if($links->length > 0){
             $inject = "";
             foreach ($links as $link){
                 $link = $link->textContent;
+
                 if ($method != 'stream'){
                     $inject = $inject.'<div onclick="grab_dl(this.innerHTML, \''.$method.'\')" class="result">'.$link.'</div>'; 
                 } else {
@@ -35,24 +40,28 @@ function get_results($site, $query){
     } 
 }
 
-function grab_dl($tor_site, $title, $site){
 //Initiates download from one of two providers by scraping their HTML
+function grab_dl($tor_site, $title, $site){
     libxml_use_internal_errors(true);
     $home = '/home/www-data';
+
     if ($tor_site == 'tc1'){
         $html = file_get_contents('https://thepiratebay.org/search/'.rawurlencode($title).'/0/99/0');
     } else if ($tor_site == 'tc2'){
         $html = file_get_contents('https://btdb.to/q/'.rawurlencode($title).'/?sort=popular');
     }
+
     $doc = new DOMDocument();
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
+
         if ($tor_site == 'tc1'){
             $links = $xpath->query('//a[@title="Download this torrent using magnet"]/@href');
         } else if ($tor_site == 'tc2'){
             $links = $xpath->query('//a[@class="magnet"]/@href');
         }
+
         if($links->length > 0){
             $choice = $links[0]->nodeValue;
         } else { echo "error"; return;}
@@ -67,29 +76,20 @@ function grab_dl($tor_site, $title, $site){
     } 
 }
 
-function grab_stream($link){
-    libxml_use_internal_errors(true);
-    $html = file_get_contents($link); 
-    $doc = new DOMDocument();
-    if(!empty($html)){
-        $doc->loadHTML($html);
-        $xpath = new DOMXPath($doc);
-        $links = $xpath->query('//span[@id="inchannel"]/iframe/@src');
-        echo $links[0]->textContent;
-    }
-}
-
+// Scrape search.stream.cr for their results
 function stream($search_term){
     libxml_use_internal_errors(true);
     $search_term = str_replace(" ", "+", $search_term);
     $html = file_get_contents('https://search.stream.cr/main/?query='.$search_term); 
     $doc = new DOMDocument();
+
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
         $links = $xpath->query('//a[@class="rl"]/@href');
         $titles = $xpath->query('//a[@class="rl"]');
         $results = '';
+
         for ($i = 0; $i < $links->length; $i++){
             $link = $links->item($i)->value;
             $title = substr($titles->item($i)->textContent, 0, -5);
@@ -98,28 +98,33 @@ function stream($search_term){
     }
     echo $results;
 }
-//    $html = file_get_contents('https://putlockerfit.net/'.$search_term.'/');
-//    $doc = new DOMDocument();
-//    if(empty($html)){
-//        $doc->loadHTML($html);
-//        $xpath = new DOMXPath($doc);
-//        $link = $xpath->query('//iframe[@id="iframe-embed"]/@src');
-//        if($link->length > 0){
-//            echo $link[0]->textContent;
-//            return;
-//        } else { echo "error"; return;}
-//    } else {
-//        $html = file_get_contents('https://solarmoviesc.co/'.$search_term.'/?action=watching');
-//        $doc = new DOMDocument();
-//        if(!empty($html)){
-//            $doc->loadHTML($html);
-//            $xpath = new DOMXPath($doc);
-//            $link = $xpath->query('//iframe/@src');
-//            if($link->length > 0){
-//                echo $link[0]->nodeValue;
-//            } else { echo "error"; return;}
-//        }
-//    }
+
+// Grab video page from search
+function grab_stream($link){
+    libxml_use_internal_errors(true);
+    $html = file_get_contents($link); 
+    $doc = new DOMDocument();
+
+    if(!empty($html)){
+        $doc->loadHTML($html);
+        $xpath = new DOMXPath($doc);
+        $links = $xpath->query('//span[@id="inchannel"]/iframe/@src');
+        echo $links[0]->textContent;
+    }
+}
+
+// Old code to grab streams from a different and worse site.
+// I have no idea how long search.stream.cr will exist so let's keep this here
+# $html = file_get_contents('https://solarmoviesc.co/'.$search_term.'/?action=watching');
+# $doc = new DOMDocument();
+# if(!empty($html)){
+#     $doc->loadHTML($html);
+#     $xpath = new DOMXPath($doc);
+#     $link = $xpath->query('//iframe/@src');
+#     if($link->length > 0){
+#         echo $link[0]->nodeValue;
+#     } else { echo "error"; return;}
+# }
 
 //Allow these functions to be called from tor.js
 if (isset($_POST['search_q'])){
