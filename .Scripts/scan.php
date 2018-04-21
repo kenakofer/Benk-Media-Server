@@ -50,7 +50,7 @@ function remove_non_av($dir, $destination){
 }
 
 // Run in the background and listen for download events
-exec('aria2c --enable-rpc --rpc-allow-origin-all -D -V');
+exec('aria2c --enable-rpc --rpc-allow-origin-all -D');
 $locations = [];
 include 'Aria2.php';
 $aria2 = new Aria2();

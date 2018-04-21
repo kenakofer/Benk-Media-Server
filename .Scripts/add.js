@@ -267,6 +267,8 @@ $(document).ready(function(){
 
 // Get movie info from IMDb database
 function get_metadata(term, id){
+
+    //Attempt to get info based on title
     $.ajax({
         url: '/functions.php',
         data: {term_q: term},
@@ -284,21 +286,61 @@ function get_metadata(term, id){
         }
         data = data.slice(chr, data.length-1);
         data_1 = JSON.parse(data);
-        imdbid = data_1.d[0].id;
 
-        //Plot summary isn't part of data, so use returned ID to scrape the page for the plot summary
-        $.ajax({
-            url: '/functions.php',
-            data: {imdbid_q: imdbid},
-            type: 'POST',
-            context: document.body
-        }).done(function(data){
+        // If no results were found, split the title at the first number and try again
+        // The title might be in standard torrent title format and shortening it may produce results
+        if (Object.keys(data_1).length == 2){
+            var newterm = '';
+            for (var i = 0; i < term.length; i++){
+               if (['1','2','3','4','5','6','7','8','9','0'].includes(term[i])){
+                    break;
+               } else {
+                    newterm = newterm+term[i];
+               }
+            }
+            $.ajax({
+                url: '/functions.php',
+                data: {term_q: newterm},
+                type: 'POST',
+                context: document.body
+            }).done(function(data){
 
-            //Inject into page
-            expand = $('#'+id).addClass('file-item-active');
-            $('#'+id).append("<div class='details'><img src='"+data_1.d[0].i+"' /><div class='desc'><h2>"+data_1.d[0].y+"</h2><h3>"+data_1.d[0].s+"</h3></div></div>");
-           $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
-        });
+                for (var i = 0; i < data.length; ++i){
+                    var chr = data.charAt(i);
+                    if (chr == '{'){
+                        var chr = i;
+                        break;
+                    }
+                }
+                data = data.slice(chr, data.length-1);
+                data_1 = JSON.parse(data);
+                imdbid = data_1.d[0].id;
+
+                // Get plot summary with new data
+                plot_summary(imdbid, id);
+            });
+
+        // The title worked fine by itself
+        } else {
+            imdbid = data_1.d[0].id;
+            plot_summary(imdbid, id);
+        }
+    });
+}
+
+function plot_summary(imdbid, id){
+    //Plot summary isn't part of data, so use returned ID to scrape the page for the plot summary
+    $.ajax({
+        url: '/functions.php',
+        data: {imdbid_q: imdbid},
+        type: 'POST',
+        context: document.body
+    }).done(function(data){
+
+        //Inject into page
+        expand = $('#'+id).addClass('file-item-active');
+        $('#'+id).append("<div class='details'><img src='"+data_1.d[0].i+"' /><div class='desc'><h2>"+data_1.d[0].y+"</h2><h3>"+data_1.d[0].s+"</h3></div></div>");
+       $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
     });
 }
 
