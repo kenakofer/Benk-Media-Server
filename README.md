@@ -1,9 +1,9 @@
 # Benk-Media-Server
-Media server webapp built on LAMP that stores, downloads, and allows the upload of audio and video.
+Media server webapp built on LAMP that stores, downloads, streams, and allows the upload of audio and video.
 
 To begin:
 
-aria2 and php-xml must be installed
+aria2, ffmpeg, and php-xml must be installed
 
 scan.php must be given the correct full path to run Aria2 on multiple lines and run in the background (php benk-media-server/.Scripts/scan.php 2>&1 /dev/null &)
 
@@ -17,7 +17,7 @@ Goals:
 
 Upload files in background and improve UX for multiple uploads
 
-Allow users to rename directories and move files (currently users can move directories and rename files)
+Allow users to rename directories (currently can only rename files)
 
 Allow users to delete multiple files at a time
 
