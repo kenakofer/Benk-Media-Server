@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    //Don't use VideoJS on mobile
+    // Don't use VideoJS on mobile
+    // If screen size is small, cut off non-wrapping titles
     if (screen.width >= 760){
         $('head').append('<script src="http://vjs.zencdn.net/6.6.3/video.js"></script>');
     }
@@ -8,6 +9,7 @@ $(document).ready(function(){
     //Click detection for the UI
     var bs = 0;
     var dlss = 0;
+    var view = 0;
 
     //Dynamically calculate the distance between breadcrumbs based on title length
     var base = -220;
@@ -19,10 +21,12 @@ $(document).ready(function(){
     //Get movie data from IMDb
     var get_meta;
     var meta;
-    if (window.location.pathname.indexOf('Movies') > -1 || window.location.pathname.indexOf('TV') > -1){
+    if (window.location.pathname.indexOf('Movies') > -1 || window.location.pathname.indexOf('TV')){
         $('.item-container').hover(function () {
-            var here = $(this);
-            get_meta = setTimeout(meta=get_metadata, 1500, $(this).children('.file-item').children().html(), $(this).children('.file-item').attr('id'));
+            if (view == 0 && screen.width >= 760){
+                var here = $(this);
+                get_meta = setTimeout(meta=get_metadata, 1500, $(this).children('.file-item').children().html(), $(this).children('.file-item').attr('id'), view);
+            }
         }, function () {
             clearTimeout(get_meta);
             $(this).children('.file-item').removeClass('file-item-active');
@@ -41,6 +45,49 @@ $(document).ready(function(){
             $('.breadcrumbs').css("margin-top", "50px");
     }});
 
+    //Toggle viewstyle
+    $('.view-tog').on('click', function() {
+        if (view == 0){
+           view = 1;
+           $(this).addClass('view-tog-v');
+           $('.item-container').addClass('item-container-art');
+           $('.item-ren, .item-del').addClass('item-v');
+           $('.file-item').addClass('file-item-art');
+           $('.file-item span').css('padding', '50px');
+           $('.file-item').each(function(i, obj){
+                get_metadata($(obj).children('.fip').html(), $(obj).attr('id'), view);
+           });
+        } else {
+           view = 0;
+           $(this).removeClass('view-tog-v');
+           $('.file-item').removeClass('file-item-art');
+           $('.item-container').removeClass('item-container-art');
+           $('.file-item').css('background-image', '');
+           $('.file-item span').html('');
+           $('.file-item span').css('padding', '0');
+           $('.item-ren, .item-del').removeClass('item-v');
+        }
+    });
+
+
+    //Tooltip hover
+    window.onmousemove = function (e) {
+        if (screen.width >= 760){
+            var x = e.clientX;
+                y = e.clientY;
+            $('.tooltip span').css('top', y+15+'px');
+            console.log($('.tooltip span').position().left, screen.width);
+            if (x + 800 > $(window).width()){
+                if (x - 800 < 0){
+                    $('.tooltip span').css('left', x-400+'px');
+                } else {
+                    $('.tooltip span').css('left', x-750+'px');
+                }
+            } else {
+                $('.tooltip span').css('left', x+15+'px');
+            }
+        }
+    }
 
     //Move to alphabetical category on keystroke
     $('body').keyup(function(event) {
@@ -266,7 +313,7 @@ $(document).ready(function(){
 });
 
 // Get movie info from IMDb database
-function get_metadata(term, id){
+function get_metadata(term, id, view){
 
     //Attempt to get info based on title
     $.ajax({
@@ -276,15 +323,6 @@ function get_metadata(term, id){
         context: document.body
     }).done(function(data){
 
-        // Not returned in JSON format, so format it
-        for (var i = 0; i < data.length; ++i){
-            var chr = data.charAt(i);
-            if (chr == '{'){
-                var chr = i;
-                break;
-            }
-        }
-        data = data.slice(chr, data.length-1);
         data_1 = JSON.parse(data);
 
         // If no results were found, split the title at the first number and try again
@@ -305,31 +343,26 @@ function get_metadata(term, id){
                 context: document.body
             }).done(function(data){
 
-                for (var i = 0; i < data.length; ++i){
-                    var chr = data.charAt(i);
-                    if (chr == '{'){
-                        var chr = i;
-                        break;
-                    }
-                }
-                data = data.slice(chr, data.length-1);
                 data_1 = JSON.parse(data);
-                imdbid = data_1.d[0].id;
 
                 // Get plot summary with new data
-                plot_summary(imdbid, id);
+                plot_summary(id, view, data_1, newterm);
             });
 
         // The title worked fine by itself
         } else {
-            imdbid = data_1.d[0].id;
-            plot_summary(imdbid, id);
+            plot_summary(id, view, data_1, term);
         }
     });
 }
 
-function plot_summary(imdbid, id){
+function plot_summary(id, view, data, term){
     //Plot summary isn't part of data, so use returned ID to scrape the page for the plot summary
+    var imdbid = data.d[0].id;
+    var img = data.d[0].i;
+    var year = data.d[0].y;
+    var star = data.d[0].s;
+    var title = term;
     $.ajax({
         url: '/functions.php',
         data: {imdbid_q: imdbid},
@@ -338,9 +371,15 @@ function plot_summary(imdbid, id){
     }).done(function(data){
 
         //Inject into page
-        expand = $('#'+id).addClass('file-item-active');
-        $('#'+id).append("<div class='details'><img src='"+data_1.d[0].i+"' /><div class='desc'><h2>"+data_1.d[0].y+"</h2><h3>"+data_1.d[0].s+"</h3></div></div>");
-       $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
+        if (view == 0){
+            expand = $('#'+id).addClass('file-item-active');
+            $('#'+id).append("<div class='details'><img src='"+img+"' /><div class='desc'><h2>"+year+"</h2><h3>"+star+"</h3></div></div>");
+           $('#'+id).children('.details').children('.desc').append('<p>'+data+'</p>');
+        } else {
+            $('#'+id).css('background-image', 'url('+img+')');
+            $('#'+id).css('background-size', 'cover');
+            $('#'+id+' span').append('<div class="desc"><h1>'+title+'</h1><h2>'+year+'</h2><h3>'+star+'</h3><p>'+data+'</div></div>');
+        }
     });
 }
 
@@ -376,7 +415,6 @@ $(function() {
             for (var chr of $(this).children('.file-item').children('.fip').html()){
                 size += 15;
             }
-            console.log(size);
             $('.item-del').css("opacity","0");
             $(this).css('width', size+'px');
             $(".item-container").css('pointer-events','none');

@@ -23,22 +23,33 @@ function list_files() {
 //List all files in a location
     $files = array_diff(scandir('.'), array('.','..','index.php'));
     if (empty($files)){
+        echo '<div class="file-container">';
         echo "<h3 style='text-align:center;'>There's nothing here! Why not add some files?</h3>";
+        echo '</div>';
         return;
     }
     $vid_id = 0;
     $current_letter = '-';
+    $vid_errors = file($_SERVER["DOCUMENT_ROOT"]."/.Scripts/video_validation.log");
     foreach($files as $file) {
         if (is_file($file)){
-            if ( strpos(file_get_contents($_SERVER["DOCUMENT_ROOT"]."/.Scripts/video_validation.log"), $file) !== false){
-                error_log('a');
-                $color = 'style=\'color:red;\'';
-            } else {
-                $color = 'style=\'color:black;\'';
+            foreach ($vid_errors as $line) {
+                if ( strpos($line, $file) !== false){
+                    if (explode("|", $line)[1] == "0\n"){
+                        $color = 'style=\'color:orange;\'';
+                    } else {
+                        $color = 'style=\'color:red;\'';
+                    }
+                    break;
+                } else {
+                    $color = 'style=\'color:black;\'';
+                }
             }
 
             if ($current_letter == '-'){
+                echo "<div class='view-tog'></div>";
                 echo "<div class='letter-head-tog'>abc</div>";
+                echo '<div class="file-container">';
             }
 
             if (strtolower(substr($file, 0, 1)) != strtolower($current_letter)){
@@ -48,18 +59,26 @@ function list_files() {
 
             $file_new = explode(".",$file);
             array_pop($file_new);
+            $cutoff = '';
             $file_new = implode(".",$file_new);
+            if (strpos($file_new, '%20') == false && strpos($file_new, '-') == false){
+                $cutoff = 'fade-out'; 
+            }
             {
                 $vid_id += 1;
                 echo "<div id='vid$vid_id' class='video-container'></div>
                         <div class='item-container'>
                         <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
                         <div class='item-ren'>A</div>
-                        <div id='fileitem$vid_id' $color onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' ><p class='fip'>".rawurldecode($file_new)."</p></div>
+                        <div id='fileitem$vid_id' $color onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item tooltip' >
+                            <p class='fip $cutoff'>".rawurldecode($file_new)."</p>
+                            <span></span>
+                        </div>
                       </div>";
             }
         }
     }
+    echo '</div>';
 }
 
 function create_dir($dir_name) {
@@ -167,9 +186,34 @@ function breadcrumbs(){
 }
 
 function get_metadata($term){
+    $cache = file('metadata.log');
+    for ($i = 0; $i < count($cache); $i++){
+        if (strpos($cache[$i], $term) !== false){
+            echo $cache[$i+1];
+            return;
+        } 
+    } 
+
     $ch1 = strtolower($term[0]);
     $jsonurl = "http://sg.media-imdb.com/suggests/".$ch1."/".$term.".json";
     $json = file_get_contents($jsonurl);
+    $start_char = 0;
+    
+    for ($i = 0; $i < strlen($json); $i++){
+        if ($json[$i] != '{'){
+            $start_char++;
+        } else {
+            break;
+        }
+    }
+    $json = substr($json, $start_char, strlen($json)-$start_char-1);
+
+    if (strpos($json, '"d"') == false){
+        echo $json;
+        return;
+    }
+
+    exec("echo ".escapeshellarg($term).'"\n"'.escapeshellarg($json)." >> metadata.log");
     echo $json;
 }
 

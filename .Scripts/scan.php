@@ -38,9 +38,9 @@ function remove_non_av($dir, $destination){
                         //} else { rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.$object_new); }
 
                         // Run file through file validation script
-                        exec("sh video_validation.sh '$dir.'/'.$object'");
-
-                        rename($dir.'/'.$object, '/var/www/media.bryceyoder.com'.$destination.'/'.rawurlencode($object).'.mp4'); 
+                        $new_dest = '/var/www/media.bryceyoder.com'.$destination.'/'.rawurlencode($object).'.mp4';
+                        rename($dir.'/'.$object, $new_dest); 
+                        exec("bash video_validation.sh '$new_dest'");
                     }
                 } else { remove_non_av($dir.'/'.$object, $destination); }
             }
@@ -50,7 +50,7 @@ function remove_non_av($dir, $destination){
 }
 
 // Run in the background and listen for download events
-exec('aria2c --enable-rpc --rpc-allow-origin-all -D');
+exec('aria2c --enable-rpc --rpc-allow-origin-all -D -V');
 $locations = [];
 include 'Aria2.php';
 $aria2 = new Aria2();

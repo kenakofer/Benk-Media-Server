@@ -83,9 +83,7 @@ session_start();
         ?>
     </div>
     <?php if ($dir != "/"){
-        echo '<div class="file-container">';
-        list_files();
-        echo '</div>';
+        list_files(0);
     }
 ?>
     </div>
@@ -146,7 +144,7 @@ session_start();
         <div class="snf">
             <div id='snfc' class="close">X</div>
             <h2>Stream Media</h2>
-            <p style='text-align:left;margin:0 auto;width:650px;margin-top:50px;line-height:30px;margin-bottom:50px;'>This feature is experimental and scrapes streaming sites for their links. Such sites tend to pop up and disappear on a monthly basis, so the feature may not always work, or require constant upkeep. Feel free to use it as it is in a working state right now, and works quite well: there are no external ads or popups, and videos seem to stream quite fast. However, the primary feature of the server will always be downloads.</p>
+            <p>This feature is experimental and scrapes streaming sites for their links. Such sites tend to pop up and disappear on a monthly basis, so the feature may not always work, or require constant upkeep. Feel free to use it as it is in a working state right now, and works quite well: there are no external ads or popups, and videos seem to stream quite fast. However, the primary feature of the server will always be downloads.</p>
             <h3>Title</h3>
             <input type="text" name="dn" id="sn"><br />
            <button id='snb' onclick='stream()'>Search</button> 

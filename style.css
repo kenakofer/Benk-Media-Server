@@ -231,24 +231,24 @@ a {
     z-index:0;
 }
 .box-container:hover .dir-box {
-   box-shadow:0px 0px 9px #f90;
-   height:250px;
-   width:250px;
-   margin-top:-10px;
+    box-shadow:0px 0px 9px #f90;
+    height:250px;
+    width:250px;
+    margin-top:-10px;
 }
 .box-container:hover .box-del {
     opacity:1;
 }
 .box-del {
-color:grey;
-opacity:0;
-transition:all 0.4s ease;
-font-size:15px;
-padding-bottom:25px;
-padding-left:25px;
-position:absolute;
-right:20px;
-cursor:pointer;
+    color:grey;
+    opacity:0;
+    transition:all 0.4s ease;
+    font-size:15px;
+    padding-bottom:25px;
+    padding-left:25px;
+    position:absolute;
+    right:20px;
+    cursor:pointer;
 }
 .box-del:hover {
     font-size:30px;
@@ -259,6 +259,9 @@ cursor:pointer;
     margin-left:100px;
     padding-right:35px;
     margin-bottom:150px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
 }
 .file-item {
     margin-bottom:25px;
@@ -274,12 +277,45 @@ cursor:pointer;
     margin: 0;
     transition:all 0.4s ease;
 }
+.fade-out {
+    white-space:nowrap;
+    background:linear-gradient(to right, #000, #fff 80%);
+    background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color: transparent;
+}
 .file-item-active .fip {
     font-size:30px;
     font-family:Avenir Heavy;
 }
 .file-item-active {
     min-height:300px;
+}
+.file-item-art {
+    height:395px;
+    margin-bottom:75px;
+    white-space:nowrap;
+    color:rgba(0,0,0,0) !important;
+}
+.file-item-art .fip {
+    background:0;
+}
+.tooltip span {
+    display:none;
+    animation:fade_in 0.4s ease;
+    box-shadow:0px 0px 9px rgba(0,0,0,0.3);
+}
+.tooltip span h1 {
+    font-size:35px;
+}
+.tooltip:hover span {
+    display:block;
+    position:fixed;
+    overflow:hidden;
+    background-color:white;
+    color:black;
+    white-space:normal;
+    z-index:99;
 }
 .item-container {
     width:100%;
@@ -293,6 +329,10 @@ cursor:pointer;
 }
 .item-container:hover .item-del, .item-container:hover .item-ren{
     opacity:1;
+}
+.item-container-art {
+    width:300px;
+    background:0;
 }
 .item-del, .item-ren{
     opacity:0;
@@ -309,6 +349,14 @@ cursor:pointer;
 .item-del:hover, .item-ren:hover{
     font-size:30px;
 }
+.item-v {
+    color:white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
 .details {
     opacity:0;
     height:300px;
@@ -321,7 +369,7 @@ cursor:pointer;
     width:200px;
 }
 .details .desc {
-   margin-left: 30px;
+    margin-left: 30px;
 }
 .desc p {
     opacity: 0;
@@ -376,10 +424,26 @@ cursor:pointer;
 .letter-head:hover {
     font-size:35px;
 }
-.letter-head-tog {
+.letter-head-tog{
     float:right;
     cursor:pointer;
     margin-top:-30px;
+    margin-right:40px;
+}
+.view-tog {
+    float:left;
+    margin-left:100px;
+    height:5px;
+    width:20px;
+    background-color:black;
+    cursor:pointer;
+    margin-top:-18px;
+    transition:all 0.4s ease;
+}
+.view-tog-v {
+    margin-top:-30px;
+    width:15px;
+    height:20px;
 }
 .letter-chooser {
     display:flex;
@@ -558,6 +622,14 @@ cursor:pointer;
     text-align:center;
     overflow-y:auto;
 }
+.snf p {
+    text-align:left;
+    margin:0 auto;
+    width:650px;
+    margin-top:50px;
+    line-height:30px;
+    margin-bottom:50px;
+}
 .dnf h2, .snf h2{
     padding-top:50px;
 }
@@ -699,6 +771,7 @@ button:hover {
     padding-right:100px;
     margin-top:-24px;
     margin-right:-500px;
+    z-index:99;
 }
 
 
@@ -729,11 +802,11 @@ button:hover {
     margin-top:-5px;
 }
 .partial-listing .close {
-   float:right;
-   position:relative;
-   margin-left:0px;
-   margin-right:-20px;
-   margin-top:-25px;
+    float:right;
+    position:relative;
+    margin-left:0px;
+    margin-right:-20px;
+    margin-top:-25px;
 }
 .partial-listing .close:hover {
     margin-top:-30px;
@@ -784,14 +857,14 @@ button:hover {
         padding-bottom:0px;
         margin-right:5px;
     }
-    form, #dn {
+    form, #dn, #sn {
         width:90%;
         margin:0 auto;
     }
-    .dnf h2 {
+    .dnf h2, .snf h2 {
         margin-top:100px;
     }
-    .dnf h3 {
+    .dnf h3, .snf h3, .snf p {
         width:95%;
     }
     .breadcrumbs {
