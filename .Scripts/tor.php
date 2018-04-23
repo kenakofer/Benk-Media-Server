@@ -80,7 +80,7 @@ function grab_dl($tor_site, $title, $site){
 function stream($search_term){
     libxml_use_internal_errors(true);
     $search_term = str_replace(" ", "+", $search_term);
-    $html = file_get_contents('https://search.stream.cr/main/?query='.$search_term); 
+    $html = file_get_contents('https://search.stream.cr/y/?query='.$search_term); 
     $doc = new DOMDocument();
 
     if(!empty($html)){
