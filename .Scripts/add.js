@@ -4,6 +4,12 @@ $(document).ready(function(){
     // If screen size is small, cut off non-wrapping titles
     if (screen.width >= 760){
         $('head').append('<script src="http://vjs.zencdn.net/6.6.3/video.js"></script>');
+    } else {
+        $('.fip').each(function () {
+            if ($(this).html().length > 30 && ! $(this).html().includes(' ')){
+                $(this).html($(this).html().slice(0, 30));
+            }
+        });
     }
 
     //Click detection for the UI
@@ -69,14 +75,12 @@ $(document).ready(function(){
         }
     });
 
-
     //Tooltip hover
     window.onmousemove = function (e) {
         if (screen.width >= 760){
             var x = e.clientX;
                 y = e.clientY;
             $('.tooltip span').css('top', y+15+'px');
-            console.log($('.tooltip span').position().left, screen.width);
             if (x + 800 > $(window).width()){
                 if (x - 800 < 0){
                     $('.tooltip span').css('left', x-400+'px');
@@ -86,6 +90,8 @@ $(document).ready(function(){
             } else {
                 $('.tooltip span').css('left', x+15+'px');
             }
+        } else {
+            $('.tooltip span').css('display', 'none');
         }
     }
 

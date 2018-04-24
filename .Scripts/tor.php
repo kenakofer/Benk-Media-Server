@@ -90,11 +90,41 @@ function stream($search_term){
         $titles = $xpath->query('//a[@class="rl"]');
         $results = '';
 
-        for ($i = 0; $i < $links->length; $i++){
-            $link = $links->item($i)->value;
-            $title = substr($titles->item($i)->textContent, 0, -5);
-            $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
-        }
+    } else {
+        // HDGO.to is broken trash.
+        //$html = file_get_contents('http://www1.hdgo.to/search-movies/'.$search_term.'.html'); 
+        //error_log('http://www1.hdgo.to/search-movies/'.$search_term.'.html');
+        //$doc = new DOMDocument();
+
+        //if(!empty($html)){
+        //    $doc->loadHTML($html);
+        //    $xpath = new DOMXPath($doc);
+        //    $titles = $xpath->query('//div[@class="title"]');
+        //    $links = $xpath->query('//div[@class="title"]/a/@href');
+        //    $results = '';
+
+        //    for ($i = 0; $i < $links->length; $i++){
+        //        $link = $links->item($i)->value;
+        //        $title = substr($titles->item($i)->textContent, 0, -5);
+        //        $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
+        //    }
+        //}
+        $html = file_get_contents('https://hdm.to/search/'.$search_term);
+        $doc = new DOMDocument();
+
+        if(!empty($html)){
+            $doc->loadHTML($html);
+            $xpath = new DOMXPath($doc);
+            $titles = $xpath->query('//div[@class="movie-details"]');
+            $links = $xpath->query('//article/a/@href');
+            $results = '';
+        } 
+    }
+
+    for ($i = 0; $i < $links->length; $i++){
+        $link = $links->item($i)->value;
+        $title = substr($titles->item($i)->textContent, 0, -5);
+        $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
     }
     echo $results;
 }
@@ -102,13 +132,23 @@ function stream($search_term){
 // Grab video page from search
 function grab_stream($link){
     libxml_use_internal_errors(true);
+    error_log($link);
     $html = file_get_contents($link); 
     $doc = new DOMDocument();
 
     if(!empty($html)){
         $doc->loadHTML($html);
         $xpath = new DOMXPath($doc);
-        $links = $xpath->query('//span[@id="inchannel"]/iframe/@src');
+        if (strpos($link, 'hdm.to') !== false){
+           $links = $xpath->query('//iframe/@src'); 
+        } else if (strpos($link, '123hulu.com') !== false){
+            $links = $xpath->query('//div[@id="media-player"]/script');
+            $base64 = substr($links[0]->textContent, 0, 29);
+            $base64 = substr($base64, 0, strlen($base64)-2);
+            error_log($base64);
+        } else {
+            $links = $xpath->query('//span[@id="inchannel"]/iframe/@src');
+        }
         echo $links[0]->textContent;
     }
 }
