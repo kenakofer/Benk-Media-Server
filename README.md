@@ -17,8 +17,6 @@ Goals:
 
 - Remember file view between pages
 
-- Upload files in background
-
 - Allow users to rename directories (currently can only rename files)
 
 - Allow users to delete multiple files at a time

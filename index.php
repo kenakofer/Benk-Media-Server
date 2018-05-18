@@ -136,10 +136,14 @@ session_start();
                 <div class=\"fsubmit\">
                     <input type=\"file\" multiple=\"multiple\" name=\"uf[]\">
                 </div>
-                <input type=\"submit\" value=\"Submit\">
+                <input id='f_upload_s' type=\"submit\" value=\"Submit\">
             </form>
         </div>
     </div>";}?>
+    <div class="um_cover">
+        <div class="loading"></div>
+        <h1>Uploading...</h1>
+    </div>
     <div class="snf_container">
         <div class="snf">
             <div id='snfc' class="close">X</div>

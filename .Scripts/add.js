@@ -37,6 +37,11 @@ $(document).ready(function(){
         }
     });
 
+    $("#f_upload_s").on('click', function() {
+        $(".um_cover").css("opacity", 1);
+        $(".um_cover").css("pointer-events", 'none');
+    });
+
     //Get movie data from IMDb
     var get_meta;
     var meta;
