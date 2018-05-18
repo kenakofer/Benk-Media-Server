@@ -15,12 +15,14 @@ And make sure to chown -R www-data:www-data and chmod -R 755 the install locatio
 
 Goals:
 
-Upload files in background and improve UX for multiple uploads
+- Remember file view between pages
 
-Allow users to rename directories (currently can only rename files)
+- Upload files in background
 
-Allow users to delete multiple files at a time
+- Allow users to rename directories (currently can only rename files)
 
-Improve music player (album art, skip buttons?)
+- Allow users to delete multiple files at a time
 
-Possibly create a Desktop app to go with it? (Probs not)
+- Improve music player (album art, skip buttons?)
+
+- Possibly create a Desktop app to go with it? (Probs not)
