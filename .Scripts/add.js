@@ -1,3 +1,5 @@
+view = 0;
+
 $(document).ready(function(){
 
     // Don't use VideoJS on mobile
@@ -15,7 +17,6 @@ $(document).ready(function(){
     //Click detection for the UI
     var bs = 0;
     var dlss = 0;
-    var view = 0;
 
     //Dynamically calculate the distance between breadcrumbs based on title length
     var base = -220;
@@ -23,6 +24,18 @@ $(document).ready(function(){
     for (var child = 0; child < $('.breadcrumbs').children().length - 2; child++){
         base = base - 70;
     }
+
+    $("input[type='file']").on("change",function(){
+        var files = $(this).prop("files");
+        if (files.length > 1) {
+            $("#file_name_label").fadeOut(400);
+            $("#file_name").fadeOut(400);
+            $("#file_name").val("");
+        } else {
+            $("#file_name_label").fadeIn(400);
+            $("#file_name").fadeIn(400);
+        }
+    });
 
     //Get movie data from IMDb
     var get_meta;
@@ -422,12 +435,14 @@ $(function() {
                 size += 15;
             }
             $('.item-del').css("opacity","0");
-            $(this).css('width', size+'px');
+            if (view == 0) {
+                $(this).css('width', size+'px');
+            }
             $(".item-container").css('pointer-events','none');
         },
         stop: function(event, ui){
             $('.item-del').css("opacity","");
-            $(this).css('width','100%');
+            $(this).css('width','');
             $(".item-container").css('pointer-events','all');
         },
         zIndex: 100,

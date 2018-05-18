@@ -87,6 +87,7 @@ function grab_dl(title, method){
 
 // Get streaming search results
 function stream(){
+    $('#sresult_container').html('<div class="loading"></div>');
     var query = document.getElementById('sn').value;
     $.ajax({
         url : '/.Scripts/tor.php',

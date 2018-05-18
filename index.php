@@ -130,8 +130,8 @@ session_start();
             <div id='umc' class=\"close\">X</div>
             <h2>Upload Media</h2>
             <form id=\"um_form\" method=\"post\" enctype=\"multipart/form-data\">
-                <h3>File Name</h3>
-                <input type=\"text\" name=\"fn\"><br>
+                <h3 id='file_name_label'>File Name</h3>
+                <input id='file_name' type=\"text\" name=\"fn\"><br>
                 <h3>Upload File</h3>
                 <div class=\"fsubmit\">
                     <input type=\"file\" multiple=\"multiple\" name=\"uf[]\">
@@ -144,7 +144,6 @@ session_start();
         <div class="snf">
             <div id='snfc' class="close">X</div>
             <h2>Stream Media</h2>
-            <p>This feature is experimental and scrapes streaming sites for their links. Such sites tend to pop up and disappear on a monthly basis, so the feature may not always work, or require constant upkeep. Feel free to use it as it is in a working state right now, and works quite well: there are no external ads or popups, and videos seem to stream quite fast. However, the primary feature of the server will always be downloads.</p>
             <h3>Title</h3>
             <input type="text" name="dn" id="sn"><br />
            <button id='snb' onclick='stream()'>Search</button> 

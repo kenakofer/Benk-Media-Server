@@ -432,19 +432,31 @@ a {
     margin-right:40px;
 }
 .view-tog {
+    display:flex;
+    flex-direction:column;
     float:left;
     margin-left:100px;
-    height:5px;
+    height:16px;
     width:20px;
-    background-color:black;
     cursor:pointer;
-    margin-top:-18px;
+    margin-top:-25px;
     transition:all 0.4s ease;
+    flex-wrap:wrap;
 }
 .view-tog-v {
-    margin-top:-30px;
-    width:15px;
-    height:20px;
+    flex-direction:row;
+}
+.view-tog-v .view-tog-bar {
+    width:8px;
+    margin-right:2px;
+    height:8px;
+    margin-bottom:1px;
+}
+.view-tog-bar {
+    width:20px;
+    height:2px;
+    background-color:black;
+    margin-bottom:2px;
 }
 .letter-chooser {
     display:flex;

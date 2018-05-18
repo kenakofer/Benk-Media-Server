@@ -124,6 +124,7 @@ function stream($search_term){
     for ($i = 0; $i < $links->length; $i++){
         $link = $links->item($i)->value;
         $title = substr($titles->item($i)->textContent, 0, -5);
+        $title = $titles->item($i)->textContent;
         $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
     }
     echo $results;

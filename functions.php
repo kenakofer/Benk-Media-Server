@@ -47,7 +47,12 @@ function list_files() {
             }
 
             if ($current_letter == '-'){
-                echo "<div class='view-tog'></div>";
+                echo "<div class='view-tog'>
+                        <div class='view-tog-bar'></div>
+                        <div class='view-tog-bar'></div>
+                        <div class='view-tog-bar'></div>
+                        <div class='view-tog-bar'></div>
+                    </div>";
                 echo "<div class='letter-head-tog'>abc</div>";
                 echo '<div class="file-container">';
             }
