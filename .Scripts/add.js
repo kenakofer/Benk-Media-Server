@@ -103,10 +103,10 @@ $(document).ready(function(){
                 if (x - 800 < 0){
                     $('.tooltip span').css('left', x-400+'px');
                 } else {
-                    $('.tooltip span').css('left', x-750+'px');
+                    $('.tooltip span').css('left', x+'px');
                 }
             } else {
-                $('.tooltip span').css('left', x+15+'px');
+                $('.tooltip span').css('left', x+'px');
             }
         } else {
             $('.tooltip span').css('display', 'none');
