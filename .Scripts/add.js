@@ -49,7 +49,7 @@ $(document).ready(function(){
         $('.item-container').hover(function () {
             if (view == 0 && screen.width >= 760){
                 var here = $(this);
-                get_meta = setTimeout(meta=get_metadata, 1500, $(this).children('.file-item').children().html(), $(this).children('.file-item').attr('id'), view);
+                get_meta = setTimeout(meta=get_metadata, 1500, $(this).children('.file-item').children('.fip').html(), $(this).children('.file-item').attr('id'), view);
             }
         }, function () {
             clearTimeout(get_meta);
@@ -75,6 +75,7 @@ $(document).ready(function(){
            view = 1;
            $(this).addClass('view-tog-v');
            $('.item-container').addClass('item-container-art');
+           $('.item-container').addClass('tooltip');
            $('.item-ren, .item-del').addClass('item-v');
            $('.file-item').addClass('file-item-art');
            $('.file-item span').css('padding', '50px');
@@ -85,6 +86,7 @@ $(document).ready(function(){
            view = 0;
            $(this).removeClass('view-tog-v');
            $('.file-item').removeClass('file-item-art');
+           $('.item-container').removeClass('tooltip');
            $('.item-container').removeClass('item-container-art');
            $('.file-item').css('background-image', '');
            $('.file-item span').html('');
@@ -98,18 +100,18 @@ $(document).ready(function(){
         if (screen.width >= 760){
             var x = e.clientX;
                 y = e.clientY;
-            $('.tooltip span').css('top', y+15+'px');
+            $('.span_fileitem').css('top', y+15+'px');
             if (x + 800 > $(window).width()){
                 if (x - 800 < 0){
-                    $('.tooltip span').css('left', x-400+'px');
+                    $('.span_fileitem').css('left', x-400+'px');
                 } else {
-                    $('.tooltip span').css('left', x+'px');
+                    $('.span_fileitem').css('left', x-750+'px');
                 }
             } else {
-                $('.tooltip span').css('left', x+'px');
+                $('.span_fileitem').css('left', x+15+'px');
             }
         } else {
-            $('.tooltip span').css('display', 'none');
+            $('.span_fileitem').css('display', 'none');
         }
     }
 
@@ -178,7 +180,8 @@ $(document).ready(function(){
     });
 
     //Show rename dialogue
-    $('.item-ren').on('click', function(){
+    $('.item-ren').on('click', function(e){
+        e.stopPropagation();
         $('.ren_container').addClass('ren-active');
         $(this).siblings('.file-item').attr('id','rename');
     });
@@ -402,7 +405,7 @@ function plot_summary(id, view, data, term){
         } else {
             $('#'+id).css('background-image', 'url('+img+')');
             $('#'+id).css('background-size', 'cover');
-            $('#'+id+' span').append('<div class="desc"><h1>'+title+'</h1><h2>'+year+'</h2><h3>'+star+'</h3><p>'+data+'</div></div>');
+            $('#span_'+id).append('<div class="desc"><h1>'+title+'</h1><h2>'+year+'</h2><h3>'+star+'</h3><p>'+data+'</div></div>');
         }
     });
 }

@@ -265,6 +265,7 @@ a {
     display:block;
     padding:25px;
     background:linear-gradient(to right, lightgrey -150%, white);
+    box-shadow:0px 0px 9px rgba(0,0,0,.3);
     cursor:pointer;
     min-height:1px;
     transition:all 0.4s ease;
@@ -299,15 +300,13 @@ a {
 .item-container {
     width:100%;
     margin-bottom:25px;
-    box-shadow:0px 0px 9px rgba(0,0,0,.3);
+    transition:all 0.4s ease;
 }
-.item-container:hover .file-item{
+.file-item:hover {
     box-shadow:0px 0px 9px #f90;
-    padding-top:30px;
-    padding-bottom:50px;
-    margin-top:-10px;
+    transform:scale(1.02);
 }
-.item-container:hover .item-del, .item-container:hover .item-ren{
+.file-item:hover .item-del, .file-item:hover .item-ren{
     opacity:1;
 }
 .item-container-art {
@@ -319,9 +318,9 @@ a {
     display:inline;
     float:right;
     transition:all 0.4s ease;
-    margin-right:10px;
+    margin-left:10px;
     color:grey;
-    margin-top:7px;
+    margin-top:-7px;
     cursor:pointer;
 }
 .item-del:hover, .item-ren:hover{
@@ -335,15 +334,16 @@ a {
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
-.tooltip span {
+.span_fileitem {
     display:none;
     animation:fade_in 0.4s ease;
     box-shadow:0px 0px 9px rgba(0,0,0,0.3);
+    padding:25px;
 }
-.tooltip span h1 {
+.span_fileitem h1 {
     font-size:35px;
 }
-.tooltip:hover span {
+.tooltip:hover .span_fileitem {
     display:block;
     position:fixed;
     overflow:hidden;

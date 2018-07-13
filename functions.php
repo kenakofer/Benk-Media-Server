@@ -73,11 +73,11 @@ function list_files() {
                 $vid_id += 1;
                 echo "<div id='vid$vid_id' class='video-container'></div>
                         <div class='item-container'>
-                        <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
-                        <div class='item-ren'>A</div>
-                        <div id='fileitem$vid_id' $color onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item tooltip' >
+                        <span id='span_fileitem$vid_id' class='span_fileitem'></span>
+                        <div id='fileitem$vid_id' $color onclick='play($vid_id, \"".rawurlencode($file)."\", \"name\")' class='file-item' >
+                            <a class='item-del' href=\"?itemdel=".rawurlencode($file)."\">X</a>
+                            <div class='item-ren'>A</div>
                             <p class='fip $cutoff'>".rawurldecode($file_new)."</p>
-                            <span></span>
                         </div>
                       </div>";
             }
