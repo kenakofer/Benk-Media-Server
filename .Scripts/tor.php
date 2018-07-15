@@ -76,8 +76,38 @@ function grab_dl($tor_site, $title, $site){
     } 
 }
 
+include 'sources.php';
+
+function stream($search_term) {
+    global $sources;
+    libxml_use_internal_errors(true);
+    $search_term = str_replace(" ", "+", $search_term);
+    $results = '';
+    # We check each source defined in sources.php
+    foreach ($sources as $source_name => $params) {
+        $results .= '<h2>'.$source_name."</h2>";
+        $html = file_get_contents($params['search_url_prefix'].$search_term);
+        $doc = new DOMDocument();
+        # If the search returns a response document
+        if(!empty($html)){
+            $doc->loadHTML($html);
+            $xpath = new DOMXPath($doc);
+            # Yank out the titles and links
+            $titles = $xpath->query($params['titles_xpath_pattern']);
+            $links = $xpath->query($params['links_xpath_pattern']);
+            # Create an entry for each result found
+            for ($i = 0; $i < $links->length; $i++){
+                $link = $links->item($i)->value;
+                $title = substr($titles->item($i)->textContent, 0, -5);
+                $title = $titles->item($i)->textContent;
+                $results .= '<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
+            }
+        } 
+    }
+    echo $results;
+}
 // Scrape search.stream.cr for their results
-function stream($search_term){
+/*function stream($search_term){
     libxml_use_internal_errors(true);
     $search_term = str_replace(" ", "+", $search_term);
     $html = file_get_contents('https://search.stream.cr/y/?query='.$search_term); 
@@ -128,10 +158,45 @@ function stream($search_term){
         $results = $results.'<div onclick="grab_stream(\''.$link.'\')" class="result">'.$title.'</div>'; 
     }
     echo $results;
-}
+}*/
 
 // Grab video page from search
-function grab_stream($link){
+function grab_stream($link) {
+    global $sources;
+    libxml_use_internal_errors(true);
+    //error_log($link);
+    # Find our first source entry that matches
+    foreach ($sources as $source_name => $params) {
+        if (strpos($link, $source_name) !== false) {
+            $source = $params;
+            break;
+        } 
+    }
+    if (!isset($source)){
+        echo "No source entry found for ".$link;
+        return;
+    }
+    //error_log( "Source found for ".$link );
+
+    # We now know which source we are using
+    # Follow the player path patterns for that source
+    $html = file_get_contents($link); 
+    $doc = new DOMDocument();
+    $doc->loadHTML($html);
+    $xpath = new DOMXPath($doc);
+    foreach ($source['intermediate_links'] as $pattern){
+        $links = $xpath->query($pattern);
+        $link = $links[0]->value;
+        $html = file_get_contents($link); 
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+        $xpath = new DOMXPath($doc);
+    }
+    # Now we're on a page that has the player, extract the player code
+    $links = $xpath->query($source['player_xpath_pattern']);
+    echo $links[0]->textContent;
+}
+/*function grab_stream($link){
     libxml_use_internal_errors(true);
     error_log($link);
     $html = file_get_contents($link); 
@@ -152,7 +217,7 @@ function grab_stream($link){
         }
         echo $links[0]->textContent;
     }
-}
+}*/
 
 // Old code to grab streams from a different and worse site.
 // I have no idea how long search.stream.cr will exist so let's keep this here
